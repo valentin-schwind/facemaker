@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chosen: A jQuery Plugin by Harvest to Tame Unwieldy Select Boxes</title>
+  <link rel="stylesheet" href="chosen.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+	  <script src="chosen.jquery.js" type="text/javascript"></script>
+</head>
+<body>
+  <script type="text/javascript">
+	$(document).ready(function(){
+		var config = {
+		  '.chosen-select'           : {},
+		  '.chosen-select-deselect'  : {allow_single_deselect:true},
+		  '.chosen-select-no-single' : {disable_search_threshold:10},
+		  '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+		  '.chosen-select-width'     : {width:"150px"}
+		}
+		for (var selector in config) {
+		  $(selector).chosen(config[selector]);
+		}
+	});
+  </script>
+        <select data-placeholder="Choose a Country..." class="chosen-select" tabindex="2">
+            <option value=""></option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Afghanistan">Afghanistan</option>
+            <option value="Aland Islands">Aland Islands</option>
+          
+          </select>
+
+</body>
+</html>

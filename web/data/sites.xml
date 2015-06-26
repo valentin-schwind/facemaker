@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <sites>
+	<static id="demographic">
+		<introText lang="de">Ausgehend vom europäischen <a target="_blank" href="http://faceresearch.org/students/averageness">Durchschnittsgesicht</a> haben Sie nun die Gelegenheit Gesichter nach Ihren Vorstellungen zu gestalten. Ob Avatar, Held oder Bösewicht - Sie entscheiden das Aussehen. Sind alle 6 Aufgaben erledigt, wird der Avatar-Downloader aktiviert, in dem man seine 3D-Modelle speichern, rendern und mit anderen teilen kann. Dieses Programm ist Teil eines interdisziplinären Forschungsprojekts an der <a target="_blank" href="http://www.hdm-stuttgart.de">Hochschule der Medien</a> und <a target="_blank" href="http://www.uni-stuttgart.de">Universität Stuttgart.</a></introText>
+		<introText lang="en">Based on the European <a target="_blank" href="http://faceresearch.org/students/averageness">average face</a> you have now the opportunity to design a virtual game character in real time. You decide on the facial paramaters of an avatar, hero, or villain. Completing all 6 different objectives activates the Avatar-Downloader where you can save, render, and share the generated 3D models. This program is part of an interdisciplinary research project of the <a target="_blank" href="http://www.hdm-stuttgart.de">Stuttgart Media University</a> and <a target="_blank" href="http://www.uni-stuttgart.de">University of Stuttgart</a>, thus let's start with a small questionnaire:</introText>
+		<sloagan lang="en">Generate your favourite avatar!</sloagan>
+		<sloagan lang="de">Generate your favourite avatar!</sloagan>
+		<footerCopyright lang="de">Copyright (c) 2014 by Valentin Schwind. Inhalte auf dieser Seite sind lizensiert unter den Bestimmungen der</footerCopyright>
+		<footerCopyright lang="en">Copyright (c) 2014 by Valentin Schwind. Contents of this site licensed under the terms of</footerCopyright>
+		<writeAnEmail lang="de">Bei Fragen oder Problemen zu dieser Anwendung schreiben Sie uns eine E-Mail</writeAnEmail>
+		<writeAnEmail lang="en">Questions or problems with this application? Write us an E-Mail.</writeAnEmail>
+		<ageQuestion lang="de">Ihr Geburtsjahr</ageQuestion>
+		<ageQuestion lang="en">Your year of birth</ageQuestion>
+
+		
+		<genderQuestion lang="de">Ihr Geschlecht</genderQuestion>
+		<genderQuestion lang="en">Your gender</genderQuestion>
+		<genderQuestionA lang="de">weiblich</genderQuestionA>
+		<genderQuestionA lang="en">female</genderQuestionA>
+		<genderQuestionB lang="de">männlich</genderQuestionB>
+		<genderQuestionB lang="en">male</genderQuestionB>
+		<genderQuestionC lang="de">sonstige</genderQuestionC>
+		<genderQuestionC lang="en">other</genderQuestionC>
+		
+		<theHairColorQuestion lang="de">Ihre aktuelle Haarfarbe</theHairColorQuestion>
+		<theHairColorQuestion lang="en">Your recent hair color</theHairColorQuestion>
+		<theHairColorQuestionA lang="de">schwarz</theHairColorQuestionA>
+		<theHairColorQuestionA lang="en">black</theHairColorQuestionA>
+		<theHairColorQuestionB lang="de">brünett</theHairColorQuestionB>
+		<theHairColorQuestionB lang="en">brunette</theHairColorQuestionB>
+		<theHairColorQuestionC lang="de">rot</theHairColorQuestionC>
+		<theHairColorQuestionC lang="en">red</theHairColorQuestionC>
+		<theHairColorQuestionD lang="de">blond</theHairColorQuestionD>
+		<theHairColorQuestionD lang="en">blonde</theHairColorQuestionD>
+		<theHairColorQuestionE lang="de">grau</theHairColorQuestionE>
+		<theHairColorQuestionE lang="en">grey</theHairColorQuestionE>
+		<theHairColorQuestionF lang="de">sonstige</theHairColorQuestionF>
+		<theHairColorQuestionF lang="en">other</theHairColorQuestionF>
+		
+		<theSkinColorQuestion lang="de">Ihr Hautton</theSkinColorQuestion>
+		<theSkinColorQuestion lang="en">Your skin type</theSkinColorQuestion>
+		<theSkinColorQuestionA lang="de">dunkelhäutig</theSkinColorQuestionA>
+		<theSkinColorQuestionA lang="en">dark skinned</theSkinColorQuestionA>
+		<theSkinColorQuestionB lang="de">braunhäutig</theSkinColorQuestionB>
+		<theSkinColorQuestionB lang="en">brown skinned</theSkinColorQuestionB>
+		<theSkinColorQuestionC lang="de">rothäutig</theSkinColorQuestionC>
+		<theSkinColorQuestionC lang="en">red skinned</theSkinColorQuestionC>
+		<theSkinColorQuestionD lang="de">hellhäutig</theSkinColorQuestionD>
+		<theSkinColorQuestionD lang="en">white skinned</theSkinColorQuestionD>
+		<theSkinColorQuestionE lang="de">gelbhäutig</theSkinColorQuestionE>
+		<theSkinColorQuestionE lang="en">yellow skinned</theSkinColorQuestionE>
+		
+		<theEyesColorQuestion lang="de">Ihre Augenfarbe</theEyesColorQuestion>
+		<theEyesColorQuestion lang="en">Your eyes color</theEyesColorQuestion>
+		<theEyesColorQuestionA lang="de">schwarz</theEyesColorQuestionA>
+		<theEyesColorQuestionA lang="en">black</theEyesColorQuestionA>
+		<theEyesColorQuestionB lang="de">braun</theEyesColorQuestionB>
+		<theEyesColorQuestionB lang="en">brown</theEyesColorQuestionB>
+		<theEyesColorQuestionC lang="de">blau</theEyesColorQuestionC>
+		<theEyesColorQuestionC lang="en">blue</theEyesColorQuestionC>
+		<theEyesColorQuestionD lang="de">grün</theEyesColorQuestionD>
+		<theEyesColorQuestionD lang="en">green</theEyesColorQuestionD>
+		<theEyesColorQuestionE lang="de">grau</theEyesColorQuestionE>
+		<theEyesColorQuestionE lang="en">grey</theEyesColorQuestionE>
+			
+		<countryQuestion lang="de">Ihr Heimatland</countryQuestion>
+		<countryQuestion lang="en">Your home country</countryQuestion>
+		
+		<occupationQuestion lang="de">Ihr Tätigkeitsfeld / Berufsfeld</occupationQuestion>
+		<occupationQuestion lang="en">What's your occupational field?</occupationQuestion>	
+		<occupation1 lang="de">Management</occupation1>
+		<occupation1 lang="en">Management</occupation1>
+		<occupation2 lang="de">Naturwissenschaft</occupation2>
+		<occupation2 lang="en">Natural Sciences</occupation2>
+		<occupation3 lang="de">Ingenieurswesen</occupation3>
+		<occupation3 lang="en">Engineering</occupation3>
+		<occupation4 lang="de">Gesundheit/Medizin</occupation4>
+		<occupation4 lang="en">Health/Medicine</occupation4>
+		<occupation5 lang="de">Recht/Gesetz</occupation5>
+		<occupation5 lang="en">Law</occupation5>
+		<occupation6 lang="de">Verwaltung</occupation6>
+		<occupation6 lang="en">Clerical</occupation6>
+		<occupation7 lang="de">Sozialwesen</occupation7>
+		<occupation7 lang="en">Social</occupation7>
+		<occupation8 lang="de">Geistlich</occupation8>
+		<occupation8 lang="en">Spirituell</occupation8>
+		<occupation9 lang="de">Kunst/Kultur</occupation9>
+		<occupation9 lang="en">Art/Culture</occupation9>
+		<occupation10 lang="de">Geisteswissenschaften</occupation10>
+		<occupation10 lang="en">Humanities</occupation10>
+		<occupation11 lang="de">Dienstleistung</occupation11>
+		<occupation11 lang="en">Service, Sale, and Trade</occupation11>
+		<occupation12 lang="de">Nahrung, Agrar</occupation12>
+		<occupation12 lang="en">Agricultur, Food</occupation12>
+		<occupation13 lang="de">Handwerk</occupation13>
+		<occupation13 lang="en">Craft</occupation13>
+		<occupation14 lang="de">Militär</occupation14>
+		<occupation14 lang="en">Military</occupation14>
+		<occupation15 lang="de">Andere</occupation15>
+		<occupation15 lang="en">Other</occupation15>
+		
+		<playingQuestion lang="de">Wie oft spielen Sie Videospiele?</playingQuestion>
+		<playingQuestion lang="en">How often do you play video games?</playingQuestion>
+		
+		<gamegenreQuestion lang="en">What are your favourite game genres?</gamegenreQuestion>
+		<gamegenreQuestion lang="de">Welche Videospielegenres bevorzugen Sie?</gamegenreQuestion>		
+		<playingGames_6 lang="de">täglich</playingGames_6>
+		<playingGames_6 lang="en">daily</playingGames_6>
+		<playingGames_5 lang="de">mehr als 1x pro Woche</playingGames_5>
+		<playingGames_5 lang="en">more than once a week</playingGames_5>
+		<playingGames_4 lang="de">1x pro Woche</playingGames_4>
+		<playingGames_4 lang="en">once a week</playingGames_4>
+		<playingGames_3 lang="de">1x im Monat</playingGames_3>
+		<playingGames_3 lang="en">once a month</playingGames_3>
+		<playingGames_2 lang="de">unregelmäßig</playingGames_2>
+		<playingGames_2 lang="en">infrequently</playingGames_2>
+		<playingGames_1 lang="de">nie</playingGames_1>
+		<playingGames_1 lang="en">never</playingGames_1>
+		
+		<movieQuestion lang="de">Wie häufig schauen Sie Spielfilme?</movieQuestion>
+		<movieQuestion lang="en">How often do you watch movies?</movieQuestion>
+		<movieQuestionA lang="de">Spielfilme</movieQuestionA>
+		<movieQuestionA lang="en">Movies</movieQuestionA>
+		<movieQuestionB lang="en">Animated Movies</movieQuestionB>
+		<movieQuestionB lang="de">Animationsfilme</movieQuestionB>
+		
+		<watchingMovies6 lang="de">täglich</watchingMovies6>
+		<watchingMovies6 lang="en">daily</watchingMovies6>
+		<watchingMovies5 lang="de">mehr als 1x pro Woche</watchingMovies5>
+		<watchingMovies5 lang="en">more than once a week</watchingMovies5>
+		<watchingMovies4 lang="de">1x pro Woche</watchingMovies4>
+		<watchingMovies4 lang="en">once a week</watchingMovies4>
+		<watchingMovies3 lang="de">1x im Monat</watchingMovies3>
+		<watchingMovies3 lang="en">once a month</watchingMovies3>
+		<watchingMovies2 lang="de">unregelmäßig</watchingMovies2>
+		<watchingMovies2 lang="en">infrequently</watchingMovies2>
+		<watchingMovies1 lang="de">nie</watchingMovies1>
+		<watchingMovies1 lang="en">never</watchingMovies1>
+		
+		<genre0 lang="de">Arcade</genre0>
+		<genre0 lang="en">Arcade</genre0>
+		<genre1 lang="de">Simulationen</genre1>
+		<genre1 lang="en">Simulations</genre1>
+		<genre2 lang="de">Ego-Shooter</genre2>
+		<genre2 lang="en">Ego-Shooter</genre2>
+		<genre3 lang="de">Abenteuer</genre3>
+		<genre3 lang="en">Adventure</genre3>
+		<genre4 lang="de">MMORPGs</genre4>
+		<genre4 lang="en">MMORPGs</genre4>
+		<genre5 lang="de">Point-'n'-Click</genre5>
+		<genre5 lang="en">Point-'n'-Click</genre5>
+		<genre6 lang="de">Hack'n'Slay</genre6>
+		<genre6 lang="en">Hack'n'Slay</genre6>
+		<genre7 lang="de">Rätsel</genre7>
+		<genre7 lang="en">Puzzles</genre7>
+		<genre8 lang="de">Retro</genre8>
+		<genre8 lang="en">Retro</genre8>
+		<genre9 lang="de">Gelegenheitsspiele</genre9>
+		<genre9 lang="en">Casual Games</genre9>
+		<genre10 lang="de">Sport/Tanz</genre10>
+		<genre10 lang="en">Sport/Dance</genre10>
+		<genre11 lang="de">Strategie</genre11>
+		<genre11 lang="en">Strategy</genre11>
+		<genre12 lang="de">Rennen</genre12>
+		<genre12 lang="en">Racing</genre12>
+		<genre13 lang="de">Experimentell</genre13>
+		<genre13 lang="en">Experimental</genre13>
+		<genre14 lang="de">Andere</genre14>
+		<genre14 lang="en">Other</genre14>
+		
+		<submitBarText lang="de">Drücken Sie Start...</submitBarText>
+		<submitBarText lang="en">Press Start...</submitBarText>
+		
+		<termsofuseQuestion lang="de">Ich akzeptiere die Datenschutzbestimmungen*</termsofuseQuestion>
+		<termsofuseQuestion lang="en">I agree the terms of use*</termsofuseQuestion>	
+		
+		<termsofuseText lang="de">*) Sämtliche von Ihnen in dieser Studie gemachten Angaben werden vertraulich und unter Einhaltung der Datenschutzbestimmungen behandelt. Ihre Antworten werden ausschließlich innerhalb der Forschung verwendet. Die im Rahmen der Befragung erhobenen Daten werden nur innerhalb dieses Forschungsthemas eingesetzt und werden von der Universität nicht an Dritte weitergegeben. Die Ergebnisdarstellungen aus den Befragungen werden außerdem aggregiert publiziert und erlauben deshalb keinerlei Rückschlüsse auf einzelne Personen. Die Ergebnisse der wissenschaftlichen Auswertung werden ausschließlich in anonymisierter Form und für Gruppen zusammengefasst dargestellt. Niemand kann also aus den Ergebnissen erkennen, von welcher Person die Angaben stammen. Wir übernehmen keinerlei Haftung für Schäden, die durch die Benutzung von faceMaker entstehen.</termsofuseText>
+		<termsofuseText lang="en">*) All information you provide in this study will be treated confidentially and in compliance with data protection regulations. Your answers will only be used within the research. The data collected in this survey will be used only within this research topic and will not be disclosed to third parties by the University. The presentation of results from the surveys are also published aggregated and therefore do not allow any conclusions on individual people. The results of the scientific evaluation are summarized in anonymous form only and for groups. So no one can see from the results, the person from whom the information submitted.</termsofuseText>
+		
+		<fillout lang="de">Drücken Sie Start, um mit dem Fragebogen zu beginnen...</fillout>
+		<fillout lang="en">Press start to fill out the questionnaire...</fillout>
+		
+		<pleaseSelect lang="de">Bitte wählen...</pleaseSelect>
+		<pleaseSelect lang="en">Please select...</pleaseSelect>
+		
+		<hardwareRequirements lang="en">FaceMaker is a 3D application based on WebGL. We recommend a graphics card with good 3D acceleration performance as well as good CPU speed (min. 2 GHz, 4 GB RAM). Please maximize your browser or use full screen and quit all other running 3D applications. The user interface is optimized for FullHD (1920 x 1080). We are not responsible for the content of external sites. We are not liable for any damage arising through the use of the program.</hardwareRequirements>
+		
+		<hardwareRequirements lang="de">FaceMaker ist eine 3D-Anwendung basierend auf WebGL. Es wird daher eine Grafikkarte mit guten 3D-Beschleunigungseigenschaften empfohlen und eine starke CPU (min. 2 GHz, 4GB RAM). Verwenden Sie - soweit möglich - die volle Bildschirmfläche oder maximieren Ihren Browser und schließen alle anderen laufenden 3D-Anwendungen. Die Anzeige ist für Auflösungen ab FullHD (1920 x 1080) optimiert. Wir haften nicht für mögliche Schäden die durch die Nutzung des Programms entstehen, oder die Inhalte externer Seiten.</hardwareRequirements>
+		
+		
+		<supportedBrowser lang="en">Supported browsers: </supportedBrowser>
+		<supportedBrowser lang="de">Unterstüzte Browser: </supportedBrowser>
+		<notSupportedBrowser lang="en">Not supported browser: </notSupportedBrowser>
+		<notSupportedBrowser lang="de">Nicht unterstüzte Browser: </notSupportedBrowser>
+		<recommendedBrowser lang="en">Recommended browser: </recommendedBrowser>
+		<recommendedBrowser lang="de">Empfohlene Browser: </recommendedBrowser>
+		
+		<btn_ageHelp lang="de">Mehr...</btn_ageHelp>
+		<btn_ageHelp lang="en">More...</btn_ageHelp>
+		<btn_genderHelp lang="de">Mehr...</btn_genderHelp>
+		<btn_genderHelp lang="en">More...</btn_genderHelp>
+		<btn_sexualHelp lang="de">Mehr...</btn_sexualHelp>
+		<btn_sexualHelp lang="en">More...</btn_sexualHelp>
+		<btn_countryHelp lang="de">Mehr...</btn_countryHelp>
+		<btn_countryHelp lang="en">More...</btn_countryHelp>
+		<btn_migrationHelp lang="de">Mehr...</btn_migrationHelp>
+		<btn_migrationHelp lang="en">More...</btn_migrationHelp>
+		<btn_occupationHelp lang="de">Mehr...</btn_occupationHelp>
+		<btn_occupationHelp lang="en">More...</btn_occupationHelp>
+		<btn_playingHelp lang="de">Mehr...</btn_playingHelp>
+		<btn_playingHelp lang="en">More...</btn_playingHelp>
+		<btn_gamegenreHelp lang="de">Mehr...</btn_gamegenreHelp>
+		<btn_gamegenreHelp lang="en">More...</btn_gamegenreHelp>
+		<btn_movieHelp lang="de">Mehr...</btn_movieHelp>
+		<btn_movieHelp lang="en">More...</btn_movieHelp>
+		<btn_termsofuseHelp lang="de">Mehr...</btn_termsofuseHelp>
+		<btn_termsofuseHelp lang="en">More...</btn_termsofuseHelp>
+	</static>
+	
+	<dynamic id="demographic">
+		<yourBrowser lang="en">Your recent browser is </yourBrowser>
+		<yourBrowser lang="de">Ihr aktueller Browser ist </yourBrowser>
+		<notSupported lang="en"> and unfortunately not <b>supported</b>. Please use Firefox, Chrome or Opera instead.</notSupported>
+		<notSupported lang="de"> und wird leider nicht unterstützt. Bitte verwenden Sie stattdessen Firefox, Chrome oder Opera.</notSupported>
+		<startFaceMaker lang="de">Start</startFaceMaker>
+		<startFaceMaker lang="en">Start</startFaceMaker>
+		
+		<end lang="de">Vielen Dank für Ihre Teilnahme!</end>
+		<end lang="en">Thank you for your participation!</end>
+		
+		<maximalSessions lang="de">Sie haben alle Aufgaben erledigt. Möchten Sie jemanden anderen bitten mitzumachen?</maximalSessions>
+		<maximalSessions lang="en">You have completed all tasks. Do you want to ask somebody to join us?</maximalSessions>
+	
+		<erroracceptTOU lang="de">Sie müssen die Datennutzungsbestimmungen akzeptieren, um fortzufahren.</erroracceptTOU>
+		<erroracceptTOU lang="en">You must accept the terms of use to continue.</erroracceptTOU>
+		
+		<errorwatching1 lang="de">Geben Sie an, wie oft Sie Spielfilme (Kino, Fernsehen, etc.) ansehen... </errorwatching1>		
+		<errorwatching1 lang="en">Please specify how often do you watch movies (in cinema, tv, etc.)...</errorwatching1>
+		<errorwatching2 lang="de">Geben Sie an, wie oft Sie computeranimierte Filme (z.B. Toy Story, Shrek, Final Fantasy)  ansehen...</errorwatching2>
+		<errorwatching2 lang="en">Please specify how often do you watch computer animated movies...</errorwatching2>
+		
+		
+		<errorgameGenres lang="de">Nennen Sie mindestens ein Spiele-Genre, welches sie bevorzugt spielen...</errorgameGenres>
+		<errorgameGenres lang="en">Please select at least one favourite game genre...</errorgameGenres>
+		<errorplayingGames lang="de">Geben Sie an, wie oft sie Computerspiele spielen...</errorplayingGames>
+		<errorplayingGames lang="en">Please specify how often do you play computer games...</errorplayingGames>
+		<errorwatchingMovies lang="de">Geben Sie an, wie häufig Sie Spielfilme schauen...</errorwatchingMovies>
+		<errorwatchingMovies lang="en">Please specify how often do you watch motion pictures...</errorwatchingMovies>
+		<erroroccupationField lang="de">Geben Sie das Berufsfeld an, indem Sie überwiegend tätig sind...</erroroccupationField>
+		<erroroccupationField lang="en">Please specify your major field of occupation...</erroroccupationField>
+		<errormigrationCountryA lang="de">Wenn Sie einen Migrationshintergrund haben, können Sie bis zu 2 Länder angeben, diesen zu beschreiben...</errormigrationCountryA>
+		<errormigrationCountryA lang="en">Please select up to 2 countries...</errormigrationCountryA>
+		<errormigrationBackground lang="de">Geben Sie an, ob Sie oder Ihre Familie aus einem anderen Land stammen...</errormigrationBackground>
+		<errormigrationBackground lang="en">Please select your migration background...</errormigrationBackground>
+		<errortheCountry lang="de">Geben Sie Ihr Herkunftsland an...</errortheCountry>
+		<errortheCountry lang="en">Please select your home country...</errortheCountry>
+		<errorrelationshipStatus lang="de">Geben Sie Ihren derzeitigen Beziehungsstatus an...</errorrelationshipStatus>
+		<errorrelationshipStatus lang="en">Please specify your current relationship status...</errorrelationshipStatus>
+		<errorsexualOrientation lang="de">Geben Sie Ihre sexuelle Orientierung an...</errorsexualOrientation>
+		<errorsexualOrientation lang="en">Please specify your sexual Orientation...</errorsexualOrientation>
+		<errortheEyesColor lang="de">Geben Sie Ihre natürliche Augenfarbe an...</errortheEyesColor>
+		<errortheEyesColor lang="en">Please select your natural eyes color...</errortheEyesColor>
+		<errortheSkinColor lang="de">Geben Sie Ihre Hautfärbung an...</errortheSkinColor>
+		<errortheSkinColor lang="en">Please select your skin color...</errortheSkinColor>
+		<errortheHairColor lang="de">Geben Sie Ihre derzeitige	 Haarfärbung an...</errortheHairColor>
+		<errortheHairColor lang="en">Please select your recent hair color...</errortheHairColor>
+		<errortheGender lang="de">Geben Sie Ihr Geschlecht an...</errortheGender>
+		<errortheGender lang="en">Please select your gender...</errortheGender>
+		<errortheAge lang="de">Geben Sie Ihr Geburtsjahr an...</errortheAge>
+		<errortheAge lang="en">Please select your year of birth...</errortheAge>
+		
+		<errorstartStep lang="de">Drücken Sie Start, um mit dem Fragebogen zu beginnen...</errorstartStep>
+		<errorstartStep lang="en">Press start to begin the questionnaire...</errorstartStep>
+		<errorwebgl lang="de">Ihr Browser unterstützt leider kein WebGL. Um faceMaker nutzen zu können, aktivieren Sie WebGL oder benutzen Sie einen anderen Browser.</errorwebgl>
+		<errorwebgl lang="en">Your browser doesn't support 3D (WebGL). Please enable WebGL or use another browser.</errorwebgl>
+		
+		<cookies lang="en"> To resume a session later you have to enable Cookies in your browser.</cookies>
+		<cookies lang="de"> Um eine Sitzung später fortsetzen zu können, sollten Sie in Ihrem Browser Cookies aktivieren.</cookies>
+		
+		<pleaseContinue lang="en"> Session restored. Please continue...</pleaseContinue>
+		<pleaseContinue lang="de"> Sitzung wiederhergestellt. Fahren Sie fort...</pleaseContinue>
+		
+		<start lang="en">Start</start>
+		<start lang="de">Start</start>
+		
+		<selectGameGenre lang="en">Please select at least one favourite game genre...</selectGameGenre>
+		<selectGameGenre lang="de">Geben Sie mindestens ein bevorzugtes Spielgenre an...</selectGameGenre>
+		
+		<placeholderAge lang="de">Bitte auswählen...</placeholderAge>
+		<placeholderAge lang="en">Please select...</placeholderAge>
+		
+		<placeholderCountry lang="de">Bitte auswählen</placeholderCountry>
+		<placeholderCountry lang="en">Please select...</placeholderCountry>
+		
+		<nothingFound lang="de">Keine Ergebnisse für:</nothingFound>
+		<nothingFound lang="en">No results found for:</nothingFound>
+		
+		<continue lang="de">Frühere Sitzung fortsetzen</continue>
+		<continue lang="en">Continue previous session</continue>
+		
+		<newUser lang="de">Ja, ich bin ein neuer Teilnehmer</newUser>
+		<newUser lang="en">Yes, I am a new participant</newUser>
+		
+		<newOrContinue lang="de">Frühere Sitzung entdeckt. Bitte wählen Sie:</newOrContinue>
+		<newOrContinue lang="en">Previous session found. Please choose:	</newOrContinue>
+		
+		<continueSession lang="de">Sie können faceMaker nun fortsetzen... </continueSession>
+		<continueSession lang="en">You can continue... </continueSession>
+		
+		<firstSession lang="de">Prima! Drücken Sie Start, um zu beginnen...</firstSession>
+		<firstSession lang="en">Great! Press Start to begin...</firstSession>
+		
+		<completionProgress lang="de">von 6 Aufgaben erledigt.</completionProgress>
+		<completionProgress lang="en">of 6 objectives completed.</completionProgress>
+		
+		<accept lang="de">Sie müssen die Datennutzungsbestimmungen akzeptieren, um fortzufahren.</accept>
+		<accept lang="en">You have to accept the terms of use to proceed.</accept>
+	</dynamic>
+	<static id="facelab">
+		<faceInfoBigButton lang="en">What should I do?</faceInfoBigButton>
+		<faceInfoBigButton lang="de">Was soll ich tun?</faceInfoBigButton>
+		
+		<mailWithProblem lang="de">Probleme? Schreiben Sie eine E-Mail</mailWithProblem>
+		<mailWithProblem lang="en">Problems? Write an E-Mail</mailWithProblem>
+
+		<changeLightBigButton lang="en">Change Light Setting</changeLightBigButton>
+		<changeLightBigButton lang="de">Lichteinstellung ändern</changeLightBigButton>
+		
+		<changeTShirtBigBtn lang="en">Change T-Shirt Color</changeTShirtBigBtn>
+		<changeTShirtBigBtn lang="de">T-Shirtfarbe ändern</changeTShirtBigBtn>
+		
+		<changeTShirt lang="en">Change T-Shirt Color</changeTShirt>
+		<changeTShirt lang="de">T-Shirtfarbe ändern</changeTShirt>
+		
+		<howToCreateAvatar lang="de">Wie Sie Ihren Avatar erzeugen</howToCreateAvatar>
+		<howToCreateAvatar lang="en">How to create your avatar</howToCreateAvatar>
+		
+		<resetUIBtn lang="en">Reset User Interface</resetUIBtn>
+		<resetUIBtn lang="de">User Interface zurücksetzen</resetUIBtn>
+		
+		<resetFaceBigBtn lang="en">Reset Complete Face</resetFaceBigBtn>
+		<resetFaceBigBtn lang="de">Gesamtes Gesicht zurücksetzen</resetFaceBigBtn>
+		
+		<makeYourPhoto lang="en">Make a photo!</makeYourPhoto>
+		<makeYourPhoto lang="de">Generieren Sie Ihr Avatarbild!</makeYourPhoto>
+
+		
+		<copyrightText lang="de">Über faceMaker</copyrightText>
+		<copyrightText lang="en">About faceMaker</copyrightText>
+		
+		<renderButton lang="de">Generieren Sie Ihr Avatarbild!</renderButton>
+		<renderButton lang="en">Render your avatar image</renderButton>
+		<changeLight lang="de">Lichtstimmung verändern</changeLight>
+		<changeLight lang="en">Change light setup</changeLight>
+		<changeTShirt lang="de">Wechsle T-Shirt-Farbe</changeTShirt>
+		<changeTShirt lang="en">Choose T-Shirt Color</changeTShirt>
+		<closeRendering lang="de">Bild schließen</closeRendering>
+		<closeRendering lang="en">Close image</closeRendering>
+		<saveRendering lang="de">Bild speichern</saveRendering>
+		<saveRendering lang="en">Save image</saveRendering>
+		<sendToFacebook lang="de">Auf facebook teilen</sendToFacebook>
+		<sendToFacebook lang="en">Share on facebook</sendToFacebook>
+		<sendAsOBJ lang="de">OBJ und Maps speichern (5 Dateien!)</sendAsOBJ>
+		<sendAsOBJ lang="en">Save as OBJ and Textures (5 files!)</sendAsOBJ>
+		<sendToGoogle lang="de">Auf Google+ teilen</sendToGoogle>
+		<sendToGoogle lang="en">Share on Google+</sendToGoogle>
+		<sendToYahoo lang="de">Auf Yahoo teilen</sendToYahoo>
+		<sendToYahoo lang="en">Send to yahoo</sendToYahoo>
+		<sendToTwitter lang="de">Twittern...</sendToTwitter>
+		<sendToTwitter lang="en">Send to Twitter...</sendToTwitter>
+		<sendPerMail lang="de">Per E-Mail versenden</sendPerMail>
+		<sendPerMail lang="en">Send per E-Mail</sendPerMail>
+		<label_chooseTrial lang="de">Aufgaben</label_chooseTrial>
+		<label_chooseTrial lang="en">Objectives</label_chooseTrial>
+		<label_chooseBackground lang="de">Hintergrund</label_chooseBackground>
+		<label_chooseBackground lang="en">Background</label_chooseBackground>
+		<label_chooseRenderSize lang="de">Bildgröße</label_chooseRenderSize>
+		<label_chooseRenderSize lang="en">Render Size</label_chooseRenderSize>
+		
+		<restartFaceMaker lang="de">Ich bin ein neuer Teilnehmer</restartFaceMaker>
+		<restartFaceMaker lang="en">I am a new Participant</restartFaceMaker>
+		
+	</static>
+	<dynamic id="facelab">
+		<noGlContext lang="de">Fehler: Keine 3D-Beschleunigung gefunden.</noGlContext>
+		<noGlContext lang="en">Error: No 3D-Acceleration found.</noGlContext>
+		<label_outerface lang="de">Äußere Gesichtsteile</label_outerface>
+		<label_outerface lang="en">Outer Face Parts</label_outerface>
+		<btn_outerface lang="de">Über die Äußeren Gesichtsteile...</btn_outerface>
+		<btn_outerface lang="en">About the Outer Face Parts...</btn_outerface>		
+		
+		<label_foreheadHeight lang="de">Stirn</label_foreheadHeight>
+		<label_foreheadHeight lang="en">Forehead</label_foreheadHeight>
+		<label_throatSize lang="de">Halsgröße</label_throatSize>
+		<label_throatSize lang="en">Throat Size</label_throatSize>
+		<label_earSize lang="de">Ohrengröße</label_earSize>
+		<label_earSize lang="en">Ears Size</label_earSize>
+		
+		<resetBtn_foreheadHeight lang="de">Stirn zurücksetzen</resetBtn_foreheadHeight>
+		<resetBtn_foreheadHeight lang="en">Reset Forehead</resetBtn_foreheadHeight>
+		<resetBtn_throatSize lang="de">Halsgröße zurücksetzen</resetBtn_throatSize>
+		<resetBtn_throatSize lang="en">Reset Throat Size</resetBtn_throatSize>
+		<resetBtn_earSize lang="de">Ohrengröße zurücksetzen</resetBtn_earSize>
+		<resetBtn_earSize lang="en">Reset Ear Size</resetBtn_earSize>		
+		
+
+		<label_jaw lang="de">Wangen und Kiefer</label_jaw>
+		<label_jaw lang="en">Cheeks and Jaw</label_jaw>
+		<btn_jaw lang="de">Über Wangen und Kiefer...</btn_jaw>
+		<btn_jaw lang="en">About Jaw and Cheeks...</btn_jaw>	
+		
+		<label_cheeksBone lang="de">Wangen</label_cheeksBone>
+		<label_cheeksBone lang="en">Cheeks</label_cheeksBone>
+		<label_jawShape lang="de">Kieferform</label_jawShape>
+		<label_jawShape lang="en">Jaw Shape</label_jawShape>
+		<label_jawChin lang="de">Kinnform</label_jawChin>
+		<label_jawChin lang="en">Chin Shape</label_jawChin>			
+		<label_jawLength lang="de">Kinnlänge</label_jawLength>
+		<label_jawLength lang="en">Chin Length</label_jawLength>
+		
+		<resetBtn_cheeksBone lang="de">Wangenknochen zurücksetzen</resetBtn_cheeksBone>
+		<resetBtn_cheeksBone lang="en">Reset Cheeks Bone</resetBtn_cheeksBone>
+		<resetBtn_jawShape lang="de">Kieferform zurücksetzen</resetBtn_jawShape>
+		<resetBtn_jawShape lang="en">Reset Jaw Shape</resetBtn_jawShape>
+		<resetBtn_jawChin lang="de">Kinn zurücksetzen</resetBtn_jawChin>
+		<resetBtn_jawChin lang="en">Reset Chin</resetBtn_jawChin>
+		<resetBtn_jawLength lang="de">Kinnlänge zurücksetzen</resetBtn_jawLength>
+		<resetBtn_jawLength lang="en">Reset Chin Length</resetBtn_jawLength>
+		
+		
+		<label_mouth lang="de">Mund</label_mouth>
+		<label_mouth lang="en">Mouth</label_mouth>
+		<btn_mouth lang="de">Über den Mund...</btn_mouth>
+		<btn_mouth lang="en">About the Mouth...</btn_mouth>
+		
+		<label_mouthVolume lang="de">Lippenvolumen</label_mouthVolume>
+		<label_mouthVolume lang="en">Lips Volume</label_mouthVolume>
+		<label_lipRatio lang="de">Größenverhältnis</label_lipRatio>
+		<label_lipRatio lang="en">Lip Size Ratio</label_lipRatio>	
+		<label_mouthWidth lang="de">Mundbreite</label_mouthWidth>
+		<label_mouthWidth lang="en">Mouth Width</label_mouthWidth>		
+		<label_mouthHeight lang="de">Mundhöhe</label_mouthHeight>
+		<label_mouthHeight lang="en">Mouth Height</label_mouthHeight>
+		<label_mouthDepth lang="de">Mundtiefe</label_mouthDepth>
+		<label_mouthDepth lang="en">Mouth Depth</label_mouthDepth>
+		<label_mouthOverlap lang="de">Mundform</label_mouthOverlap>
+		<label_mouthOverlap lang="en">Mouth Shape</label_mouthOverlap>
+		<label_noseCartilage lang="de">Nasenknorpel</label_noseCartilage>
+		<label_noseCartilage lang="en">Nose  Cartilage</label_noseCartilage>	
+		
+		<resetBtn_mouthVolume lang="de">Lippenvolumen zurücksetzen</resetBtn_mouthVolume>
+		<resetBtn_mouthVolume lang="en">Reset Lip Volume</resetBtn_mouthVolume>
+		<resetBtn_lowerLipWidth lang="de">Unterlippe zurücksetzen</resetBtn_lowerLipWidth>
+		<resetBtn_lowerLipWidth lang="en">Reset Lower Mouth</resetBtn_lowerLipWidth>
+		<resetBtn_lipRatioWidth lang="de">Oberlippe zurücksetzen</resetBtn_lipRatioWidth>
+		<resetBtn_lipRatioWidth lang="en">Reset Upper Lip</resetBtn_lipRatioWidth>
+		<resetBtn_mouthWidth lang="de">Mundbreite zurücksetzen</resetBtn_mouthWidth>
+		<resetBtn_mouthWidth lang="en">Reset Mouth Width</resetBtn_mouthWidth>
+		<resetBtn_mouthHeight lang="de">Mundhöhe zurücksetzen</resetBtn_mouthHeight>
+		<resetBtn_mouthHeight lang="en">Reset Mouth Height</resetBtn_mouthHeight>
+		<resetBtn_mouthDepth lang="de">Mundtiefe zurücksetzen</resetBtn_mouthDepth>
+		<resetBtn_mouthDepth lang="en">Reset Mouth Depth</resetBtn_mouthDepth>
+		<resetBtn_mouthOverlap lang="de">Überhang zurücksetzen</resetBtn_mouthOverlap>
+		<resetBtn_mouthOverlap lang="en">Reset Mouth Overlap</resetBtn_mouthOverlap>
+		<resetBtn_lipRatio lang="de">Größenverhältnis zurücksetzen</resetBtn_lipRatio>
+		<resetBtn_lipRatio lang="en">Reset Lip Size Ratio</resetBtn_lipRatio>
+		
+		
+		<label_eyebrows lang="en">Eyebrows</label_eyebrows>
+		<label_eyebrows lang="de">Augenbrauen</label_eyebrows>		
+		<btn_eyebrows lang="de">Über die Augenbrauen...</btn_eyebrows>
+		<btn_eyebrows lang="en">About the Eyebrows...</btn_eyebrows>	
+		
+		<label_eyebrowsColor lang="de" fontSize="11">Augenbrauenfarbe</label_eyebrowsColor>
+		<label_eyebrowsColor lang="en" fontSize="11">Eyebrows Color</label_eyebrowsColor>
+		<label_eyebrowsShape lang="de" fontSize="11">Augenbrauenform</label_eyebrowsShape>
+		<label_eyebrowsShape lang="en" fontSize="11">Eyebrows Shape</label_eyebrowsShape>
+		<label_eyebrowsLine lang="de" fontSize="11">Augenbrauenlinie</label_eyebrowsLine>
+		<label_eyebrowsLine lang="en" fontSize="11">Eyebrows Line</label_eyebrowsLine>	
+		
+		<resetBtn_eyebrowsColor lang="de">Augenbrauenfarbe zurücksetzen</resetBtn_eyebrowsColor>
+		<resetBtn_eyebrowsColor lang="en">Reset Eyebrows Color</resetBtn_eyebrowsColor>
+		<resetBtn_eyebrowsPosition lang="de">Augenbrauenabstand zurücksetzen</resetBtn_eyebrowsPosition>
+		<resetBtn_eyebrowsPosition lang="en">Reset Eyebrows Distance</resetBtn_eyebrowsPosition>
+		<resetBtn_eyebrowsShape lang="de">Augenbrauenform zurücksetzen</resetBtn_eyebrowsShape>
+		<resetBtn_eyebrowsShape lang="en">Reset Eyebrows Shape</resetBtn_eyebrowsShape>
+		<resetBtn_eyebrowsLine lang="de">Augenbrauenlinie zurücksetzen</resetBtn_eyebrowsLine>
+		<resetBtn_eyebrowsLine lang="en">Reset Eyebrows Line</resetBtn_eyebrowsLine>
+	
+	
+		<label_nose lang="de">Nase</label_nose>
+		<label_nose lang="en">Nose</label_nose>
+		<btn_nose lang="de">Über die Nase...</btn_nose>
+		<btn_nose lang="en">About the Nose...</btn_nose>
+		
+		<label_noseShape lang="de">Nasenform</label_noseShape>
+		<label_noseShape lang="en">Nose Shape</label_noseShape>
+		<label_noseLength lang="de">Nasenlänge</label_noseLength>
+		<label_noseLength lang="en">Nose Length</label_noseLength>
+		<label_noseWidth lang="de">Nasenbreite</label_noseWidth>
+		<label_noseWidth lang="en">Nose Width</label_noseWidth>	
+		<label_noseBridge lang="de">Nasenrücken</label_noseBridge>
+		<label_noseBridge lang="en">Nosebridge</label_noseBridge>		
+		
+		<resetBtn_noseShape lang="de">Nasenform zurücksetzen</resetBtn_noseShape>
+		<resetBtn_noseShape lang="en">Reset Nose Shape</resetBtn_noseShape>
+		<resetBtn_noseLength lang="de">Nasenlänge zurücksetzen</resetBtn_noseLength>
+		<resetBtn_noseLength lang="en">Reset Nose Length</resetBtn_noseLength>
+		<resetBtn_noseWidth lang="de">Nasenbreite zurücksetzen</resetBtn_noseWidth>
+		<resetBtn_noseWidth lang="en">Reset Nose Width</resetBtn_noseWidth>
+		<resetBtn_noseBridge lang="de">Nasenrücken zurücksetzen</resetBtn_noseBridge>
+		<resetBtn_noseBridge lang="en">Reset Nose Bridge</resetBtn_noseBridge>
+		<resetBtn_noseCartilage lang="de">Nasenknorpel zurücksetzen</resetBtn_noseCartilage>
+		<resetBtn_noseCartilage lang="en">Reset Nose Cartilage</resetBtn_noseCartilage>		
+		
+		
+		<label_general lang="de">Allgemein</label_general>
+		<label_general lang="en">General</label_general>
+		<btn_general lang="de">Allgemeine Informationen...</btn_general>
+		<btn_general lang="en">General Information...</btn_general>
+		
+		<label_faceGender lang="de">Geschlecht</label_faceGender>
+		<label_faceGender lang="en">Gender</label_faceGender>
+		<label_faceStyle lang="de">Stil</label_faceStyle>
+		<label_faceStyle lang="en">Style</label_faceStyle>
+		<label_skinDetails lang="de">Details</label_skinDetails>
+		<label_skinDetails lang="en">Details</label_skinDetails>
+		<label_skinColor lang="en">Skin Color</label_skinColor>
+		<label_skinColor lang="de">Hautfarbe</label_skinColor>
+		<label_hairColor lang="de">Haarfarbe</label_hairColor>
+		<label_hairColor lang="en">Hair Color</label_hairColor>
+		
+		<resetBtn_faceGender lang="de">Geschlecht zurücksetzen</resetBtn_faceGender>
+		<resetBtn_faceGender lang="en">Reset Gender</resetBtn_faceGender>
+		<resetBtn_faceStyle lang="de">Stil zurücksetzen</resetBtn_faceStyle>
+		<resetBtn_faceStyle lang="en">Reset Style</resetBtn_faceStyle>
+		<resetBtn_skinDetails lang="de">Details zurücksetzen</resetBtn_skinDetails>
+		<resetBtn_skinDetails lang="en">Reset Details</resetBtn_skinDetails>
+		<resetBtn_skinColor lang="de">Haut zurücksetzen</resetBtn_skinColor>
+		<resetBtn_skinColor lang="en">Reset Skin</resetBtn_skinColor>
+		<resetBtn_hairColor lang="de">Haarfarbe zurücksetzen</resetBtn_hairColor>
+		<resetBtn_hairColor lang="en">Reset Hair Color</resetBtn_hairColor>
+		
+		
+		<label_makeUp lang="de">Make-Up</label_makeUp>
+		<label_makeUp lang="en">Make-Up</label_makeUp>
+		<btn_makeUp lang="de">Über das Make-Up...</btn_makeUp>
+		<btn_makeUp lang="en">About the Make-Up...</btn_makeUp>
+	
+		<label_eyeShadow lang="de">Lidschatten</label_eyeShadow>
+		<label_eyeShadow lang="en">Eye Shadow</label_eyeShadow>
+		<label_lipStick lang="de">Lippenstift</label_lipStick>
+		<label_lipStick lang="en">Lipstick</label_lipStick>
+		<label_rouge lang="de">Rouge</label_rouge>
+		<label_rouge lang="en">Rouge</label_rouge>
+		
+		<resetBtn_eyeShadow lang="de">Lidschatten zurücksetzen</resetBtn_eyeShadow>
+		<resetBtn_eyeShadow lang="en">Reset Eye Shadow</resetBtn_eyeShadow>
+		<resetBtn_lipStick lang="de">Lippenstift zurücksetzen</resetBtn_lipStick>
+		<resetBtn_lipStick lang="en">Reset Lipstick</resetBtn_lipStick>
+		<resetBtn_rouge lang="de">Rouge zurücksetzen</resetBtn_rouge>
+		<resetBtn_rouge lang="en">Reset Rouge</resetBtn_rouge>
+
+		
+		<label_eyes lang="en">Eyes</label_eyes>
+		<label_eyes lang="de">Augen</label_eyes>
+		<btn_eyes lang="de">Über die Augen...</btn_eyes>
+		<btn_eyes lang="en">About the Eyes...</btn_eyes>
+		
+		<label_eyeColor lang="de">Augenfarbe</label_eyeColor>
+		<label_eyeColor lang="en">Eyes Color</label_eyeColor>		
+		<label_eyeShape lang="de">Augenform</label_eyeShape>
+		<label_eyeShape lang="en">Eyes Shape</label_eyeShape>
+		<label_eyeOpening lang="de">Augenöffnung</label_eyeOpening>
+		<label_eyeOpening lang="en">Eyes Opening</label_eyeOpening>
+		<label_eyeSize lang="de">Augengröße</label_eyeSize>
+		<label_eyeSize lang="en">Eyes Size</label_eyeSize>
+		<label_eyeHeight lang="de">Augenhöhe</label_eyeHeight>
+		<label_eyeHeight lang="en">Eyes Height</label_eyeHeight>
+		<label_eyeDistance lang="de">Augenabstand</label_eyeDistance>
+		<label_eyeDistance lang="en">Eyes Distance</label_eyeDistance>
+		<label_eyeDepth lang="de">Augenhöhle</label_eyeDepth>
+		<label_eyeDepth lang="en">Eyes Orbit</label_eyeDepth>	
+		<label_eyeRotation lang="de">Augendrehung</label_eyeRotation>
+		<label_eyeRotation lang="en">Eyes Rotation</label_eyeRotation>	
+
+		<resetBtn_eyeOpening lang="en">Reset Eye Opening</resetBtn_eyeOpening>
+		<resetBtn_eyeOpening lang="de">Augenöffnung zurücksetzen</resetBtn_eyeOpening>
+		<resetBtn_eyeColor lang="en">Reset Eye Color</resetBtn_eyeColor>
+		<resetBtn_eyeColor lang="de">Augenfarbe zurücksetzen</resetBtn_eyeColor>
+		<resetBtn_eyeHeight lang="en">Reset Eye Height</resetBtn_eyeHeight>
+		<resetBtn_eyeHeight lang="de">Augenhöhe zurücksetzen</resetBtn_eyeHeight>
+		<resetBtn_eyeShape lang="de">Augenform zurücksetzen</resetBtn_eyeShape>
+		<resetBtn_eyeShape lang="en">Reset Eye Shape</resetBtn_eyeShape>
+		<resetBtn_eyeSize lang="de">Augengröße zurücksetzen</resetBtn_eyeSize>
+		<resetBtn_eyeSize lang="en">Reset Eye Size</resetBtn_eyeSize>
+		<resetBtn_eyeDistance lang="de">Augenabstand zurücksetzen</resetBtn_eyeDistance>
+		<resetBtn_eyeDistance lang="en">Reset Eye Distance</resetBtn_eyeDistance>
+		<resetBtn_eyeDepth lang="de">Augenhöhle zurücksetzen</resetBtn_eyeDepth>
+		<resetBtn_eyeDepth lang="en">Reset Eye Depth</resetBtn_eyeDepth>
+		<resetBtn_eyeRotation lang="de">Augenrotation zurücksetzen</resetBtn_eyeRotation>
+		<resetBtn_eyeRotation lang="en">Reset Eye Rotation</resetBtn_eyeRotation>
+
+		
+		<label_trialid lang="de">Trial ID</label_trialid>
+		<label_trialid lang="en">Versuchs-Nr.</label_trialid>
+		<label_latinSquare lang="de">Aufgaben</label_latinSquare>
+		<label_latinSquare lang="en">Tasks</label_latinSquare>
+		<label_sessions lang="de">Sitzungen</label_sessions>
+		<label_sessions lang="en">Tasks</label_sessions>
+		<label_userUID lang="de">Teilnehmer ID</label_userUID>
+		<label_userUID lang="en">User ID</label_userUID>
+		<label_theAge lang="de">Alter</label_theAge>
+		<label_theAge lang="en">Age</label_theAge>
+		<label_timeWelcome lang="de">Erster Besuch</label_timeWelcome>
+		<label_timeWelcome lang="en">First Visit</label_timeWelcome>
+		<label_timeStart lang="de">Startzeit</label_timeStart>
+		<label_timeStart lang="en">Starting Time</label_timeStart>
+		<label_timeMainSessionTime lang="de">Versuchsdauer (M)</label_timeMainSessionTime>
+		<label_timeMainSessionTime lang="en">Trial duration (M)</label_timeMainSessionTime>
+		<label_timeDuration lang="de">Gesamtbesuchszeit (M)</label_timeDuration>
+		<label_timeDuration lang="en">Overall Visit (M)</label_timeDuration>
+		<label_screenWidth lang="de">Bildschirmbreite</label_screenWidth>
+		<label_screenWidth lang="en">Screen Width</label_screenWidth>
+		<label_screenHeight lang="de">Bildschirmhöhe</label_screenHeight>
+		<label_screenHeight lang="en">Screen Height</label_screenHeight>
+		<label_systemLanguage lang="de">Systemsprache</label_systemLanguage>
+		<label_systemLanguage lang="en">System Language</label_systemLanguage>
+		<label_userLanguage lang="de">Benutzersprache</label_userLanguage>
+		<label_userLanguage lang="en">User Language</label_userLanguage>
+		<label_timeDate lang="de">Datum</label_timeDate>
+		<label_timeDate lang="en">Datum</label_timeDate>
+		<label_webgl lang="de">WebGL</label_webgl>
+		<label_webgl lang="en">WebGL</label_webgl>
+		<label_appCodeName lang="de">App Code</label_appCodeName>
+		<label_appCodeName lang="en">App Code</label_appCodeName>
+		<label_appVersion lang="de">App Version</label_appVersion>
+		<label_appVersion lang="en">App Version</label_appVersion>
+		<label_browser lang="de">Browser</label_browser>
+		<label_browser lang="en">Browser</label_browser>
+		<label_platform lang="de">Plattform</label_platform>
+		<label_platform lang="en">Platform</label_platform>
+		<label_cookies lang="de">Cookies</label_cookies>
+		<label_cookies lang="en">Cookies</label_cookies>
+		<label_timeEnd lang="de">Letzter Besuch</label_timeEnd>
+		<label_timeEnd lang="en">Last Visit</label_timeEnd>
+		<label_ipadress lang="de">IP Adresse</label_ipadress>
+		<label_ipadress lang="en">IP Address</label_ipadress>
+		<label_product lang="de">Render Engine</label_product>
+		<label_product lang="en">Render Engine</label_product>
+		<label_theHairColor lang="de">Haarfarbe</label_theHairColor>
+		<label_theHairColor lang="en">Hair Color</label_theHairColor>
+		<label_theSkinColor lang="de">Hautfabre</label_theSkinColor>
+		<label_theSkinColor lang="en">Skin Color</label_theSkinColor>
+		<label_theEyesColor lang="de">Augenfarbe</label_theEyesColor>
+		<label_theEyesColor lang="en">Eyes Color</label_theEyesColor>
+		
+		<label_occupationField lang="de">Beschäftigung</label_occupationField>
+		<label_occupationField lang="en">Occupation</label_occupationField>
+		
+		<label_watching1 lang="de">Spielfilme</label_watching1>
+		<label_watching1 lang="en">Motion Pictures </label_watching1>
+		
+		<label_watching2 lang="de">Animationsfilme</label_watching2>
+		<label_watching2 lang="en">Animated Movies </label_watching2>
+		<label_gameGenres1 lang="de">Arcade</label_gameGenres1>
+		<label_gameGenres1 lang="en">Arcade</label_gameGenres1>
+		<label_gameGenres2 lang="de">Simulationen</label_gameGenres2>
+		<label_gameGenres2 lang="en">Simulations</label_gameGenres2>
+		<label_gameGenres3 lang="de">Ego-Shooter</label_gameGenres3>
+		<label_gameGenres3 lang="en">Ego-Shooter</label_gameGenres3>
+		<label_gameGenres4 lang="de">Abenteuer</label_gameGenres4>
+		<label_gameGenres4 lang="en">Adventure</label_gameGenres4>
+		<label_gameGenres5 lang="de">MMORPGs</label_gameGenres5>
+		<label_gameGenres5 lang="en">MMORPGs</label_gameGenres5>
+		<label_gameGenres6 lang="de">Point-'n'-Click</label_gameGenres6>
+		<label_gameGenres6 lang="en">Point-'n'-Click</label_gameGenres6>
+		<label_gameGenres7 lang="de">Hack'n'Slay</label_gameGenres7>
+		<label_gameGenres7 lang="en">Hack'n'Slay</label_gameGenres7>
+		<label_gameGenres8 lang="de">Rätsel</label_gameGenres8>
+		<label_gameGenres8 lang="en">Puzzles</label_gameGenres8>
+		<label_gameGenres9 lang="de">Retro</label_gameGenres9>
+		<label_gameGenres9 lang="en">Retro</label_gameGenres9>
+		<label_gameGenres10 lang="de">Gelegenheitsspiele</label_gameGenres10>
+		<label_gameGenres10 lang="en">Casual Games</label_gameGenres10>
+		<label_gameGenres11 lang="de">Sport/Tanz</label_gameGenres11>
+		<label_gameGenres11 lang="en">Sport/Dance</label_gameGenres11>
+		<label_gameGenres12 lang="de">Strategie</label_gameGenres12>
+		<label_gameGenres12 lang="en">Strategy</label_gameGenres12>
+		<label_gameGenres13 lang="de">Rennen</label_gameGenres13>
+		<label_gameGenres13 lang="en">Racing</label_gameGenres13>
+		<label_gameGenres14 lang="de">Experimentell</label_gameGenres14>
+		<label_gameGenres14 lang="en">Experimental</label_gameGenres14>
+		<label_gameGenres15 lang="de">Andere</label_gameGenres15>
+		<label_gameGenres15 lang="en">Other</label_gameGenres15>
+		<label_acceptTOU lang="de">Akzeptiere TOU</label_acceptTOU>
+		<label_acceptTOU lang="en">Accept TOU</label_acceptTOU>
+		
+		<completelyDisagree lang="de">Ich stimme überhaupt nicht zu</completelyDisagree>
+		<completelyDisagree lang="en">I completely disagree </completelyDisagree>
+		<completelyAgree lang="de">Ich stimme vollkommen zu</completelyAgree>
+		<completelyAgree lang="en">I completely agree</completelyAgree>
+		
+		<sending lang="de">Übertrage...</sending>
+		<sending lang="en">Sending...</sending>
+		
+		<emailHeader lang="de">Mein faceMaker Avatar</emailHeader>
+		<emailHeader lang="en">My faceMaker Avatar</emailHeader>
+		
+		<backgroundArrayTitle0 lang="de">faceMaker (nur Gesicht)</backgroundArrayTitle0>
+		<backgroundArrayTitle0 lang="en">faceMaker (face only)</backgroundArrayTitle0>
+		<backgroundArrayTitle1 lang="de">Im Wald (Langholmen, Sw.)</backgroundArrayTitle1>
+		<backgroundArrayTitle1 lang="en">In the forest (Langholmen, Sw.)</backgroundArrayTitle1>
+		<backgroundArrayTitle2 lang="de">Am Strand (Nissi, Zypern)</backgroundArrayTitle2>
+		<backgroundArrayTitle2 lang="en">On the beach (Nissi, Cyprus)</backgroundArrayTitle2>
+		<backgroundArrayTitle3 lang="de">Am Strand (Pl. d. Americas, Teneriffa)</backgroundArrayTitle3>
+		<backgroundArrayTitle3 lang="en">On the beach (Playa d. Americas, Tenerife)</backgroundArrayTitle3>
+		<backgroundArrayTitle4 lang="de">Im Hotel (Dallas, USA)</backgroundArrayTitle4>
+		<backgroundArrayTitle4 lang="en">In a hotel (Dallas, USA)</backgroundArrayTitle4>
+		<backgroundArrayTitle5 lang="de">An der Kirche (Larnaca, Zypern)</backgroundArrayTitle5>
+		<backgroundArrayTitle5 lang="en">At the church (Larnaca, Cyprus)</backgroundArrayTitle5>
+		<backgroundArrayTitle6 lang="de">Beim Königsschloss (Stockholm, Sw.)</backgroundArrayTitle6>
+		<backgroundArrayTitle6 lang="en">At the Royal Castle (Stockholm, Sw.)</backgroundArrayTitle6>
+		<backgroundArrayTitle7 lang="de">Auf dem Gletscher (Måskonåive, Sw.)</backgroundArrayTitle7>
+		<backgroundArrayTitle7 lang="en">On the glacier (Måskonåive, Sw.)</backgroundArrayTitle7>
+		<backgroundArrayTitle8 lang="de">Auf dem Berg (Ryfjallet, Sw)</backgroundArrayTitle8>
+		<backgroundArrayTitle8 lang="en">On the mountain (Ryfjallet, Sw.)</backgroundArrayTitle8>
+
+		<rightLightOn lang="en">Right Light</rightLightOn>
+		<rightLightOn lang="de">Rechtes Licht</rightLightOn>
+		
+		<leftLightOn lang="en">Left Light</leftLightOn>
+		<leftLightOn lang="de">Linkes Licht</leftLightOn>
+		
+		<rightAndLeftLightOn lang="en">Center Light</rightAndLeftLightOn>
+		<rightAndLeftLightOn lang="de">Mittleres Licht</rightAndLeftLightOn>
+		
+		<emailText lang="de">siehe Anhang, viele Grüße...</emailText>
+		<emailText lang="en">see attachment, best regards</emailText>
+		
+		<sendFace lang="en">Finished</sendFace>
+		<sendFace lang="de">Fertig</sendFace>
+		
+		<label_loader lang="de">Lade... </label_loader>
+		<label_loader lang="en">Loading... </label_loader>
+		
+		<oldSession lang="de">Vorherige Sitzung gefunden</oldSession>
+		<oldSession lang="en">Previous session found</oldSession>		
+		
+		<createNewFace lang="de">Erstellen Sie ein Gesicht</createNewFace>
+		<createNewFace lang="en">Create a face</createNewFace>	
+				
+		<createSession lang="de">Möchten Sie das vorherige Gesicht weiter bearbeiten?</createSession>
+		<createSession lang="en">Do you want to restore your previous session?</createSession>
+		
+		<createStart lang="de">Fortfahren...</createStart>
+		<createStart lang="en">Continue...</createStart>
+
+		<clickOnFace lang="en">Image created</clickOnFace>
+		<clickOnFace lang="de">Fertig!</clickOnFace>
+		
+		<restoreSession lang="de">Möchten Sie das vorherige Gesicht weiter bearbeiten?</restoreSession>
+		<restoreSession lang="en">Do you want to restore your previous session?</restoreSession>
+		
+		<restoreYes lang="de">Ja, Gesicht wiederherstellen</restoreYes>
+		<restoreYes lang="en">Yes, restore face</restoreYes>
+		
+		<restoreNo lang="de">Nein, neue Sitzung starten</restoreNo>
+		<restoreNo lang="en">No, reset face</restoreNo>
+		
+		<resetFace lang="en">Resetting Face...</resetFace>
+		<resetFace lang="de">Gesicht wird zurückgesetzt...</resetFace>
+		
+		<faceResetted lang="en">Face resetted</faceResetted>
+		<faceResetted lang="de">Gesicht wurde zurückgesetzt</faceResetted>
+		
+		<mapCookies lang="en">Face restore</mapCookies>
+		<mapCookies lang="de">Gesicht wiederhergestellt</mapCookies>
+		
+		<mappingCookies lang="en">Computing face...</mappingCookies>
+		<mappingCookies lang="de">Gesicht wird berechnet...</mappingCookies>
+		
+		<finalQuestions lang="en">Final Questions</finalQuestions>
+		<finalQuestions lang="de">Abschließende Fragen</finalQuestions>
+		
+		<finalQuestion1 lang="de">Bitte bewerten Sie Ihren Erfolg bei der Umsetzung der Aufgabe:</finalQuestion1>
+		<finalQuestion1 lang="en">Please rate your success in accomplishing the task:</finalQuestion1>
+		
+		<label_theTrial lang="de">Versuch</label_theTrial>
+		<label_theTrial lang="en">Trial</label_theTrial>
+		
+		<label_theTask lang="de">Aufgabe</label_theTask>
+		<label_theTask lang="en">Objective</label_theTask>
+		
+		<label_theGender lang="de">Geschlecht</label_theGender>
+		<label_theGender lang="en">Gender</label_theGender>
+		
+		<label_theCountry lang="de">Land</label_theCountry>
+		<label_theCountry lang="en">Country</label_theCountry>
+		
+		<label_playingGames lang="de">Videospielkonsum</label_playingGames>
+		<label_playingGames lang="en">Playing Games</label_playingGames>
+		
+		<label_watchingMovies lang="de">Filmekonsum</label_watchingMovies>
+		<label_watchingMovies lang="en">Watching Movies</label_watchingMovies>
+		
+		<label_finalQuestion1 lang="de">Erfolg</label_finalQuestion1>
+		<label_finalQuestion1 lang="en">Success</label_finalQuestion1>
+		
+		<finalQuestion2 lang="de">Bitte markieren Sie Ihre Einstellung bezüglich folgender Aussagen: Das Gesicht finde ich...</finalQuestion2>
+		<finalQuestion2 lang="en">Please rate the extent to which you feel that the face is...</finalQuestion2>
+		
+		<label_finalQuestion2 lang="de">Sympathie</label_finalQuestion2>
+		<label_finalQuestion2 lang="en">Likeability</label_finalQuestion2>
+		<label_finalQuestion3 lang="de">Attraktivität</label_finalQuestion3>
+		<label_finalQuestion3 lang="en">Attractiveness</label_finalQuestion3>
+		<label_finalQuestion4 lang="de">Geschlechtszuordnung</label_finalQuestion4>
+		<label_finalQuestion4 lang="en">Gender Rating</label_finalQuestion4>
+
+		
+		<neutral lang="de">neutral</neutral>
+		<neutral lang="en">neutral</neutral>
+		
+		<successful lang="de">erfolgreich</successful>
+		<successful lang="en">successful</successful>
+		
+		<notsuccessful lang="de">misslungen</notsuccessful>
+		<notsuccessful lang="en">failed</notsuccessful>
+		
+		<uncanny lang="de">unheimlich</uncanny>
+		<uncanny lang="en">uncanny</uncanny>
+		
+		<disagreeable lang="de">unsympathisch</disagreeable>
+		<disagreeable lang="en">disagreeable</disagreeable>
+		
+		<likable lang="de">sympathisch</likable>
+		<likable lang="en">likable</likable>
+		
+		<unrealistic lang="de">unrealistisch</unrealistic>
+		<unrealistic lang="en">unrealistic</unrealistic>
+		
+		<realistic lang="de">realistisch</realistic>
+		<realistic lang="en">realistic</realistic>
+		
+		<attractive lang="de">attraktiv</attractive>
+		<attractive lang="en">attractive</attractive>
+		
+		<feminine lang="en">feminine</feminine>
+		<feminine lang="de">feminin</feminine>
+		
+		<masculine lang="en">masculine</masculine>
+		<masculine lang="de">maskulin</masculine>
+		
+		<unattractive lang="en">ugly</unattractive>
+		<unattractive lang="de">hässlich</unattractive>
+		
+		
+	<!--
+		<finalQuestion3 lang="de">Das Gesicht ist attraktiv.</finalQuestion3>
+		<finalQuestion3 lang="en">The face is attractive.</finalQuestion3>
+		
+		<finalQuestion4 lang="de">Das Gesicht ist realistisch</finalQuestion4>
+		<finalQuestion4 lang="en">The face is realistic.</finalQuestion4>-->
+		
+		<wantToSubmit lang="en">To submit your face please answer to the upper questions.</wantToSubmit>
+		<wantToSubmit lang="de">Um das Gesicht abzusenden, beantworten Sie die abschließenden Fragen.</wantToSubmit>
+		
+		<pleaseFillOut lang="en">Thanks! Do you want to submit the face now?</pleaseFillOut>
+		<pleaseFillOut lang="de">Danke! Möchten Sie uns das Gesicht jetzt senden?</pleaseFillOut>
+		
+		<submitYes lang="de">Ja, Gesicht jetzt absenden</submitYes>
+		<submitYes lang="en">Yes, submit now</submitYes>
+		
+		<submitNo lang="de">Nein, abbrechen</submitNo>
+		<submitNo lang="en">No, abort</submitNo>
+		
+		<afterSubmitContinue lang="en">Create Profile Image</afterSubmitContinue>
+		<afterSubmitContinue lang="de">Profilbild erzeugen</afterSubmitContinue>
+		
+		<afterSubmitNextFace lang="de">Ja, nächstes Gesicht erstellen</afterSubmitNextFace>
+		<afterSubmitNextFace lang="en">Yes, create next face</afterSubmitNextFace>		
+		
+		<afterSubmitAbort lang="de">Nein, faceMaker beenden</afterSubmitAbort>
+		<afterSubmitAbort lang="en">No, exit faceMaker</afterSubmitAbort>
+		
+		<thankYou lang="en">Thank you for participation! </thankYou>
+		<thankYou lang="de">Vielen Dank für Ihre Teilnahme! </thankYou>
+		
+		<success lang="en">Your face was successfully submitted.</success>
+		<success lang="de">Ihre Daten wurden erfolgreich übermittelt.</success>
+		
+		<yourID lang="en">This trial ID is </yourID>
+		<yourID lang="de">Diese Versuchsnummer lautet: </yourID>
+		<youHave1 lang="en">You have completed</youHave1>
+		<youHave1 lang="de">Sie haben</youHave1>
+		<youHave2 lang="en">of <b>6</b> possible objectives.</youHave2>
+		<youHave2 lang="de">von <b>6</b> möglichen Aufgaben erledigt.</youHave2>
+		
+
+		<openAgen lang="de">Avatar Generator öffnen</openAgen>
+		<openAgen lang="en">Open Avatar Generator</openAgen>
+		<pleaseContinue lang="en">Do you want to continue?</pleaseContinue>
+		<pleaseContinue lang="de">Möchten Sie fortfahren?</pleaseContinue>
+		
+		<finalMessage lang="en">You have completed all tasks. Now you start the Avatar Generator or ask a new participant to join faceMaker!</finalMessage>
+		<finalMessage lang="de">Sie haben jetzt alle Aufgaben erledigt. Öffnen Sie nun den Avatar-Generator oder bitten Sie einen anderen Teilnehmer mitzumachen.</finalMessage>
+		
+		<newParticipant lang="en">Invite Participant (Mail)</newParticipant>
+		<newParticipant lang="de">Teilnehmer einladen (Mail)</newParticipant>
+		
+
+		<error lang="en">An error occured.</error>
+		<error lang="de">Ein Fehler ist aufgetreten</error>
+		<accentuated lang="en">accentuated</accentuated>
+		<almond lang="en">almond</almond>
+		<amber lang="en">amber</amber>
+		<asian lang="en">asian</asian>
+		<backwards lang="en">backwards</backwards>
+		<big lang="en">big</big>
+		<black lang="en">black</black>
+		<blue lang="en">blue</blue>
+		<brightblue lang="en">bright blue</brightblue>
+		<bright lang="en">bright</bright>
+		<brightblonde lang="en">brightblonde</brightblonde>
+		<brown lang="en">brown</brown>
+		<brunette lang="en">brunette</brunette>
+		<bulgy lang="en">bulgy</bulgy>
+		<cartoon lang="en">cartoon</cartoon>
+		<cleft lang="en">cleft</cleft>
+		<cavernous lang="en">covernous</cavernous>
+		<curved lang="en">curved</curved>
+		<flat lang="en">flat</flat>
+		<dark lang="en">dark</dark>
+		<down lang="en">down</down>
+		<droopy lang="en">droopy</droopy>
+		<fat lang="en">full</fat>
+		<female lang="en">female</female>
+		<forwards lang="en">forwards</forwards>
+		<full lang="en">full</full>
+		<green lang="en">green</green>
+		<grey lang="en">grey</grey>
+		<hooded lang="en">hooded</hooded>
+		<downturned lang="en">downturned</downturned>
+		<upturned lang="en">upturned</upturned>
+		<hooked lang="en">hooked</hooked>
+		<lantern lang="en">lantern</lantern>
+		<long lang="en">long</long>
+		<lowerlip lang="en">lower lip</lowerlip>
+		<male lang="en">male</male>
+		<mediumblonde lang="en">mediumblonde</mediumblonde>
+		<narrow lang="en">narrow</narrow>
+		<oval lang="en">oval</oval>
+		<pointed lang="en">pointed</pointed>
+		<porous lang="en">porous</porous>
+		<real lang="en">real</real>
+		<red lang="en">red</red>
+		<round lang="en">round</round>
+		<flat lang="de">flach</flat>
+		<scraggy lang="en">scraggy</scraggy>
+		<short lang="en">short</short>
+		<slanted lang="en">slanted</slanted>
+		<small lang="en">small</small>
+		<smooth lang="en">smooth</smooth>
+		<snub lang="en">snub</snub>
+		<squared lang="en">squared</squared>
+		<straight lang="en">straight</straight>
+		<thick lang="en">thick</thick>
+		<thin lang="en">thin</thin>
+		<triangle lang="en">triangle</triangle>
+		<up lang="en">up</up>
+		<upperlip lang="en">upper lip</upperlip>
+		<wide lang="en">wide</wide>
+		<accentuated lang="de">ausgeprägt</accentuated>
+		<almond lang="de">mandelförmig</almond>
+		<amber lang="de">bernsteinfarben</amber>
+		<asian lang="de">asiatisch</asian>
+		<backwards lang="de">zurück</backwards>
+		<big lang="de">groß</big>
+		<black lang="de">schwarz</black>
+		<blue lang="de">blau</blue>
+		<brightblue lang="de">hellblau</brightblue>
+		<bright lang="de">hell</bright>
+		<brightblonde lang="de">hellbond</brightblonde>
+		<brown lang="de">braun</brown>
+		<brunette lang="de">brünett</brunette>
+		<bulgy lang="de">bauchig</bulgy>
+		<cartoon lang="de">cartoon</cartoon>
+		<cleft lang="de">gespalten</cleft>
+		<cavernous lang="de">eingefallen</cavernous>
+		<curved lang="de">kurvig</curved>
+		<round lang="de">rund</round>
+		<dark lang="de">dunkel</dark>
+		<down lang="de">tief</down>
+		<droopy lang="de">hängend</droopy>
+		<fat lang="de">voll</fat>
+		<female lang="de">weiblich</female>
+		<forwards lang="de">vor</forwards>
+		<full lang="de">voll</full>
+		<green lang="de">grün</green>
+		<grey lang="de">grau</grey>
+		<hooded lang="de">hängend</hooded>
+		<downturned lang="de">abfallend</downturned>
+		<upturned lang="de">aufsteigend</upturned>
+		<hooked lang="de">hakenförmig</hooked>
+		<inner lang="en">in</inner>
+		<outer lang="en">out</outer>
+		<inner lang="de">innen</inner>
+		<outer lang="de">aussen</outer>
+		<lantern lang="de">eingefallen</lantern>
+		<long lang="de">lang</long>
+		<lowerlip lang="de">Unterlippe</lowerlip>
+		<male lang="de">männlich</male>
+		<mediumblonde lang="de">mittelblond</mediumblonde>
+		<narrow lang="de">eng</narrow>
+		<oval lang="de">oval</oval>
+		<pointed lang="de">spitz</pointed>
+		<porous lang="de">uneben</porous>
+		<real lang="de">real</real>
+		<red lang="de">rot</red>
+		<flat lang="de">flach</flat>
+		<scraggy lang="de">dürr</scraggy>
+		<short lang="de">kurz</short>
+		<slanted lang="de">schlitzförmig</slanted>
+		<small lang="de">klein</small>
+		<smooth lang="de">glatt</smooth>
+		<snub lang="de">stubsförmig</snub>
+		<squared lang="de">quadratisch</squared>
+		<straight lang="de">gerade</straight>
+		<thick lang="de">dick</thick>
+		<thin lang="de">dünn</thin>
+		<triangle lang="de">dreieckig</triangle>
+		<up lang="de">hoch</up>
+		<upperlip lang="de">Oberlippe</upperlip>
+		<wide lang="de">breit</wide>
+		
+		<nothing lang="de">ohne</nothing>
+		<nothing lang="en">nothing</nothing>
+		<strong lang="de">stark</strong>
+		<strong lang="en">strong</strong>
+		
+		<theA lang="de">Beliebiges Gesicht</theA>
+		<theA lang="en">Arbitrary Face</theA>
+		<theB lang="de">Abstoßendes Gesicht</theB>
+		<theB lang="en">Repulsive Face</theB>
+		<theC lang="de">Weiblicher Held</theC>
+		<theC lang="en">Female Hero</theC>
+		<theD lang="de">Männlicher Held</theD>
+		<theD lang="en">Male Hero</theD>
+		<theE lang="de">Weiblicher Bösewicht</theE>
+		<theE lang="en">Female Villain</theE>
+		<theF lang="de">Männlicher Bösewicht</theF>
+		<theF lang="en">Male Villain</theF>
+	</dynamic>
+   <site id="todo">
+    <title lang="en">Your Objective</title>
+	<title lang="de">Ihre Aufgabe</title>
+	
+	<taskA lang="en">Create <b>an arbitrary face</b>.</taskA>
+	<taskA lang="de">Erstellen Sie <b>ein beliebiges Gesicht</b>.</taskA>
+	
+	<taskB lang="en">Create <b>a repulsive face</b>.</taskB>
+	<taskB lang="de">Erstellen Sie <b>ein abstoßendes Gesicht</b>.</taskB>
+	
+	<taskC lang="en">Create <b>a female hero</b>.</taskC>
+	<taskC lang="de">Erstellen Sie <b>eine weibliche Heldin</b>.</taskC>
+	
+	<taskD lang="en">Create <b>a male hero</b>.</taskD>
+	<taskD lang="de">Erstellen Sie <b>einen männlichen Helden</b>.</taskD>
+	
+	<taskE lang="en">Create <b>a female villain</b>.</taskE>
+	<taskE lang="de">Erstellen Sie <b>einen weiblichen Bösewicht</b>.</taskE>
+	
+	<taskF lang="en">Create <b>a male villain</b>.</taskF>
+	<taskF lang="de">Erstellen Sie <b>einen männlichen Bösewicht</b>.</taskF>
+	
+
+	
+    <text lang="en" button="Continue">Use the slider at the left and the right side to manipulate the face and to accomplish your task according to your imagination.<p></p>Click on the viewport to rotate the face up to 180°. Changing the sliders magnifies the viewport corresponding to the region. The round button at the right of each slider resets its value. Take as much time as you want. There are 6 objectives. Completing all 6 objectives enables the Avatar-Downloader, where you can save your faces as image or 3D-Model. We would appreciate if you recommend faceMaker and thus support our research. If there are any problems just try to reload faceMaker. Otherwise write an E-Mail to <a href="mailto:valentin.schwind@vis.uni-stuttgartde">our support</a>.<p></p>We look forward to your contribution!</text>
+    <text lang="de" button="Weiter">Verwenden Sie die Schieberegler auf der linken und rechten Seite des Browserfensters. Gestalten Sie das Durchschnittsgesicht bis es Ihrer Vorstellung der Aufgabe entspricht.<p></p>Klicken oder ziehen Sie die Maus, um die 3D-Ansicht um bis zu 180° zu drehen. Fahren Sie mit der Maus über die Regler, um die Ansicht auf die jeweiligen Gesichtsbereiche zu richten. Rechts neben jedem Regler ist eine Schaltfläche, mit der sie den Regler jederzeit zurücksetzen können.<p></p>Nehmen Sie sich soviel Zeit, wie Sie wollen. Es gibt 6 Aufgaben. Sind alle 6 Aufgaben erledigt, können Sie im Avatar-Downloader die Gesichter als Bilder oder 3D-Modelle herunterladen. <p></p>Wenn es Probleme mit der Anzeige gibt, versuchen Sie faceMaker neu zu starten, ansonsten schreiben Sie uns eine <a href="mailto:valentin.schwind@vis.uni-stuttgartde">E-Mail</a>. Wir würden uns freuen, wenn Sie faceMaker weiterempfehlen und somit unsere Forschung unterstützen.<p></p>Wir freuen uns auf Ihren Beitrag!</text>
+   </site>
+
+   <site id="general">
+    <title lang="en">General Features</title>
+	<title lang="de">Allgemeine Eigenschaften</title>
+	<url>img/help_common.png</url>
+    <text lang="en">Choose between your generally preferred face parameters. <p /><b>The Gender</b> can be seamlessly adjust between a male and female face.<br/><b>Style</b> distinguishes between a realistic and stylized face.<br /><b>Details </b>determines the degree of smoothing or imperfections on the skin. <br /> <b>Skin Color</b> defines the pigmentation of the face. <br /><b>Hair Color </b> blend between different black, brunette, blonde, red, and bright blonde.</text>
+    <text lang="de">Wählen Sie hier Ihre allgemein bevorzugten Gesichtsparameter.<p /><b>Geschlecht</b> stellt übergangslos das Geschlecht zwischen Mann und Frau ein.<br /><b>Stil</b> überblenden Sie zwischen einem realistischen und einem stilisierten Cartoon-Gesicht.<br /><b>Details</b> zeigt Unebenheiten auf der Haut.<br /><b>Hautfarbe</b> kontrolliert die Pigmentierung des Gesichts.<br /><b>Haarfarbe</b>  überblendet zwischen schwarz, brünett, blond, rot und hellbond ein.</text>
+   </site>
+   <site id="eyes">
+    <title lang="en">The Eyes</title>
+	<title lang="de">Die Augen</title>
+	<url>img/help_eyes.png</url>
+    <text lang="en">The eyes can be changed using following settings:<p /><b>Eyes Size</b> increase the scaling of the eyes up to 150% or decrease it to 50%.<br /><b>Eyes Height</b> controls the position of the eyes up to 2cm up or down.<br /><b>Eyes Orbit</b> controls the position of the eyes up to 2cm in or out.<br /><b>Eyes Color </b> changes the iris to black, brown, blue, bright blue, green, or gray.<br /><b>Eyes Rotation</b> changes the eyes rotation within a rotation angle of -15° and +15°.<br /><b>Eyes Shape</b> changes the eyes type to hanging, hooded, oval, almond-shaped, or asian.<br /><b>Eyes Depth</b> controls the orbit of the eyeballs within the skull.</text>
+    <text lang="de">Die Augen könnten über folgende Einstellungen verändert werden:<p /><b>Augengröße</b> vergrößert die Skalierung der Augen um bis 150% oder verkleinert sie auf bis zu 50%.<br /><b>Augenhöhe</b> kontrolliert die Position der Augen um bis zu 2 cm nach oben oder unten.<br /><b>Augenabstand</b> verändert die Position der Augen um bis zu 2 cm nach innen oder aussen.<br /><b>Augenfarbe</b> verändert die Iris zu schwarz, braun, blau, hellblau, grün oder grau.<br /><b>Augenform</b> verändert den Augentyp zu hängend, schwer, oval, mandelförmig oder asiatisch<br /><b>Augenhöhle</b> verändert das Herausstehen oder die Tiefe der Augäpfel im Schädel. </text>
+   </site>
+   <site id="eyebrows">
+    <title lang="en">The Eyebrows</title>
+	<title lang="de">Die Augenbrauen</title>
+	<url>img/help_eyebrows.png</url>
+    <text lang="en">This settings change the appearance of the eyebrows.<br /><b>Eyebrows Shape</b> controls the curve of the line.<br /><b>Eyebrows Color</b> uses the same colors as the hair slider  (black, brunette, medium blonde, red, bright blonde).<br /><b>Eyebrows Line</b> controls the hair density of the hair above the eyes.</text>
+    <text lang="de">Die folgenden Einstellungen verändern das Aussehen der Augenbrauen:<p /><b>Augenbrauenform</b> regelt die Krümmung der Augenbrauen von spitz, gerade, zu rund und hakenförmig.<br /><b>Augenbrauenfarbe</b> nutzt die gleichen Farben wie die Haare (schwarz, brünett, mittelblond, rot, hellblond).<br /><b>Augenbrauenlinie</b> steuert die Dichte der Behaarung über den Augen.</text>
+   </site>
+   <site id="nose">
+    <title lang="en">The Nose</title>
+	<title lang="de">Die Nase</title>
+	<url>img/help_nose.png</url>
+    <text lang="en">The Nose can be designed by the following parameters:<p /><b>Nose Length</b> controls the length of the nose in its growth direction.<br /><b>Nose Width</b> changes the width of the nose.<br /><b>Nose Bridge</b> controls the width of the nose bone.<br /><b>Nose Shape</b> changes the whole shape of the nose from stub to hooked.<br /><b>Nose Cartilage</b> changes the size of the cartilage at the nose tip.</text>
+    <text lang="de">Die Nase kann über folgende Parameter gestaltet werden:<p /><b>Nasenlänge</b> steuert die Länge der Nase in ihrer Orientierungsrichtung.<br /><b>Nasenbreite</b> verändert die Breite der Nasenspitze und die Nasenlöcher.<br /><b>Nasenrücken</b> verändert die Volumenbreite des oberen Nasenknochens.<br /><b>Nasenform</b> verändert die gesamte Nasenform von stubs- zu hakenförmig.<br /><b>Nasenknorpel</b> verändert die Größe des Knorpels auf der Nasenspitze.</text>
+   </site> 
+   <site id="outerface">
+    <title lang="en">The Outer Face</title>
+	<title lang="de">Die äußere Gesichtsform</title>
+	<url>img/help_outer.png</url>
+    <text lang="en">Here you can change the outer features of the face:<p /><b>Ears Size</b> scales the size of the ears up to 150% or downscale the size to 50% of its original scaling.<br /><b>Throat Size</b> increase the diameter of the throat up to 150% or down to 50%.<br /><b>Forehead Height</b> moves the forehead as well as the hairline up to 2 cm to the top of the head or down.</text>
+    <text lang="de">Hier verändern Sie die äußeren Merkmale des Gesichts:<p /><b>Ohrengröße</b> skaliert die Ohren auf eine Größe von 150% oder verkleinert sie auf 50%.<br /><b>Halsgröße</b> erhöht den Durchmesser des Halses auf 150% oder reduziert ihn auf 50%.<br /><b>Stirnhöhe</b> verschiebt den Haaransatz auf der Stirn um nach 2 cm nach oben oder unten.</text>
+   </site> 
+   <site id="mouth">
+    <title lang="en">Mouth and Lips</title>
+	<title lang="de">Mund und Lippen</title>
+	<url>img/help_mouth.png</url>
+    <text lang="en">The following settings change the appearance of the lip and the mouth:<p /><b>Mouth Width</b> increase or decrease the distance of the mouth angles up to 2.0 cm.<br /><b>Mouth Depth</b> moves the lips 2.0 cm forwards or backwards.<br /><b>Mouth Height</b> changes the attitude of the mouth up to 2.0 cm.<br /><b>Lips Shape Ratio</b> controls the relative size of both lips.<br /><b>Lips Volume</b> controls the line width of both lips.<br /><b>Mouth Shape</b> bends the alignment of the lips between up and down shaped.<br /></text>
+    <text lang="de">Über folgende Einstellungen können Sie das Aussehen von Mund und Lippen verändern:<p /><b>Mundbreite</b> vergößert und verkleinert den Abstand der beiden Mundwinkel um 2.0 cm.<br /><b>Mundtiefe</b> schiebt die Lippen um 2.0 cm vor oder zurück.<br /><b>Mundhöhe</b> verändert die Höhenlage des Mundes im Gesicht um 2.0 cm.<br /><b>Größenverhältnis</b> kontrolliert die relative Größe der beiden Lippen zueinander ein.<br /><b>Lippenvolumen</b> stellt die Linienbreite beider Lippen ein.<br /><b>Mundform</b> krümmt die Ausrichtung der Lippen von unten nach oben.<br /></text>
+   </site> 
+   <site id="jaw">
+    <title lang="en">Jaw and Chin</title>
+	<title lang="de">Kiefer und Kinn</title>
+	<url>img/help_jaw.png</url>
+    <text lang="en">With this settings you change the shape of jaw and chin. This settings also significantly influence the skull shape.<p /><b>Jaw Shape</b> controls the appearance of the jaw from a triangle to a square.<br /><b>Chin Shape</b> transforms the chin from a pointed to an splitted shape.<br /><b>Chin Length</b> controls the length of the chin.<br /><b>Cheeks</b> can be full and inconspicuous as well as scraggy and prominent.</text>
+    <text lang="de">Mit diesen Einstellungen verändern sie Kiefer und Kinnform. Diese Einstellungen haben auch Einfluss auf die Kopfform.<p /><b>Kieferform</b> verändert den Kieferknochen zu einem Dreieck oder zu einem Viereck. Oval ist der Durchschnitt.<br /><b>Kinnform</b> transformiert das Kinn von einer spitzen zu einer gespaltenen Form. Glatt ist normal.<br /><b>Kinnlänge</b> verändert die Gesamtlänge des Kinns/Kiefers.<br /><b>Wangen</b> können voll  und unscheinbar oder dürr und hervorgehoben sein.</text>
+   </site>
+   <site id="makeUp">
+    <title lang="en">The MakeUp</title>
+	<title lang="de">Das Make-up</title>
+	<url>img/help_makeup.png</url>
+    <text lang="en" button="Continue">Make-Up is an additional feature to highlight some parts of the face:<p /><b>Eye Shadow</b> to highlight the eyes with an black shadow.<br /><b>Lip Stick</b> to add a red color to the lips.<br /><b>Rouge</b> to emphasize the cheeks with a red teint.</text>
+    <text lang="de" button="Fortfahren">Make-Up ist eine zusätzliche Option, um Merkmale hervorzuheben. Dazu gehören: <p /><b>Lidschatten</b>, um die Augen durch eine schwarze Umrandung hervorzuheben.<br /><b>Lippenstift</b>, welcher die Lippen rot einfärbt.<br /><b>Rouge</b>, um die Wangen mit einem rötlichen Teint zu betonen.</text>
+   </site> 
+  
+   <site id="aboutFaceMaker">
+    <title lang="en">Credits</title>
+	<title lang="de">Credits</title>
+    <text lang="en">
+		<b>Project management and development:</b><br></br>Valentin Schwind<p> </p><br></br>
+		<b>Modeling, Texturing, Web programming:</b><br></br>
+		Valentin Schwind, Verena Dengler, Katharina Leicht, Julia Sandrock<p> </p><br></br>
+		<b>Consulting: </b><br></br>Niels Henze, Katrin Wolf, Norman Pohl, Solveigh Jäger<p> </p><br></br>
+		<b>Supervisors:</b><br></br>Albrecht Schmidt, Jens-Uwe Hahn, Bernd Eberhardt
+	</text>
+    <text lang="de">
+		<b>Projektleitung und Entwicklung:</b><br></br>Valentin Schwind<p> </p><br></br>
+		<b>3D-Modellierung, Texturierung, Web-Programmierung:</b><br></br>
+		Verena Dengler, Katharina Leicht, Julia Sandrock<p> </p><br></br>
+		<b>Beratung: </b><br></br>Niels Henze, Katrin Wolf, Norman Pohl, Solveigh Jäger<p> </p><br></br>
+		<b>Betreuung:</b><br></br>Albrecht Schmidt, Jens-Uwe Hahn, Bernd Eberhardt
+	</text>
+   </site>
+ </sites>

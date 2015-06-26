@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>faceMaker - Generate your favourite avatar!</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+		<title>facemaker.uvrg.org | Welcome to faceMaker free online avatar creator, profile picture creator.</title>      
+		<meta name="copyright" content="(c) 2015" />
+		<meta name="title" content="faceMaker - free online avatar creator, profile picture creator." />
+		<meta name="description" content=" faceMaker is a free web app to create custom cartoon avatar and profile picture." />
+		<meta name="keywords" content="avatar creator, avatar cartoon, online avatar creator, free avatar creator, create cartoon avatar, avatar creator free, cartoon avatar maker, online avatar games, online avatar, avatar creators, cartoon avatar, online avatar face creator, avatar maker, cartoon face , profile picture creator,avatar builder,cartoon, manga, pickaface, pick a face, face maker, facelift, game" />
+		<meta name="author" content="Valentin Schwind" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" ontent="height = device-height, width = device-width, initial-scale = 1.0, minimum-scale = 1.0,  maximum-scale = 1.0,  user-scalable = no" />
+		<meta property="og:image" content="http://facemaker.uvrg.org/img/logo.jpg">
+		<meta property="og:description" content="Create your own virtual figure">
+		<meta property="og:url" content="http://facemaker.uvrg.org">
+		<link rel="image_src" type="image/jpeg" href="http://facemaker.uvrg.org/img/logo.jpg" />
+		<meta property="og:site_name" content="faceMaker">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="css/chosen.css" />
+		<link rel="stylesheet" href="css/faceMaker.css" />
+		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<!--<script src="js/jquery/jquery-2.1.1.min.js"></script>-->
+		<!--<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>-->
+		<!--<script src="js/jquery/jqueryjquery-1.11.2.min.js"></script>-->
+		<script src="js/jquery/jquery-2.1.1.min.js"></script>
+		<script src="js/jquery/jquery-cookie-plugin/jquery.cookie.js"></script>
+		<script src="js/jquery/jquery-chosen-plugin/chosen.jquery.js"></script>
+		<script src="js/three/build/three.min.js"></script>
+		<script src="data/countryList.js"></script>
+		
+		<script src="data/dataArray.js"></script>
+
+		<div id="site" class="siteCenter siteStart">
+			<div id="loadingScreen"></div>
+			<div class="header">
+				<div id="logo"></div>
+				<div id="title">
+					<h1><div class="accentColor" >face</div>Maker</h1>
+					<h2 id="sloagan">Generate your favourite avatar!</h2>
+				</div>
+				<div id="logos">
+					<a target="_blank" href="http://www.hdm-stuttgart.de"><img src="img/Logo_Hochschule_der_Medien_Stuttgart_logo_01.png" /></a>
+					<a target="_blank" href="http://www.uni-stuttgart.de"><img src="img/Logo_Uni-Stuttgart_black-small.png" /></a>
+				</div>
+				<hr></hr>	
+				
+				<div colspan="5" class="sp_table_desc" id="introText">How your favourite virtual figure looks like? Based on the european <a target="_blank" href="http://faceresearch.org/students/averageness">Average Face</a> you now have the opportunity to design your own favourite avatar. You decide how your game, movie, or cartoon figure looks like.</div>
+			</div>
+			<form id="form" name="form1" method="post" action="">
+				<div id="formTable" class="sp_table">
+					<div id="uiRow_theAge" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="ageQuestion" >How old are you?</div>
+						<div class="sp_table_cell">
+							<select id="theAge" name="theAge" data-placeholder="Choose a your age..."  class="chosen-select"></select>
+						</div>
+					</div>
+					<div id="uiRow_theGender" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="genderQuestion" >Your gender</div>
+						<div class="sp_table_cell">
+							<input type="radio" name="theGender" value="female" id="radioBox_Gender_1" class="css-radiobox" /><label for="radioBox_Gender_1" class="css-radiolabel"><div id="genderQuestionA">female</div></label>
+							<input type="radio" name="theGender" value="male" id="radioBox_Gender_2" class="css-radiobox" /><label for="radioBox_Gender_2" class="css-radiolabel"><div id="genderQuestionB">male</div></label>
+							<input type="radio" name="theGender" value="other" id="radioBox_Gender_3" class="css-radiobox" /><label for="radioBox_Gender_3" class="css-radiolabel"><div id="genderQuestionC">other</div></label>
+						</div>
+					</div>
+					
+					<div id="uiRow_theCountry" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="countryQuestion" >Your home country</div>
+						<div class="sp_table_cell">
+							<select name="theCountry" data-placeholder="Choose a Country..."  accesskey="2"  class="chosen-select-wide"></select>
+						</div>
+					</div>
+					
+					<div id="uiRow_playingGames" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="playingQuestion" >How often do you play video games?</div>
+						<div class="sp_table_cell" >
+							<input type="radio" name="playingGames" value="6" id="playingGames6" class="css-radiobox" /><label for="playingGames6" class="css-radiolabel"><div id="playingGames_6">daily</div></label>
+							<input type="radio" name="playingGames" value="5" id="playingGames5" class="css-radiobox" /><label for="playingGames5" class="css-radiolabel"><div id="playingGames_5">more than once a week</div></label>
+							<input type="radio" name="playingGames" value="4" id="playingGames4" class="css-radiobox" /><label for="playingGames4" class="css-radiolabel"><div id="playingGames_4">once a week</div></label>
+							<input type="radio" name="playingGames" value="3" id="playingGames3" class="css-radiobox" /><label for="playingGames3" class="css-radiolabel"><div id="playingGames_3">once a month</div></label>
+							<input type="radio" name="playingGames" value="2" id="playingGames2" class="css-radiobox" /><label for="playingGames2" class="css-radiolabel"><div id="playingGames_2">infrequently</div></label>
+							<input type="radio" name="playingGames" value="1" id="playingGames1" class="css-radiobox" /><label for="playingGames1" class="css-radiolabel"><div id="playingGames_1">never</div></label>
+						</div>
+					</div>
+					
+				  
+					<div id="uiRow_watchingMovies" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="movieQuestion" >How often do you play video games?</div>
+						<div class="sp_table_cell" >
+							<input type="radio" name="watchingMovies" value="6" id="radioGrp_watchingMovies_6" class="css-radiobox" /><label for="radioGrp_watchingMovies_6" class="css-radiolabel"><div id="watchingMovies6">daily</div></label>
+							<input type="radio" name="watchingMovies" value="5" id="radioGrp_watchingMovies_5" class="css-radiobox" /><label for="radioGrp_watchingMovies_5" class="css-radiolabel"><div id="watchingMovies5">more than once a week</div></label>
+							<input type="radio" name="watchingMovies" value="4" id="radioGrp_watchingMovies_4" class="css-radiobox" /><label for="radioGrp_watchingMovies_4" class="css-radiolabel"><div id="watchingMovies4">once a week</div></label>
+							<input type="radio" name="watchingMovies" value="3" id="radioGrp_watchingMovies_3" class="css-radiobox" /><label for="radioGrp_watchingMovies_3" class="css-radiolabel"><div id="watchingMovies3">once a month</div></label>
+							<input type="radio" name="watchingMovies" value="2" id="radioGrp_watchingMovies_2" class="css-radiobox" /><label for="radioGrp_watchingMovies_2" class="css-radiolabel"><div id="watchingMovies2">infrequently</div></label>
+							<input type="radio" name="watchingMovies" value="1" id="radioGrp_watchingMovies_1" class="css-radiobox" /><label for="radioGrp_watchingMovies_1" class="css-radiolabel"><div id="watchingMovies1">never</div></label>
+						</div>
+						
+					</div>
+					<div id="uiRow_termsOfUse" class="sp_table_row">
+						<div class="sp_table_cell questionStart" id="termsofuseQuestion" >I agree the terms of use*</div>
+						<div class="sp_table_cell">
+							<div class="sp_sub_table">
+								<div class="sp_sub_table_row">
+									<div class="sp_sub_table_cell sp_sub_table_centeredCell" >
+										<input  type="checkbox" name="checkGrp_TermsOfUse"  value="0" id="acceptTOU" class="css-checkbox" /><label for="acceptTOU"  class="css-checklabel css-correctDistance"></label>
+									</div>
+									<div class="sp_sub_table_cell leftAlignedCell" >
+										<div class="sp_table_tou" id="termsofuseText" >
+								*) All information you provide in the questionnaire and upcoming experiment will be treated confidentially and in compliance with data protection regulations. Your answers to the questionnaire will only be used within the research. The data collected in this survey will be used only within this research topic and will not be disclosed to third parties by the University. The presentation of results from the surveys are also published aggregated and therefore do not allow any conclusions on individual people. The results of the scientific evaluation are summarized in anonymous form only and for groups. So no one can see from the results, the person from whom the information submitted.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="submitBar" >
+						<div id="submitBarText">Unfortunately, your browser is not supported. Please use Firefox, Chrome, or Opera instead.</div>
+						
+				</div>
+			</form>
+			<div class="footer" >
+				<div>
+					<span id="hardwareRequirements"></span><p></p><br />
+					<span id="recommendedBrowser">Recommended browser: </span><a href="https://www.mozilla.org/" target="_blank">Firefox</a><br />
+					<span id="supportedBrowser">Supported browser: </span>Chrome, Opera<br />
+					<span id="notSupportedBrowser">Not supported browser: </span>Internet Explorer, Safari<br />
+				</div>
+				<div>
+					<hr></hr> 
+					<div id="credits"><a href="#">Credits</a></div>
+					<div id="footerCopyright"></div>&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0/deed.de">CC BY-SA 3.0.</a><p></p><a id="writeAnEmail" href="mailto:valentin.schwind@vis.uni-stuttgart.de?subject=faceMaker">Questions or problems with this application? Write us an E-Mail.</a>.<!--<a id="aboutUs" href="#">Credits</a>-->
+					
+				</div>
+			</div>
+			<div id='infoBoxBackground'>
+				<div id='infoBox'>
+					<div id='infoBoxTitle'></div>
+					<div id='infoBoxImage'></div>
+					<div id='infoBoxText'></div>
+					<div id='buttonHolder'></div>
+				</div>
+				
+			</div>
+		</div>
+		<script>		
+
+			setDataCookie("browser", getBrowser());
+			
+			var selectedLanguage = navigator.language || navigator.userLanguage;
+			if(selectedLanguage == "de" || selectedLanguage == "de-DE" || selectedLanguage == "de-AT" || selectedLanguage == "de-CH" || selectedLanguage == "de-LI"|| selectedLanguage == "de-LU") selectedLanguage = "de";		
+			else selectedLanguage = "en";
+
+			$("#loadingScreen").hide();
+			$("#uiRow_theAge").hide();
+			$('#aboutUs').on("click",function(){btnLoadFromXML('aboutFaceMaker');});
+			$("#uiRow_theGender").hide();		
+			$("#uiRow_theCountry").hide();
+			$("#uiRow_playingGames").hide();
+			$("#uiRow_gameGenres").hide();
+			$("#uiRow_watchingMovies").hide();
+			$("#uiRow_termsOfUse").hide();
+			$("#infoBoxBackground").hide();
+			$("#alertBoxBackground").hide();
+			$("#credits").click(function(event){
+				btnLoadFromXML('aboutFaceMaker');
+			});
+			
+			$(document).ready(function(){	
+				loadLanguage();
+			});
+
+			function loadLanguage(){
+				$.ajax({ async: true, crossDomain: false, cache: false, type: "GET", url: "data/sites.xml", contentType: "text/xml;charset='ISO-8859-1'", dataType: "xml", success: function (xml){
+					$(xml).find('static[id="demographic"]').children().each(function(){
+						updateHTML((this).nodeName, $(xml).find('static[id="demographic"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text(), $(this).attr('fontSize'));
+					});
+					$(xml).find('dynamic[id="demographic"]').children().each(function(){		
+						demographicLanguageMapping[this.nodeName] = $(xml).find('dynamic[id="demographic"]').find(this.nodeName + '[lang="' + selectedLanguage + '"]').text();
+					});
+				}}).done(function() {
+					browserValidation();			
+				});
+			}
+
+			var demographicLanguageMapping = new Array();	
+			
+			var completed = new Array();
+			
+			function browserValidation(){
+				var browserInfo = getBrowser("all");			
+				
+				if( browserInfo[0] == "Firefox" || browserInfo[0] == "Chrome" || browserInfo[0] == "Opera" ){
+					document.getElementById("submitBar").innerHTML += "<input id='submitButton' type='button' style='float:right' class='button' value='Start Questionaire'></input>";
+				
+					
+					$("select[name='theAge']").attr("data-placeholder",demographicLanguageMapping["placeholderAge"]);
+					$("select[name='theAge']").attr("data-no_results_text",demographicLanguageMapping["nothingFound"]);
+
+					$("select[name='theCountry']").attr("data-placeholder",demographicLanguageMapping["placeholderCountry"]);
+					$("select[name='theCountry']").attr("data-no_results_text",demographicLanguageMapping["nothingFound"]);
+					
+					$("select[name='migrationCountryA']").attr("data-placeholder",demographicLanguageMapping["placeholderCountry"]);
+					$("select[name='migrationCountryA']").attr("data-no_results_text",demographicLanguageMapping["nothingFound"]);
+					
+					$('#submitButton').prop('value', demographicLanguageMapping["start"]);	
+
+					if(parseInt(getDataCookie("userUID")) > 0){
+						document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["newOrContinue"];	
+						$('#submitButton').prop('value', demographicLanguageMapping["continue"]);
+						$("#submitBar").append("<input id='newUser' type='button' style='float:right' class='button' value='" + demographicLanguageMapping["newUser"] + "'></input>");
+						
+						$("#newUser").click(function(){
+							completionCheck("newUser");
+							$("#newUser").remove();
+						});
+						
+						$("#submitButton").click(function(){
+							$("#newUser").remove();
+							completionCheck("continue");
+						});
+						
+						if(parseInt(getDataCookie("sessions")) > 6){
+							document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["maximalSessions"];	
+							$("#submitButton").hide();
+							$("#newUser").click(function(){
+								completionCheck("newUser");
+								$("#newUser").remove();
+							});
+						}
+						
+					} else {
+						document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["errorstartStep"];
+						$('#submitButton').prop('value', demographicLanguageMapping["start"]);
+						$("#submitButton").click(function(){
+							if(parseInt(getDataCookie("userUID")) > 0){
+							} else {
+								completionCheck("newUser");
+								$("#newUser").remove();
+							}
+						});
+					}
+				} else {
+					document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["yourBrowser"] + " " + browserInfo[0] + " " + demographicLanguageMapping["notSupported"];
+				}
+			}
+			
+			var config = {
+				'.chosen-select'           : {width:"100px"},
+				'.chosen-select-wide'      : {width:"250px"},
+				'.chosen-select-deselect'  : {allow_single_deselect:true, width:"250px"},
+				'.chosen-select-no-single' : {disable_search_threshold:10, width:"250px"},
+				'.chosen-select-multi' 	   : {max_selected_options: 2, width:"400px"},
+				'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+				'.chosen-select-width'     : {width:"150px"}
+			}
+			
+			function completionCheck(value) {			
+				if(value == "continue" || value == "newUser") {
+					remapDataArray();
+					$("#uiRow_theAge").fadeIn(250);
+					$("#submitButton").fadeOut(250);
+					$('#submitButton').prop('value', demographicLanguageMapping["start"]);
+				}
+				
+				if(value == "newUser"){
+					clearListCookies();
+					removeAllDataCookies();
+					clearOldUserUID();
+					deleteNeedTask();
+					deleteCookieString();
+					setDataCookie("acceptTOU", 0);
+					resetCounterCookies();
+					$.cookie("sessionFinished", 1);
+					$.cookie("sessions", 0);
+					
+					var timeWelcomeStamper = new Date();
+					
+					setDataCookie("timeWelcome", timeWelcomeStamper.getTime());	
+					setDataCookie("userUID", checkForUserID());
+					$("select[name='theAge'] option[value='-1']").attr('selected', 'selected');
+					$("select[name='theCountry'] option[value='-1']").attr('selected', 'selected');
+					$("input[name='theGender']").prop('checked', false);
+					$("input[name='playingGames']").prop('checked', false);
+					$("input[name='watchingMovies']").prop('checked', false);
+					$("input[name='acceptTOU']").prop('checked', false);
+				} 
+				
+				if(value == "continue"){
+					loadCookies();
+					setDataCookie("userUID", parseInt(getDataCookie("userUID")));
+				}
+				
+				if($('select[name="theAge"]').val() == "" || $('select[name="theAge"]').val() == null) completed["theAge"] = false;
+				else { 
+					completed["theAge"] = true;
+					$("#uiRow_theGender").fadeIn(250);
+				}
+				
+				if($('input[name="theGender"]:checked').val() == null || typeof $('input[name="theGender"]:checked').val() == "undefined"){
+					completed["theGender"] = false;
+				}else {
+					completed["theGender"] = true;
+					$("#uiRow_theCountry").fadeIn(250);
+				}
+
+				if($('select[name="theCountry"]').val() == null || $('select[name="theCountry"]').val() == "" || $('select[name="theCountry"]').val() < 0){
+					completed["theCountry"] = false;
+				} else {
+					completed["theCountry"] = true;
+					$("#uiRow_playingGames").fadeIn(250);
+				}
+				
+				if($('input[name="playingGames"]:checked').val() == null || typeof $('input[name="playingGames"]:checked').val() == "undefined") completed["playingGames"] = false;
+				else {
+					completed["playingGames"] = true;
+					$("#uiRow_watchingMovies").fadeIn(250);
+				}
+				
+				if($('input[name="watchingMovies"]:checked').val() == null || typeof $('input[name="watchingMovies"]:checked').val() == "undefined"){
+					completed["watchingMovies"] = false;
+				}else{
+					completed["watchingMovies"] = true;
+					$("#uiRow_termsOfUse").fadeIn(250);
+				}
+
+				if($('#acceptTOU').is(":checked") == false) completed["acceptTOU"] = false;
+				else {
+					completed["acceptTOU"] = true;
+					setDataCookie("acceptTOU", 1);
+				}
+				
+				if(!!window.WebGLRenderingContext == true) completed["webgl"] = true;
+				else completed["webgl"] = false;
+				
+				for(var selector in config)  $(selector).chosen(config[selector]);
+				
+				for(var item in completed) {
+					if(completed[item] == false){
+
+						document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["error" + item];
+						$("#submitButton").hide();
+						return false;
+					} else {
+						if(completed["acceptTOU"] == true){
+						
+							$("#submitButton").fadeIn(250);
+
+							
+							if(parseInt(getDataCookie("sessions")) >= 1){
+								document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["continueSession"];
+								document.getElementById("submitBarText").innerHTML += "("  + parseInt(getDataCookie("sessions")) + " " + demographicLanguageMapping["completionProgress"] + ")" ;
+							} else {
+								document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["firstSession"];
+							}
+							
+							$("#submitButton").click(function(){
+								startFaceMaker();
+							});
+						} else {
+							$("#submitButton").hide();
+							document.getElementById("submitBarText").innerHTML = demographicLanguageMapping["erroracceptTOU"];	
+						}
+					}
+				}
+				
+				return true;
+			}
+				
+		
+			
+			function updateHTML(_id, _value) {
+				var elem = document.getElementById(_id);
+				if(elem != null) document.getElementById(_id).innerHTML = _value;
+			}
+			
+			$("select[name='theAge']").append(new Option());
+			
+			for(var year = 2010; year > 1900; year--) {
+				$("select[name='theAge']").append(new Option(year, year));
+			}
+			
+			$("select[name='theCountry']").append(new Option());
+			var countryIndex = 0;
+			for(var country in countryList[selectedLanguage]) {
+				$("select[name='theCountry']").append(new Option(countryList[selectedLanguage][country], countryIndex));
+				countryIndex++;
+			};
+			$("select[name='theCountry']").html($("select[name='theCountry'] option").sort(function(x, y) {
+				return $(x).text() < $(y).text() ? -1 : 1;
+			}));
+			$('select[name="theCountry"]').val(-1);
+			
+				
+			$("select[name='theAge']").change(function(){
+				setDataCookie("theAge", $('select[name="theAge"] option:selected').val());
+				completionCheck();
+			});
+
+			$("input[name='theGender']").change(function () {
+				setDataCookie("theGender", $('input[name="theGender"]:checked').val());
+				completionCheck();
+			});
+				
+		
+
+			$("select[name='theCountry']").change(function(){
+				setDataCookie("theCountry", $("select[name='theCountry'] option:selected").val());
+				completionCheck();
+			});
+
+			
+			
+			$("input[name='playingGames']").change(function(){
+				var checked = $(this).val();
+				setDataCookie("playingGames", $(this).val());
+				completionCheck();
+			});
+			
+
+			$("input[name='watchingMovies']").change(function(){
+				setDataCookie("watchingMovies", $('input[name="watchingMovies"]:checked').val());
+				completionCheck();
+			});			
+			
+
+
+			$("#acceptTOU").change(function(){
+				setDataCookie("acceptTOU", ($('#acceptTOU').is(":checked") == true ? 1 : 0));
+				completionCheck();
+			});				
+							
+			function startFaceMaker() {
+						
+				
+				
+				$("#form").remove();
+				$("#loadingScreen").fadeIn(200, function(){
+					$("body").empty();
+					$("body").load("faceMaker.html");
+					//$.cookie("shit",12);
+					//window.location.href = "faceMaker.html";
+					
+				});
+			}
+
+			$("#alertBoxBackground").click(function(e) {
+				$("#alertBoxBackground").fadeOut(200);
+			});
+			
+			function webgl_detect(return_context)
+			{
+				if (!!window.WebGLRenderingContext) {
+					var canvas = document.createElement("canvas"),
+						names = ["webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+						context = false;
+
+					for(var i=0;i<4;i++) {
+						try {
+							context = canvas.getContext(names[i]);
+							if (context && typeof context.getParameter == "function") {
+								if (return_context) {
+									return {name:names[i], gl:context};
+								}
+								return true;
+							}
+						} catch(e) {}
+					}
+					return false;
+				}
+				return false;
+			}
+		</script>
+		
+		
+	</body>
+</html>

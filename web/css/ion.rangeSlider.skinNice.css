@@ -1,0 +1,94 @@
+/* Ion.RangeSlider, Nice Skin
+// css version 1.8.5
+// by Denis Ineshin | ionden.com
+// ===================================================================================================================*/
+
+/* =====================================================================================================================
+// Skin details */
+
+.irs-line-mid,
+.irs-line-left,
+.irs-line-right,
+.irs-diapason,
+.irs-slider {
+    background: url(../img/sprite-skin-nice.png) repeat-x;
+}
+
+.irs {
+    height: 40px;
+}
+.irs-with-grid {
+    height: 40px;
+	
+}
+.irs-line {
+    height: 8px; top: 6px;
+}
+    .irs-line-left {
+        height: 8px;
+        background-position: 0 -30px;
+    }
+    .irs-line-mid {
+        height: 8px;
+        background-position: 0 0;
+    }
+    .irs-line-right {
+        height: 8px;
+        background-position: 100% -30px;
+    }
+	
+
+.irs-diapason {
+    height: 8px; top: 25px;
+    background-position: 0 -60px;
+}
+
+.irs-slider  {
+    width: 18px; height: 18px;
+    top: 0px;
+    background-position: -2px -92px;
+	box-shadow: 1px 1px 4px rgba(0,0,0,1.0), inset 0 0 6px rgba(0,0,0,0.4);
+	border-radius: 50%;
+}
+
+
+.irs-slider:hover  {
+	box-shadow: 1px 1px 4px rgba(0,0,0,1.0), inset 0 0 6px rgba(255,255,255,0.4);
+}
+
+#irs-active-slider, .irs-slider:hover {
+    background-position: -2px  -122px;
+}
+
+.irs-min, .irs-max {
+    font-size: 11px; line-height: 1.333;
+    text-shadow: none;
+    bottom: 4px; padding: 0px 0px;
+    background: rgba(255,255,255,0.0);
+    border-radius: 20px;
+}
+.lt-ie9 .irs-min, .lt-ie9 .irs-max {
+    background: #777;
+}
+
+.irs-from, .irs-to, .irs-single {
+    font-size: 11px; line-height: 1.333;
+    text-shadow: none;
+    padding: 1px 5px;
+	top: 25px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 3px;
+}
+.lt-ie9 .irs-from, .lt-ie9 .irs-to, .lt-ie9 .irs-single {
+    background: #999;
+}
+
+.irs-grid-pol {
+    background: #666;
+}
+.irs-grid-text {
+    color: #CCCCCC;
+}
+
+.irs-disabled {
+}

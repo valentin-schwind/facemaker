@@ -1,0 +1,3282 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>faceMaker</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="css/normalize.min.css" />
+		<link rel="stylesheet" href="css/ion.rangeSlider.css" />
+		<link rel="stylesheet" href="css/faceMaker.css" />
+		<link rel="stylesheet" href="css/ion.rangeSlider.skinNice.css" />
+		<link rel="stylesheet" href="css/ion.rangeSlider.skinColor.css" />
+		<link rel="stylesheet" href="css/chosen.css" />
+		<meta property="og:image" content="http://facemaker.uvrg.org/img/logo.jpg">
+		<meta property="og:description" content="Create your own virtual figure">
+		<meta property="og:url" content="http://facemaker.uvrg.org">
+		<link rel="image_src" type="image/jpeg" href="http://facemaker.uvrg.org/img/logo.jpg" />
+		<meta property="og:site_name" content="faceMaker">
+	</head>
+
+	<body>
+		<script src="js/jquery/jquery-1.11.0.min.js"></script>
+		<script src="js/jquery/jquery-ui.js"></script>
+		<script src="js/jquery/jquery-cookie-plugin/jquery.cookie.js"></script>
+		<script src="js/jquery/jquery-chosen-plugin/chosen.jquery.js"></script>
+		<script src="js/fileSaver/FileSaver.min.js"></script>
+		
+		<script src="js/ion-RangeSlider/slider.js"></script>
+		<script src="js/three/build/three.min.js"></script>
+		<script src="js/three/ShaderSkin.js"></script>
+		<script src="js/three/shaders/CopyShader.js"></script>
+		
+		<script src="js/three/postprocessing/EffectComposer.js"></script>
+		<script src="js/three/postprocessing/RenderPass.js"></script>
+		<script src="js/three/postprocessing/ShaderPass.js"></script>
+		<script src="js/three/postprocessing/MaskPass.js"></script>	
+
+		<script src="data/dataArray.js"></script>
+		<script src="data/countryList.js"></script>
+		
+		<script src="js/three/Detector.js"></script>
+		<script src="js/three/libs/stats.min.js"></script>
+		
+		<div id="facepage">
+			<div id="loadingScreen"></div>
+			<div id="statusText"></div>
+
+			<div id='alertBoxBackground'>
+				<div id="alertBox">
+					<div id='alertBoxTitle'></div>
+						<div id="innerAlertBox" style="display: none" class="sp_table"><!--style="display: none"-->
+						</div>
+					<div id='alertBoxText'></div>
+				</div>
+			</div>
+
+			<div class="containerInterface" id="containerInterface">
+				<div class="sidebar left" id="sidebarLeft"></div>
+				<div class="sidebar right" id="sidebarRight">
+					<div id="settingsSliderGrp" class="ctrlgrp">
+						<div class="ctrlgrpHeader" id="missionHeader">
+							<div class="ctrlgrpMissionTitleLeft" id="theMission">faceMaker - How your virtual figure should look like?</div>
+							<div class="ctrlgrpHeaderButtonRight"></div>
+						</div>
+						<div id="buttonBar" class="ctrlgrpNoEffectWrapper">
+							<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="reloadAll bigButton" onclick="resetAllSlider(false)"><span id="resetFaceBigBtn">Reset Face</span></input></a></div>
+							<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="resetUI bigButton" onclick="btnResetUI()"><span id="resetUIBtn">Reset UI</span></input></a></div>
+							<!--<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="changeTShirt bigButton" onclick="resetAllSlider(true)"><span  id="changeTShirtBigBtn">Change Shirt Color</span></input></a></div>-->
+							<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="lightButton bigButton" onclick="btnChangeLight()"><span  id="changeLightBigButton">Change Light</span></input></a></div>
+							<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="mainInfoButton bigButton" onclick="btnLoadFromXML('todo')"><span  id="faceInfoBigButton">Your task</span></input></a></div>
+							<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="mailButton bigButton" onclick="openMailWithProblem()"><span id="mailWithProblem">Mail with problem</span></input></a></div>
+							<div class="ctrlBtnGrpSeparator"></div>
+							<input id="sendFace"  type="button" class="button" value="Submit Face" onclick="btnSubmit()"></input>
+						</div>	
+					</div>
+				</div>
+			</div>
+			
+			<div id="renderAvatarBox">
+				<p id="makeYourPhoto" class="draggable" ></p>
+				
+				<div id="imageHolder">
+					<div id="imageItself"></div>
+				</div>
+				
+				<div id="imageButtonBar">
+					<a class="tooltip tooltipbottom" href="#"><input type="button" class="closeButton bigButton" onclick="closeRendering()"><span id="closeRendering">Close Image Window</span></input></a>
+					<a class="tooltip tooltipbottom" href="#"><input type="button" class="saveButton bigButton" id="saveImageButton"><span id="saveRendering">Save Rendering</span></input></a>
+				</div>			
+				
+				<div id="chooseTrial" class="ctrlgrp" class="sp_table">
+					<div class='sp_sub_table_row'>
+						<div class='sp_sub_table_cell'> <div id="label_chooseTrial">Your Trial</div> </div>
+						<div class='sp_sub_table_cell'> <select id="chooseTrialID" class='chosen-select-wide'></select></div> 
+					</div>
+				</div>
+				
+				<div id="chooseRenderSize" class="ctrlgrp" class="sp_table">
+					<div class='sp_sub_table_row'>
+						<div class='sp_sub_table_cell'> <div id="label_chooseRenderSize">Render Size</div> </div>
+						<div class='sp_sub_table_cell'> <select id="renderSizeID" class='chosen-select-wide'></select></div> 
+					</div>
+				</div>
+				
+				<div id="chooseBackground" class="ctrlgrp" class="sp_table">
+					<div class='sp_sub_table_row'>
+						<div class='sp_sub_table_cell'> <div id="label_chooseBackground">Background</div> </div>
+						<div class='sp_sub_table_cell'> <select id="chooseBackgroundID" class='chosen-select-wide'></select></div> 
+					</div>
+				</div>
+				
+				<!--<div id="chooseBackground"  class="ctrlgrp" class="sp_table"></div>-->
+				<!--<div id="chooseRenderSize" class="ctrlgrp" class="sp_table"></div>-->
+
+				<div class="ctrlgrp rendermenu">
+					<div class="rendermenu">
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="renderButton bigButton" onclick="renderFace()"><span id="renderButton">Render Face</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="mailButton bigButton" onclick="openMail()"><span id="sendPerMail">Send per Mail</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="twitterButton bigButton" onclick="openTwitter()"><span id="sendToTwitter">Share on Twitter</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="facebookButton bigButton" onclick="openFacebook()"><span id="sendToFacebook">Share on Facebook</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="googlePlusButton bigButton" onclick="openGooglePlus()"><span id="sendToGoogle">Share on Google+</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="linkedinButton bigButton" onclick="openLinkedin()"><span id="sendToLinkedin">Share on LinkedIn</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="objButton bigButton" id="saveAsObj" onclick="saveAsObj()"><span id="sendAsOBJ">Save as OBJ</span></input></a></div></div>
+						<div class="ctrlBtnGrpCol"><div class="sp_table_cell borderless"><a class="tooltip tooltipbottom" href="#"><input type="button" class="lightButton bigButton" onclick="btnChangeLight()"><span id="changeLight">Change Light</span></input></a></div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div id="backgroundCopyright"></div>
+	
+		<a id="newface" class="tooltip tooltipleft" href="javascript:fallbackStart()">
+			<span id="restartFaceMaker">Restart FaceMaker</span>
+		</a>
+		
+		<div id='infoBoxBackground'>
+			<div id='infoBox'>
+				<div id='infoBoxTitle'></div>
+				<div id='infoBoxImage'></div>
+				<div id='infoBoxText'></div>
+				<div id='buttonHolder'></div>
+			</div>
+		</div>
+		
+		<div id="copyrightBox">
+			<div class="copyrightRow">
+				<span id="copyrightText"></span>
+			</div>
+		</div>
+		
+		<div id="evaluationBackground" style="display: none">
+			<div id="evaluationResult"  >
+				<div id="evaluationBoard" class="column50">
+					<div class="sp_table_row">
+						<div class="sp_table_row">
+							<div class="sp_table_cell">
+								<h2>Filters</h2>
+								<div id="filterTable" class="inEval"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column50">
+					<div class="sp_table_row">
+						<div class="sp_table_row">
+							<div class="sp_table_cell">
+								<h2 id="resultsTitle" >Face Results</h2>
+								<div class="sp_sub_table" id="faceResultTable">
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column50">
+					<div class="sp_table_row">
+						<div class="sp_table_row">
+							<div class="sp_table_cell">
+								<h2 id="demoTitle" >Demographic Results</h2>
+								<div class="sp_sub_table" id="demoResultTable">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="container3D">
+			<script>
+
+				var evalFilterSelection = new Array();
+				var renderSizeArray = new Array(9);
+				
+				var eval3DWidth = 500;
+				var eval3DHeight = 500;
+				var	faceMakerStarted = false;
+				
+				var documentRoot;
+				
+				//console.log(window.location.hostname)
+				
+				if (window.location.hostname == "localhost") {
+					documentRoot = "http://localhost/www/"
+				} else {
+					documentRoot = "http://facemaker.uvrg.org/";
+				}
+				
+				var currentSlider = "";
+				var zoom, targetZoom;
+				var zoomSpeed = .1;
+				var sliderInUse = false;
+				var skipMovement = false;
+				
+				start();
+				//console.log($.cookie());
+				findMetaData();
+				
+				
+				function start(){
+					$('#loadingScreen').show();
+					$('#renderAvatarBox').hide();
+					$('#copyrightBox').hide();
+					$("#imageHolder").hide();
+					$("#sidebarRight").hide();
+					$("#sidebarLeft").hide();
+					$("#imageButtonBar").hide();
+					$("#newface").hide();
+					$("#sidebarLeft").mouseover(function(){ mouseOverUIElement = true; });
+					$("#sidebarLeft").mouseout(function() { mouseOverUIElement = false; });
+					$("#sidebarRight").mouseover(function(){ mouseOverUIElement = true; });
+					$("#sidebarRight").mouseout(function() { mouseOverUIElement = false; });
+					
+					$("#evaluationResult").mouseover(function(){ mouseOverUIElement = true; });
+					$("#evaluationResult").mouseout(function() { mouseOverUIElement = false; });
+					
+				}
+				
+				$( document ).ready(function() {
+					loadLanguage();	
+					init();
+					animate();
+				});
+				
+				function appChooser(){
+					faceMakerStarted = true;
+					lockIncreaseCountOf = true;
+					var param = gup( 'param' );
+					
+					switch ( param ) 
+					{
+						case "eval": 
+							openEvaluationBoard();
+							showFace = true; 
+						break;
+						case "agen": {
+							var loadTrialID = gup( 'trialid' );
+							var loadUserUID = gup( 'useruid' );
+							openAvatarRenderer(loadTrialID,loadUserUID); 
+							showFace = true;
+						break;
+						}
+						default: openFaceGenerator();
+					}
+					
+				}
+				
+				function gup( name )
+				{
+					name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+					var regexS = "[\\?&]"+name+"=([^&#]*)";
+					var regex = new RegExp( regexS );
+					var results = regex.exec( window.location.href );
+					if( results == null )
+						return "";
+					else
+						return results[1];
+				}
+				
+			//	checkForUserID();
+				
+				function shuffle(o){ //v1.0
+					var splitter = parseInt(parseFloat(getDataCookie("userUID")));
+					var str = "0." + splitter;
+					var quasiRnd = parseFloat(str);
+					//console.log("quasiRnd" + quasiRnd);
+					
+					for(var j, x, i = o.length; i; j = Math.floor(quasiRnd * i), x = o[--i], o[i] = o[j], o[j] = x);
+					return o;
+				};
+				
+				function generateSliders(){
+					// grpname, name, sliderfactor, resetvalue, camTargetYaw (radians), camTargetPitch, camHeight
+					// ("general","faceGender",2,1, 1.57, 0.0, 8.0, -100);
+
+					$("#buttonBar").on( "mousemove", function(event) {
+						if(sliderInUse == false) {
+							camTargetYaw = 1.57;
+							camTargetPitch = 0.0;
+							targetZoom = 10.0;
+							targetCamHeight = 0;
+							zoomSpeed = .1;
+						}
+					});
+
+					var sidebarAlignment = "sidebarLeft";
+					var sliderItemCounterLeft = 0;
+					var sliderItemCounterRight = 0;
+					var maxSliderPerSidebar = 22;
+					
+					sliderCollection = shuffle(sliderCollection);
+					
+					for(var sliderGrp = 0; sliderGrp < sliderCollection.length; sliderGrp++){
+						
+						if(sliderItemCounterLeft > (sliderItemCounterRight + 2)) sidebarAlignment = "sidebarRight";
+						else sidebarAlignment = "sidebarLeft";
+						
+						if(sidebarAlignment == "sidebarLeft") {
+							sliderItemCounterLeft += sliderCollection[sliderGrp].length;
+						} else {
+							sliderItemCounterRight += sliderCollection[sliderGrp].length;
+						}
+						
+						if(sidebarAlignment == "sidebarLeft") toolTipAlignment = "right";
+						if(sidebarAlignment == "sidebarRight") toolTipAlignment = "left";
+						
+						//console.log("slider " + sliderCollection[sliderGrp][0][0]);
+						var ctrlgrp = document.createElement("div");
+						ctrlgrp.id = sliderCollection[sliderGrp][0][0] + "SliderGrp";
+						ctrlgrp.className = "ctrlgrp";	
+						
+						var ctrlgrpHeader = document.createElement("div");
+						ctrlgrpHeader.className = "ctrlgrpHeader";	
+						
+						var ctrlgrpHeaderTitleLeft = document.createElement("div");
+						ctrlgrpHeaderTitleLeft.id = "label_" + sliderCollection[sliderGrp][0][0];
+						ctrlgrpHeaderTitleLeft.className = "ctrlgrpHeaderTitleLeft";
+						ctrlgrpHeaderTitleLeft.innerHTML = languageMapping[ctrlgrpHeaderTitleLeft.id];
+						
+						var ctrlgrpHeaderButtonRight = document.createElement("div");
+						ctrlgrpHeaderButtonRight.className = "ctrlgrpHeaderButtonRight";
+						ctrlgrpHeaderButtonRight.innerHTML = "<a class='tooltip tooltip" + toolTipAlignment + "' href='#'><input type='button' class='infoButton' onclick='btnLoadFromXML(\"" + sliderCollection[sliderGrp][0][0] + "\")'><span id='btn_" + sliderCollection[sliderGrp][0][0] + "'>" + languageMapping["btn_" + sliderCollection[sliderGrp][0][0]] + "</span></input></a>";
+						
+						ctrlgrpHeader.appendChild(ctrlgrpHeaderTitleLeft);
+						ctrlgrpHeader.appendChild(ctrlgrpHeaderButtonRight);
+						ctrlgrp.appendChild(ctrlgrpHeader);
+						
+						sliderCollection[sliderGrp] = shuffle(sliderCollection[sliderGrp]);
+						
+						for(var slider = 0; slider < sliderCollection[sliderGrp].length; slider++){
+							//console.log("slider " + sliderCollection[sliderGrp][slider][0]);
+							var ctrlgrpWrapper = document.createElement("div");
+							ctrlgrpWrapper.className = "ctrlgrpWrapper";
+							ctrlgrpWrapper.id = sliderCollection[sliderGrp][slider][1] + "MM";
+							
+							var jawAndPitch = new Array();
+							jawAndPitch[0] = sliderCollection[sliderGrp][slider][4];
+							jawAndPitch[1] = sliderCollection[sliderGrp][slider][5];
+							jawAndPitch[2] = sliderCollection[sliderGrp][slider][6];
+							jawAndPitch[3] = sliderCollection[sliderGrp][slider][7];
+							jawAndPitch[4] = sliderCollection[sliderGrp][slider][1];
+							
+							$(ctrlgrpWrapper).on( "mousemove", { value: jawAndPitch }, function(event) {
+								if(sliderInUse == false) {
+									_jawAndPitch = event.data.value;
+									camTargetYaw = _jawAndPitch[0];
+									camTargetPitch = _jawAndPitch[1];
+									targetZoom = _jawAndPitch[2];
+									targetCamHeight = camHeightOffset + _jawAndPitch[3];
+									zoomSpeed = .1;
+									if(currentSlider != _jawAndPitch[4]){
+										currentSlider = _jawAndPitch[4]
+										increaseCountOf(_jawAndPitch[4], "MM");
+										//console.log("Name " + _jawAndPitch[4] + " " + parseInt(getDataCookie(_jawAndPitch[4])));
+									}
+								}
+							});
+							
+							var ctrlGrpSliderCol = document.createElement("div");
+							var ctrlGrpTextCol = document.createElement("div");
+							var ctrlGrpButtonCol = document.createElement("div");
+							
+							ctrlGrpSliderCol.className = "ctrlGrpSliderCol";
+							if(sliderCollection[sliderGrp][slider].length == 9) ctrlGrpSliderCol.className += " " + sliderCollection[sliderGrp][slider][8];
+							ctrlGrpTextCol.className = "ctrlGrpTextCol";
+							ctrlGrpButtonCol.className = "ctrlGrpButtonCol";
+							
+							ctrlGrpTextCol.innerHTML = languageMapping["label_" + sliderCollection[sliderGrp][slider][1]];
+							if(languageFontSizeMapping["label_" + sliderCollection[sliderGrp][slider][1]] != null)
+								ctrlGrpTextCol.style.fontSize = "11px";
+
+							ctrlGrpSliderCol.innerHTML = "<input type='text' id='slider_" + sliderCollection[sliderGrp][slider][1] + "'/>";
+							ctrlGrpButtonCol.innerHTML = "<a class='tooltip tooltip" + toolTipAlignment + "' href='#'><input type='button' class='reload' onclick='reset(\"" + sliderCollection[sliderGrp][slider][1] + "\","+sliderCollection[sliderGrp][slider][3]+",true"+")'><span >" +  languageMapping['resetBtn_' + sliderCollection[sliderGrp][slider][1]] + "</span></input></a>";
+							
+							ctrlgrpWrapper.appendChild(ctrlGrpTextCol);
+							ctrlgrpWrapper.appendChild(ctrlGrpSliderCol);
+							ctrlgrpWrapper.appendChild(ctrlGrpButtonCol);
+							
+							ctrlgrp.appendChild(ctrlgrpWrapper);
+						}
+						
+						if(sidebarAlignment == "sidebarLeft"){
+							document.getElementById(sidebarAlignment).appendChild(ctrlgrp);
+						}else {
+							var node = document.getElementById("settingsSliderGrp");
+							document.getElementById(sidebarAlignment).insertBefore(ctrlgrp, node);
+						}
+					}
+
+					transformSliders();
+
+				}
+				
+				function openFaceGenerator(){
+					
+					$("#sidebarRight").show();
+					$("#sidebarLeft").show();
+					
+					var timeStartStamper = new Date();
+					setDataCookie("timeStart", timeStartStamper.getTime());
+					
+					checkForCookies();
+					generateSliders();
+					
+					$( "#generalSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#eyesSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#eyebrowsSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#noseSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#outerfaceSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#mouthSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#jawSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#makeUpSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});
+					$( "#settingsSliderGrp" ).draggable({handle: ".ctrlgrpHeader"});	
+					
+					$("#generalSliderGrp").data({ 'originalLeft': $("#generalSliderGrp").css('left'), 'originalTop': $("#generalSliderGrp").css('top') });
+					$("#eyesSliderGrp").data({ 'originalLeft': $("#eyesSliderGrp").css('left'), 'originalTop': $("#eyesSliderGrp").css('top') });
+					$("#eyebrowsSliderGrp").data({ 'originalLeft': $("#eyebrowsSliderGrp").css('left'), 'originalTop': $("#eyebrowsSliderGrp").css('top') });
+					$("#noseSliderGrp").data({ 'originalLeft': $("#noseSliderGrp").css('left'), 'originalTop': $("#noseSliderGrp").css('top') });
+					$("#outerfaceSliderGrp").data({ 'originalLeft': $("#outerfaceSliderGrp").css('left'), 'originalTop': $("#outerfaceSliderGrp").css('top') });
+					$("#jawSliderGrp").data({ 'originalLeft': $("#jawSliderGrp").css('left'), 'originalTop': $("#jawSliderGrp").css('top') });
+					$("#mouthSliderGrp").data({ 'originalLeft': $("#mouthSliderGrp").css('left'), 'originalTop': $("#mouthSliderGrp").css('top') });
+					$("#makeUpSliderGrp").data({ 'originalLeft': $("#makeUpSliderGrp").css('left'), 'originalTop': $("#makeUpSliderGrp").css('top') });
+					$("#settingsSliderGrp").data({ 'originalLeft': $("#settingsSliderGrp").css('left'), 'originalTop': $("#settingsSliderGrp").css('top') });
+					
+				}
+				
+				function btnResetUI() {
+					$("#generalSliderGrp").css({ 'left': $("#generalSliderGrp").data('originalLeft'), 'top': $("#generalSliderGrp").data('originalTop')});
+					$("#eyesSliderGrp").css({ 'left': $("#eyesSliderGrp").data('originalLeft'), 'top': $("#eyesSliderGrp").data('originalTop')});
+					$("#eyebrowsSliderGrp").css({ 'left': $("#eyebrowsSliderGrp").data('originalLeft'), 'top': $("#eyebrowsSliderGrp").data('originalTop')});
+					$("#noseSliderGrp").css({ 'left': $("#noseSliderGrp").data('originalLeft'), 'top': $("#noseSliderGrp").data('originalTop')});
+					$("#outerfaceSliderGrp").css({ 'left': $("#outerfaceSliderGrp").data('originalLeft'), 'top': $("#outerfaceSliderGrp").data('originalTop')});
+					$("#jawSliderGrp").css({ 'left': $("#jawSliderGrp").data('originalLeft'), 'top': $("#jawSliderGrp").data('originalTop')});
+					$("#mouthSliderGrp").css({ 'left': $("#mouthSliderGrp").data('originalLeft'), 'top': $("#mouthSliderGrp").data('originalTop')});
+					$("#makeUpSliderGrp").css({ 'left': $("#mouthSliderGrp").data('originalLeft'), 'top': $("#mouthSliderGrp").data('originalTop')});
+					$("#settingsSliderGrp").css({ 'left': $("#settingsSliderGrp").data('originalLeft'), 'top': $("#settingsSliderGrp").data('originalTop')});
+					setDataCookie("interfaceResetClicked",(parseInt(getDataCookie("interfaceResetClicked"))+1));
+				}
+				
+				function openEvaluationBoard(){
+					$("#sidebarRight").hide();
+					$("#sidebarLeft").hide();
+					generateSliders();
+					resetAllSlider(true);
+					
+					evalMode = true;
+					
+					$('#container3D div canvas').css("width", eval3DWidth);
+					$('#container3D div canvas').css("height", eval3DHeight);
+					$('#container3D div canvas').css("border", "2px solid #fff");
+					$('#container3D div canvas').css("position", "absolute");
+					$('#container3D div canvas').css("top", 10);
+					$('#container3D div canvas').css("left", 10);
+					
+					$("#container3D").mouseover(function(){ mouseOverUIElement = false; });
+					$("#container3D").mouseout(function() { mouseOverUIElement = true; });
+				
+					camera.aspect = eval3DWidth / eval3DHeight;
+					camera.updateProjectionMatrix();
+
+					$('#evaluationBackground').show();
+					
+					if(evalMode == true) {
+						canvas3DHalfX = eval3DWidth / 2;
+						canvas3DHalfY = eval3DHeight / 2;
+					}
+					renderer.setSize( eval3DWidth, eval3DHeight );
+					render();
+					dataUrl = renderer.domElement.toDataURL("image/png");
+					
+					var showOnlyCompleteTrials = false;
+					
+					evalFilter();
+					
+					function evalFilter(){
+						$("#filterTable").empty();
+						$("#filterTable").append("<input type='checkbox' name='onlyCompleted' value='1' id='onlyCompletedTrials' class='css-checkbox'></input><label for='onlyCompletedTrials' class='css-checklabel'><div id='label_onlyCompletedTrials'>only complete trials</div></label><p></p>");
+						
+						//$("#onlyCompletedTrials").prop( "checked", showOnlyCompleteTrials ) 
+						$("#onlyCompletedTrials").prop("checked", showOnlyCompleteTrials);
+						$("#onlyCompletedTrials").change(function(){
+							console.log($("#onlyCompletedTrials").prop( "checked" ));
+							showOnlyCompleteTrials = $("#onlyCompletedTrials").prop( "checked" );
+							evalFilter();
+						});
+					
+						evalFilterSelection["trialid"] = new Array("label_trialID",languageMapping["label_theTrial"],"trialID","200px");
+						evalFilterSelection["latinSquare"] = new Array("label_taskID",languageMapping["label_theTask"],"taskID","200px");
+						evalFilterSelection["theGender"] = new Array("label_genderID",languageMapping["label_theGender"],"genderID","200px");
+						evalFilterSelection["theCountry"] = new Array("label_theCountryID",languageMapping["label_theCountry"],"theCountryID","200px");
+						evalFilterSelection["playingGames"] = new Array("label_playingGamesID",languageMapping["label_playingGames"],"playingGamesID","200px");
+						evalFilterSelection["watchingMovies"] = new Array("label_watchingMoviesID",languageMapping["label_watchingMovies"],"watchingMoviesID","200px");
+						evalFilterSelection["finalQuestion1"] = new Array("label_finalQuestion1ID",languageMapping["label_finalQuestion1"],"finalQuestion1ID","200px");
+						evalFilterSelection["finalQuestion2"] = new Array("label_finalQuestion2ID",languageMapping["label_finalQuestion2"],"finalQuestion2ID","200px");
+						evalFilterSelection["finalQuestion3"] = new Array("label_finalQuestion3ID",languageMapping["label_finalQuestion3"],"finalQuestion3ID","200px");
+						evalFilterSelection["finalQuestion4"] = new Array("label_finalQuestion4ID",languageMapping["label_finalQuestion4"],"finalQuestion4ID","200px");
+						evalFilterSelection["userUID"] = new Array("label_userUID","User UID","userUID","200px");
+						
+						var paramAllOrOnly = "all"
+						var phpURL = "getEvalCount.php"
+						if(showOnlyCompleteTrials == true) paramAllOrOnly += "&onlycomplete=yes";
+						//if(showOnlyCompleteTrials==true) phpURL = "getEvalCountOnly.php";
+						
+						for(var item in evalFilterSelection){
+							$.ajax({ async: true, crossDomain: false, cache: true, indexValue: item, type: "GET", url: "php/getEvalCount.php", data: item+"="+paramAllOrOnly, success: function(e) {	
+								var results = e.split("|");
+
+								var str = "<div class='sp_sub_table_row' id='" + evalFilterSelection[this.indexValue][0] + "'><div class='sp_sub_table_cell question' id='" + evalFilterSelection[this.indexValue][0] + "'>" + evalFilterSelection[this.indexValue][1] + "&nbsp;<i>(" + results.length + ")</i></div><div class='sp_sub_table_cell'><select id='" + this.indexValue + "' multiple='multiple' class='chosen-select-wide'></select></div></div>";
+								$("#filterTable").append(str);
+								$("#"+this.indexValue).append(new Option()); 
+								
+								if(this.indexValue != "theCountry") for(var i = 0; i < results.length; i++) $("#"+this.indexValue).append(new Option(results[i])); 
+								else for(var i = 0; i < results.length; i++) $("#"+this.indexValue).append(new Option(countryList["en"][parseInt(results[i])])); 
+								
+								var config = {'.chosen-select-wide'      : {width:evalFilterSelection[this.indexValue][3]}};
+								for (var selector in config) { $("#"+this.indexValue).chosen(config[selector]); }
+								$("#"+this.indexValue).change(function () { evalFace(); });
+							}});	
+						}
+						
+						$("#filterTable").append("<input id='saveEvalImageButton' type='button' class='button inEval' value='Save Image'></input>");
+						$("#filterTable").append("<input id='resetEvalViewButton' type='button' class='button inEval' value='Reset View'></input>");
+						$("#filterTable").append("<h3>The Tasks</h3>");
+						$("#filterTable").append("<p>A: Create <b>an arbitrary face</b>.</p>");
+						$("#filterTable").append("<p>B: Create <b>a repulsive face</b>..</p>");
+						$("#filterTable").append("<p>C: Create <b>a sympathetic, female hero</b>.</p>");
+						$("#filterTable").append("<p>D: Create <b>a sympathetic, male hero</b>.</p>");
+						$("#filterTable").append("<p>E: Create <b>a female villain</b>.</p>");
+						$("#filterTable").append("<p>F: Create <b>a male villain</b>.</p>");
+						
+						$("#saveEvalImageButton").click(function(){
+							saveToDisk("evalAvatar.png");
+						});
+						
+						$("#resetEvalViewButton").click(function(){
+							camTargetYaw = 1.00;
+							camTargetPitch = 0;
+							targetZoom = 10
+						});
+						
+						evalFace();
+					}
+					
+					 
+					function evalFace() {					
+						$("#faceResultTable").empty();
+						$("#demoResultTable").empty();
+						
+						var str = "";
+						
+						for(var item in evalFilterSelection){
+							if(item != "theCountry" ){
+								var selectedItems = $("#" +item).val();
+								for(var field in selectedItems){
+									str += item + "[]=" + selectedItems[field]+"&";
+								}
+							} else {
+								var selectedTheCountry = [];
+								$('#theCountryID option:selected').each(function(){
+									selectedTheCountry.push($(this).text());
+								});
+
+								//console.log("selectedTheCountry " + selectedTheCountry);
+								for(var country in selectedTheCountry){
+									countryIndex = jQuery.inArray( selectedTheCountry[country], countryList["en"] );
+									//console.log("selectedTheCountry: " + selectedTheCountry[item] + " item: " + countryIndex);
+									str += "theCountry[]=" + countryIndex+"&";
+								}
+							}
+						}
+						
+						selectedTrials = $("#trialID").val();
+						for(var item in selectedTrials){
+							str += "trialid[]=" + selectedTrials[item]+"&";
+						}
+						
+						str = str.substr(0, (str.length - 1)) 
+						//console.log(str);
+						
+						var faceDataEval = new Array();
+						var aggregatedData = new Array();
+						
+						//console.log("str" + str);
+						if(showOnlyCompleteTrials==true) str += "&onlycomplete[]=yes";
+						loadFaceWithStr(str);
+						
+					}
+
+					console.log("eval mode");
+				}
+				
+				function loadFaceWithStr(str) {
+					
+					$.ajax({ async: true, crossDomain: false, cache: true, type: "POST", url: "php/getAvgData.php", data: str, success: function(response) {
+						//console.log(response);
+						if(response!=""){
+							
+							var responseColumns = response.split("|");
+							
+							document.getElementById("resultsTitle").innerHTML = "No Results";
+							document.getElementById("demoTitle").innerHTML = "";
+							
+							//search for MaxRsts
+							
+							function searchForMax(_theColumn, _theSearchValues){
+								var maxValue = 0.0;
+								for(var _theColumn in responseColumns) {
+									var responseNameAndValue = responseColumns[_theColumn].split("=");
+									var fieldNameAndCount = responseNameAndValue[0].split("_");
+									
+									var field = fieldNameAndCount[0];
+									if ( field.search(_theSearchValues) > 0 ){
+										var theValue = parseFloat(responseNameAndValue[1]);
+										var theRstArray = new Array();
+										if ( theValue > maxValue ) maxValue = theValue;
+									}
+								}
+								return maxValue;
+							}
+							
+							maxRstValue = searchForMax(column, "Rst");
+							maxMMValue = searchForMax(column, "MM");
+							maxClkValue = searchForMax(column, "Clk");
+							maxClickedValue = searchForMax(column, "Clicked");
+							
+							for(var column in responseColumns) {
+								var responseNameAndValue = responseColumns[column].split("=");
+								var fieldNameAndCount = responseNameAndValue[0].split("_");
+								
+								var field = fieldNameAndCount[0];
+								var count = "";
+								
+								if (fieldNameAndCount[1] != null) count = " <i>(" + fieldNameAndCount[1] + ")</i>"
+								
+								var value = responseNameAndValue[1];
+								var resultRow = document.createElement("div"); resultRow.className = "sp_sub_table_row";
+								var resultName = document.createElement("div"); resultName.className = "sp_sub_table_cell question";
+								var resultValue = document.createElement("div"); resultValue.className = "sp_sub_table_cell";
+								var resultValueBar = document.createElement("div"); resultValueBar.className = "sp_sub_table_cell_bar";
+								
+								var barWidth = 130;
+								var valBarWidth = ((value * barWidth) - (barWidth / 2));
+								var valBarOffsetVal = 0;
+										
+								resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count; 
+								resultValue.innerHTML = value;
+							
+								resultRow.appendChild(resultName);
+								resultRow.appendChild(resultValue);
+									
+								if( field == "found"){
+									document.getElementById("resultsTitle").innerHTML = "Average from " + value + " results";
+									document.getElementById("demoTitle").innerHTML = value + " demographic data sets";
+								}else if(field == "latinSquare" ||field == "trialid" || field == "latinSquare"|| field == "timeDate"|| field == "cookies"|| field == "webgl"|| field == "acceptTOU" ||field == "sessions" || field == "userUID" || field == "systemLanguage"|| field == "userLanguage" || field == "ipadress" || field == "theAge" || field == "theGender" || field == "theCountry" ||  field == "appVersion" || field == "product" || field == "playingGames" || field == "watchingMovies" || field == "screenHeight"  || field == "screenWidth" || field == "browser"|| field == "appCodeName" || field == "platform"|| field == "browser" )
+								{
+									if(field == "theCountry") {
+										var str = "";
+										value = value.substr(0, (value.length - 1))
+										var values = value.split(",");
+										for(vals in values){
+											var countryAndCount = values[vals].split(" ");
+											str += "<b>" + countryList[selectedLanguage][parseInt(countryAndCount[0])] +"</b> " + " <i>(" + countryAndCount[1] +")</i><br />";
+										}
+										var values = values[0].split(",");					
+										resultValue.innerHTML = str;
+									}
+									
+									document.getElementById("demoResultTable").appendChild(resultRow);
+									
+								} else if ( field == "faceGender" || field == "faceStyle" || field == "skinDetails" || field == "skinColor" || field == "hairColor" || field == "eyeColor" || field == "eyeShape" || field == "eyeOpening" ||  field == "eyeSize" || field == "eyeHeight" || field == "eyeDistance" || field == "eyeDepth" || field == "eyeRotation" || field == "eyebrowsColor" || field == "eyebrowsShape" || field == "eyebrowsLine" || field == "noseShape" || field == "noseLength" || field == "noseWidth" || field == "noseBridge" || field == "foreheadHeight" || field == "cheeksBone" || field == "jawShape" || field == "jawChin" || field == "jawLength" || field == "earSize" || field == "throatSize" || field == "lipRatio" || field == "mouthVolume" || field == "mouthWidth" || field == "mouthHeight" || field == "mouthDepth" || field == "mouthOverlap" || field == "noseCartilage" || field == "eyeShadow" || field == "lipStick" || field == "rouge" || field == "finalQuestion1" || field == "finalQuestion2" || field == "finalQuestion3" || field == "finalQuestion4" ) {
+									dataArray[field] = parseFloat(value);
+									//console.log("field: " + field + " - "+ dataArray[field]);
+									resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count;
+									
+									if( value < 1 && field != "finalQuestion1" && field != "finalQuestion2" && field != "finalQuestion3" && field != "finalQuestion4"	){
+									
+										if( field == "lipStick" || field == "eyeShadow" ||  field == "rouge" || field == "faceStyle" ){
+											valBarWidth = ((value * barWidth));
+											valBarOffsetVal = 0;
+										} else {	
+											if (valBarWidth < 0){
+												valBarWidth = valBarWidth * -1;
+												valBarOffsetVal = (barWidth / 2) - valBarWidth;
+											} else {
+												valBarOffsetVal = (barWidth / 2);
+											}												
+										}
+										var valBarOffset = "translate(" +  valBarOffsetVal + "px, -20px)";
+										valBarWidth = valBarWidth + 1;
+										
+										resultValueBar.style.width  =  valBarWidth + "px";
+										resultValueBar.style.transform  =  valBarOffset;
+										resultValue.appendChild(resultValueBar);
+									}
+									document.getElementById("faceResultTable").appendChild(resultRow);
+
+									//resultValueBar.css("transform",valBarOffset);
+								
+								} else if ( field.search("Clk") > 0 ) {						
+									resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count;
+									valBarWidth = ((value / maxClkValue) * barWidth);
+									resultValueBar.style.width  =  valBarWidth + "px";
+									valBarOffsetVal = 0;
+									var valBarOffset = "translate(" +  valBarOffsetVal + "px, -20px)";
+									
+									resultValueBar.style.transform  =  valBarOffset;
+									resultValue.appendChild(resultValueBar);
+									document.getElementById("faceResultTable").appendChild(resultRow);										
+								} else if ( field.search("Clicked") > 0 ) {						
+									resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count;
+									valBarWidth = ((value / maxClickedValue) * barWidth);
+									resultValueBar.style.width  =  valBarWidth + "px";
+									valBarOffsetVal = 0;
+									var valBarOffset = "translate(" +  valBarOffsetVal + "px, -20px)";
+									
+									resultValueBar.style.transform  =  valBarOffset;
+									resultValue.appendChild(resultValueBar);
+									document.getElementById("faceResultTable").appendChild(resultRow);								
+								} else if ( field.search("MM") > 0 ) {						
+									resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count;
+									valBarWidth = ((value / maxMMValue) * barWidth);
+									resultValueBar.style.width  =  valBarWidth + "px";
+									valBarOffsetVal = 0;
+									var valBarOffset = "translate(" +  valBarOffsetVal + "px, -20px)";
+									
+									resultValueBar.style.transform  =  valBarOffset;
+									resultValue.appendChild(resultValueBar);
+									document.getElementById("faceResultTable").appendChild(resultRow);
+								} else if ( field.search("Rst") > 0 ) {						
+									resultName.innerHTML = ((languageMapping["label_" + field] == null) ? field : languageMapping["label_" + field]) + count;
+									valBarWidth = ((value / maxRstValue) * barWidth);
+									resultValueBar.style.width  =  valBarWidth + "px";
+									valBarOffsetVal = 0;
+									var valBarOffset = "translate(" +  valBarOffsetVal + "px, -20px)";
+									
+									resultValueBar.style.transform  =  valBarOffset;
+									resultValue.appendChild(resultValueBar);
+									document.getElementById("faceResultTable").appendChild(resultRow);
+								} else {
+									if(field == "timeDuration" || field == "timeMainSessionTime") resultValue.innerHTML = round(parseFloat((value) / 1000 / 60),2) + " min ";
+									if(field == "timeWelcome" || field == "timeStart"|| field == "timeEnd")
+									{
+										myDate = new Date(parseInt(value));
+										resultValue.innerHTML = myDate.toLocaleString();
+									}
+									document.getElementById("faceResultTable").appendChild(resultRow);
+								}
+							}
+							mapCookiesToFace();
+							
+						}else{
+							document.getElementById("resultsTitle").innerHTML = "No Results";
+							document.getElementById("demoTitle").innerHTML = "";
+							$('#container3D div canvas').hide();
+						}
+					}});
+				}
+				
+				function closeRendering(){$("#imageHolder").fadeOut(200, function(){$("#imageButtonBar").fadeOut(100);})}
+				
+				function checkForCookies(){
+					//console.log($.cookie());
+					//if(parseInt(getDataCookie("userUID")) == 0 ) window.location.href = "index.html"
+					//if(parseInt(getDataCookie("userUID")) == 0 ) console.log("error");
+					//console.log($.cookie());
+					//console.log("canResumeSession: " + $.cookie("canResumeSession"))
+					if( $.cookie("sessionFinished") == 0 ) {
+						$("#alertBoxBackground").fadeIn(200);
+						infoBoxOpen = true;
+						document.getElementById("alertBoxTitle").innerHTML = languageMapping["oldSession"];
+						document.getElementById("alertBoxText").innerHTML = languageMapping["restoreSession"] + "<div class='alertBoxButtonBar'><a id='yes' class='button' href='#' width='48px' >" +  languageMapping["restoreYes"] + "</a><a id='no' class='button' href='#' width='48px' >" +  languageMapping["restoreNo"] + "</a></div>";
+						
+						$("#yes").click(function(e) {
+							$("#alertBoxBackground").fadeOut(0,function(){
+								$("#infoBoxBackground").fadeIn(0, function(){
+									infoBoxOpen = true;
+									//initArrayfromCookie();
+									mapCookiesToFace();
+									loadCounterCookies();
+								});
+							});
+						});
+						
+						$("#no").click(function(e) {
+							$("#alertBoxBackground").fadeOut(200, function(){
+								//resetAllSlider(true);
+							});
+							remapDataArray();
+							btnLoadFromXML("todo");
+							resetAllSlider(true);
+							resetCounterCookies();
+							$("#okay").click(function(){
+								$("#okay").off("click");
+							});
+							infoBoxOpen = false;
+						});
+						
+					}else{
+						remapDataArray();
+						resetAllSlider(true);
+						
+						btnLoadFromXML("todo");
+						$("#okay").click(function(){
+							$("#okay").off("click");
+						});
+					}
+					
+					$.cookie("sessionFinished", 0);
+					
+				}
+				
+				function mapCookiesToFace(){
+					function mapValues() {
+						if(!evalMode && !agenMode) loadCounterCookies();
+						
+						for(var slidergrp in sliderCollection) {
+							for(var slider in sliderCollection[slidergrp]){
+								//console.log("value : " + sliderCollection[slidergrp][slider][1] +" ---- cookie: " + parseFloat(getDataCookie(sliderCollection[slidergrp][slider][1])));
+								if(evalMode || agenMode){
+									reset(sliderCollection[slidergrp][slider][1], dataArray[sliderCollection[slidergrp][slider][1]] * sliderCollection[slidergrp][slider][2]); 
+									
+								}else{
+									if(parseFloat(getDataCookie(sliderCollection[slidergrp][slider][1])) != 0){
+										reset(sliderCollection[slidergrp][slider][1], parseFloat(getDataCookie(sliderCollection[slidergrp][slider][1]) * sliderCollection[slidergrp][slider][2])); 
+									}
+								}
+							}				
+						}
+						
+						document.getElementById("statusText").innerHTML = languageMapping["mapCookies"];
+						computeMorphing("all");
+						computeBlending("all");
+						$("#statusText").fadeOut(200, function(){if(!evalMode && !agenMode) btnLoadFromXML("todo");});
+					}
+					
+					document.getElementById("statusText").innerHTML = languageMapping["mappingCookies"];
+					$("#statusText").fadeIn(200, function(){mapValues()});
+				}
+				
+				$("body").css("overflow","hidden");
+			
+				if(!selectedLanguage){
+					var selectedLanguage = navigator.language || navigator.userLanguage; 
+					if(selectedLanguage != "de") selectedLanguage = "en";	
+				}
+			
+				//$("<div id='infoBoxBackground'><div id='infoBox'><div id='infoBoxTitle'></div><div id='infoBoxImage'></div><div id='infoBoxText'></div><div id='buttonHolder'></div></div></div>").appendTo( document.body );
+				
+				$("#infoBoxBackground").hide();
+				$("#alertBoxBackground").hide();
+				var dataUrl;
+				
+				function renderFace() {
+					var selectedSize = $('#renderSizeID option:selected').val();
+
+					var renderWidth = renderSizeArray[selectedSize][0];
+					var renderHeight = renderSizeArray[selectedSize][1];
+				
+					$('#container3D').css('width', renderWidth);
+					$('#container3D').css('height', renderHeight);
+
+					camera.aspect = renderWidth / renderHeight;
+					camera.updateProjectionMatrix();
+					renderer.setSize( renderWidth, renderHeight );
+					render();
+					
+					dataUrl = renderer.domElement.toDataURL("image/png");
+					
+					$('#container3D').css('width', '100%');
+					$('#container3D').css('height', '100%');
+					renderer.setSize( window.innerWidth, window.innerHeight );
+					camera.aspect = window.innerWidth / window.innerHeight;
+					camera.updateProjectionMatrix();
+					render();
+					
+					document.getElementById("statusText").innerHTML = languageMapping["clickOnFace"];
+
+					$("#imageHolder").css("height","0");
+					$("#imageButtonBar").css("left",(renderWidth + 1)+"px");
+					$("#imageHolder").show();
+					
+					$("#imageHolder").animate({height: renderHeight}, 1000, function(){$("#imageButtonBar").fadeIn(200);});
+					$("#imageItself").html("<a href='" + dataUrl + "'><img src='" + dataUrl + "' name='virtual-face' id='faceImg'></a>");
+
+				}
+				
+				function saveToDisk(fileName) {
+					var fileURL = renderer.domElement.toDataURL("image/png");
+					if (!window.ActiveXObject) {
+						var save = document.createElement('a');
+						save.href = fileURL;
+						save.target = '_blank';
+						save.download = fileName || fileURL;
+						var evt = document.createEvent('MouseEvents');
+						evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+						save.dispatchEvent(evt);
+						(window.URL || window.webkitURL).revokeObjectURL(save.href);
+					}else if(!!window.ActiveXObject && document.execCommand){
+						var _window = window.open(fileURL, "_blank");
+						_window.document.close();
+						_window.document.execCommand('SaveAs', true, fileName || fileURL)
+						_window.close();
+					}
+				}
+
+				function phpSubmission() {
+					document.getElementById("statusText").innerHTML =  languageMapping["sending"];
+					
+					$("#alertBox").fadeOut(200, function(){
+						$("#innerAlertBox").hide();
+						
+						$("#statusText").fadeIn(200, function(){
+							var dataQuery = "";
+							for(var item in dataArray){
+								//dataQuery += item + "="+ dataArray[item] + "&";
+								var value = dataArray[item];
+								if(value == null) value = 0;
+								dataQuery += item + "="+ value + "&";
+							}
+							dataQuery = dataQuery.substring(0, dataQuery.length - 1);
+																			
+							/*console.log("Cookies: " + $.cookie());
+							for(var item in dataArray){
+								console.log("dataArray[" + item +"] = " + dataArray[item]);
+							}
+							console.log("Sending: " + dataQuery);*/
+							
+							var xmlhttp;
+							if (window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();  // code for IE7+, Firefox, Chrome, Opera, Safari
+							else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+							
+							var response;
+							xmlhttp.onreadystatechange=function()
+							{
+								if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+								{
+									response = xmlhttp.responseText;
+
+								}
+							}
+							xmlhttp.open("POST","php/saveData.php",false);
+							xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+							xmlhttp.send(dataQuery);
+							
+							$("#statusText").fadeOut(100, function(){
+								
+								//console.log(response);
+								if(response == "success"){			
+									var dataStr = "useruid="+getDataCookie("userUID");
+									//console.log("dataStr: " + dataStr);
+									$.ajax({ async: true, crossDomain: false, cache: true, type: "GET", url: "php/getDataCount.php", data: dataStr, success: function(e) {	
+										var results;
+										var yourTrialID;
+										
+										if(e.split("|") != ""){
+											results = e.split("|"); 											
+											var subResults = results[results.length-1].split("-"); 
+											yourTrialID = subResults[0];
+										} else {
+											results = e; 
+											var subResults = results.split("-"); 
+											yourTrialID = subResults[0];
+										}
+										
+										//console.log("$.cookie(userUID): " + getDataCookie("userUID"));
+										//console.log("results: " + results);
+										//console.log("yourTrialID: " + yourTrialID);
+
+										document.getElementById("alertBoxTitle").innerHTML = languageMapping["thankYou"];
+
+										document.getElementById("alertBoxText").innerHTML = languageMapping["success"] + "&nbsp;";
+										document.getElementById("alertBoxText").innerHTML += languageMapping["yourID"] + " " + yourTrialID + ".<p></p>" ;
+										
+										if(parseInt($.cookie("sessions")) < 6){
+											$.cookie("sessionFinished",1);
+											
+											document.getElementById("alertBoxText").innerHTML += languageMapping["youHave1"] + "&nbsp;" + parseInt($.cookie("sessions")) + "&nbsp;" + languageMapping["youHave2"] + "<p></p>";
+											document.getElementById("alertBoxText").innerHTML += languageMapping["pleaseContinue"] + "<p></p>";
+											document.getElementById("alertBoxText").innerHTML += "<a id='restart' class='button' href='#' width='48px' >" + languageMapping["afterSubmitNextFace"] + "</a>";		
+											
+										} else {
+											//console.log("hier bin ich");
+											document.getElementById("alertBoxText").innerHTML = languageMapping["finalMessage"] + "<p></p>";
+											document.getElementById("alertBoxText").innerHTML += "<a id='newParticpiant' class='button' href='#' width='48px' >" + languageMapping["newParticipant"] + "</a>";
+											document.getElementById("alertBoxText").innerHTML += "<a id='openAGen' class='button' href='" + documentRoot + "faceMaker.html?param=agen&useruid=" + parseInt($.cookie("userUID")) + "' width='48px' >" + languageMapping["openAgen"] + "</a>";
+										}
+										
+										$.cookie("canResumeSession", 0);
+										
+										$("#sidebarRight").fadeOut(200);
+										$("#sidebarLeft").fadeOut(200);
+										
+										infoBoxOpen = true;
+										
+										$("#alertBox").fadeIn(100, function(){
+											
+											$("#continue").click(function(e) {
+												
+												$("#alertBoxBackground").fadeOut(200);
+												openAvatarRenderer();
+											});
+											$("#restart").click(function(e) {
+												
+												resetAllSlider(false);
+												resetCounterCookies();
+												
+												$("body").empty();
+												$("body").load("faceMaker.html");
+											});
+											$("#newParticpiant").click(function(e) {
+												//console.log("window.location.href: "+window.location.href.replace("&","&amp;"));
+												openMail();
+											});
+										});
+									}});	
+									
+									
+									
+
+								}else{
+									document.getElementById("alertBoxText").innerHTML = "<span id='innerAlertBoxText'>" + response + "</span><p></p><a id='continue' class='button' href='#' width='48px' >" + languageMapping["afterSubmitContinue"] + "</a>";			
+									document.getElementById("alertBoxTitle").innerHTML = languageMapping["error"];
+									
+									$("#alertBox").fadeIn(100, function(){
+										$("#continue").click(function(e) {
+											infoBoxOpen = false;
+											$("#alertBoxBackground").fadeOut(200);
+											
+											//openAvatarRenderer();
+										});
+									});
+								}
+							});
+						});
+					});
+				}
+				
+				function openFacebook(){
+					window.open("https://www.facebook.com/sharer/sharer.php?u=" + documentRoot + "faceMaker.html?param%3Dagen%26useruid%3D"+dataArray["userUID"], '_blank');
+				}
+				
+				function openGooglePlus(){
+					window.open("https://plus.google.com/share?url=" + documentRoot + "faceMaker.html?param%3Dagen%26useruid%3D"+dataArray["userUID"], '_blank');
+				}
+				
+				function openLinkedin(){
+					window.open("https://www.linkedin.com/shareArticle?mini=true&url=" + documentRoot + "faceMaker.html?param%3Dagen%26useruid%3D" + dataArray["userUID"] + "&title=faceMaker&summary=&source=", '_blank');
+				}
+				
+				function openTwitter(){
+					window.open("https://twitter.com/home?status=" + documentRoot + "faceMaker.html?param%3Dagen%26useruid%3D"+dataArray["userUID"], '_blank');
+				}
+				
+				function openMail(){
+					window.location.href = "mailto:?subject=My%20faceMaker%20Results!&body=Link:%20" + documentRoot + "faceMaker.html?param=agen%26useruid="+dataArray["userUID"]+"%0D%0A%0D%0A"+"Create your own faces at: "+documentRoot;
+				}
+				function openMailWithProblem(){
+					var browserInfo = getBrowser("all");
+					window.location.href = "mailto:schwindv@hdm-stuttgart.de?subject=faceMaker%20Problem!&body=Problem:%20%0D%0A" +"UserID:%20" + dataArray["userUID"]+"%0D%0ABrowser:%20"+browserInfo[0]+"%20"+browserInfo[1];
+					//console.log("Cookies:" +  $.cookie())
+				}
+				
+				function round(zahl,n){
+					var faktor;
+					faktor = Math.pow(10,n);
+					return (Math.round(zahl * faktor) / faktor);
+				}
+				
+				function submitFaceQuestion() {
+					
+					infoBoxOpen = false;
+					
+					var timeEndStamper = new Date();
+					setDataCookie("timeDate", new Date());
+					setDataCookie("timeEnd", timeEndStamper.getTime());
+					setDataCookie("timeDuration", parseFloat(getDataCookie("timeEnd")) - parseFloat(getDataCookie("timeWelcome")));
+					setDataCookie("timeMainSessionTime", parseFloat(getDataCookie("timeEnd")) - parseFloat(getDataCookie("timeStart")));
+					setDataCookie("screenHeight", window.innerHeight);
+					setDataCookie("screenWidth", window.innerWidth);
+					setDataCookie("platform", navigator.platform);
+					setDataCookie("browser", getBrowser());
+					setDataCookie("product", navigator.product);		
+					setDataCookie("appCodeName", navigator.appName);	
+					setDataCookie("sessions", (parseInt(getDataCookie("sessions"))) + 1);
+							
+					findMetaData();
+					
+					$("#innerAlertBox").show();
+					phpSubmission();
+				}
+				
+				function fallbackStart(){
+
+					resetAllSlider(false);
+					resetCounterCookies();
+					clearListCookies();
+					removeAllDataCookies();
+					clearOldUserUID();
+					deleteNeedTask();
+					deleteCookieString();
+					setDataCookie("acceptTOU", 0);
+					$.cookie("sessionFinished", 1);
+					$.cookie("sessions",0)
+					window.location.assign(documentRoot);
+					
+				}
+				
+				function restartFaceMaker(){
+					
+					resetAllSlider();
+					start();
+					loadLanguage();	
+					init();
+					animate();
+				}
+				
+				function openAvatarRenderer(_loadTrialID,_loadUserUID) {
+					//if(_loadTrialID == null) _loadTrialID == 1;
+					generateSliders();
+					resetAllSlider(true);
+					agenMode = true;
+					dataArray["userUID"] = _loadUserUID;
+
+					
+					var requestStr = "";
+					if(_loadTrialID) requestStr += "trialid=" + _loadTrialID;
+				//	else requestStr += "trialid=all";
+					if(_loadTrialID && _loadUserUID) requestStr += "&";
+					if(_loadUserUID) requestStr += "useruid=" + _loadUserUID;
+					//console.log("requestStr:" + requestStr);
+					
+					$.ajax({ async: true, crossDomain: false, cache: true, type: "GET", url: "php/getDataCount.php", data: requestStr, success: function(e) {	
+						var results = e.split("|"); 
+						
+						for(var i = 0; i < results.length; i++){
+							var subResults = results[i].split("-"); 
+							var optionString = languageMapping["the" + subResults[1]] + " (ID:" + subResults[0] + ")";
+							$("#chooseTrialID").append(new Option(optionString,subResults[0])); 
+							
+						}
+						
+						$("#chooseTrialID").prop("selectedIndex", results.length-1);
+						var config = {'.chosen-select-wide'      : {width:"250px"}};
+						var str = "trialID[]="+results[results.length-1];
+
+						loadFaceWithStr(str);
+						
+						for (var selector in config) { $("#chooseTrialID").chosen(config[selector]); }
+						$("#chooseTrialID").change(function () { 
+							var str = "trialID[]="+$('#chooseTrialID option:selected').val();
+							loadFaceWithStr(str);
+						});
+						
+						
+					}});						
+							
+					//mapfToFace();
+					infoBoxOpen = false;
+					
+					$( "#renderAvatarBox" ).draggable({ handle: "p" });
+					$("#containerInterface" ).fadeOut(250);
+					<!--$("select[name='renderSize']").empty();-->
+					renderSizeArray[0] = new Array(720,480,"Large");
+					renderSizeArray[1] = new Array(400,400,"Big");
+					renderSizeArray[2] = new Array(256,256,"Thumb Size");
+					renderSizeArray[3] = new Array(180,180,"Facebook");
+					renderSizeArray[4] = new Array(128,128,"Yahoo");
+					renderSizeArray[5] = new Array(96,96,"Skype");
+					renderSizeArray[6] = new Array(80,80,"Linkedin");
+					renderSizeArray[7] = new Array(73,73,"Twitter");
+					renderSizeArray[8] = new Array(50,50,"Gravatar");
+					
+					for(var i = 0; i < renderSizeArray.length; i++){
+						var optionString = renderSizeArray[i][0] + " x " + renderSizeArray[i][1] + " (" + renderSizeArray[i][2] + ")";
+						$("#renderSizeID").append(new Option(optionString,i)); 
+					}
+					$("#renderSizeID").prop("selectedIndex", 2);
+					var config = {'.chosen-select-wide'      : {width:"250px"}};
+					for (var selector in config) { $("#renderSizeID").chosen(config[selector]); }
+					
+					$("#renderSizeID").change(function () { 
+						//var str = "trialID[]="+$('#renderSizeID option:selected').val();
+						//loadFaceWithStr(str);
+						renderFace();
+					});
+					/*
+					var appendStringSize = "";
+					for(var i = 0; i < renderSizeArray.length; i++) {
+						appendStringSize += "<div class='sp_table_row'>";
+						appendStringSize += "<div class='sp_sub_table_cell'><input type='radio' name='radioGrp_chooseRenderSize' value='" + i + "' id='radioBox_chooseRenderSize_" + i + "' class='css-radiobox' /><label for='radioBox_chooseRenderSize_" + i + "' class='css-radiolabel'><div id='chooseRenderSize" + i + "'>" + renderSizeArray[i][0] + " x " + renderSizeArray[i][1] + " (" + renderSizeArray[i][2] + ")</div></label></div>";
+						appendStringSize += "</div>";
+					}
+					document.getElementById("chooseRenderSize").innerHTML = appendStringSize;
+					$("input[name='radioGrp_chooseRenderSize'][value=2]").attr('checked', true);
+*/
+					
+					var backgroundArray = new Array(8); //lightsetting, cube visible, title, dirname
+					backgroundArray[0] = new Array(3,false, languageMapping['backgroundArrayTitle0'], "Standard", "FaceMaker");
+					backgroundArray[1] = new Array(3,true, languageMapping['backgroundArrayTitle1'], "langholmen", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=49'>humus.name</a>");
+					backgroundArray[2] = new Array(2,true, languageMapping['backgroundArrayTitle2'], "NissiBeach2", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=100'>humus.name</a>");
+					backgroundArray[3] = new Array(2,true, languageMapping['backgroundArrayTitle3'], "Tenerife", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=83'>humus.name</a>");
+					backgroundArray[4] = new Array(2,true, languageMapping['backgroundArrayTitle4'], "DallasW", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=23'>humus.name</a>");
+					backgroundArray[5] = new Array(1,true, languageMapping['backgroundArrayTitle5'], "SaintLazarusChurch2", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=22'>humus.name</a>");
+					backgroundArray[6] = new Array(2,true, languageMapping['backgroundArrayTitle6'], "SwedishRoyalCastle", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=49'>humus.name</a>");
+					backgroundArray[7] = new Array(2,true, languageMapping['backgroundArrayTitle7'], "Maskonaive2", "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=78'>humus.name</a>");
+					backgroundArray[8] = new Array(2,true, languageMapping['backgroundArrayTitle8'], "Ryfjallet" , "Background Texture CCA3.0 by <a target='_blank' href='http://www.humus.name/index.php?page=Textures&ID=37'>humus.name</a>");
+
+					var appendString = "";
+					for(var i = 0; i < backgroundArray.length; i++) {
+						$("#chooseBackgroundID").append(new Option(backgroundArray[i][2],i)); 
+					}
+					$("#chooseBackgroundID").prop("selectedIndex", 0);
+					var config = {'.chosen-select-wide'      : {width:"250px"}};
+					for (var selector in config) { $("#chooseBackgroundID").chosen(config[selector]); }
+								
+					$('#chooseBackgroundID').change(function(){
+						lightSetting = backgroundArray[parseInt($(this).val())][0];
+						changeSkyMaterial(backgroundArray[parseInt($(this).val())][3]);
+						btnChangeLight();
+						document.getElementById("statusText").innerHTML = backgroundArray[parseInt($(this).val())][2];
+						if(skyMesh) skyMesh.visible = backgroundArray[parseInt($(this).val())][1];
+						document.getElementById("backgroundCopyright").innerHTML = backgroundArray[parseInt($(this).val())][4];
+					});
+					
+					$("#copyrightBox").fadeIn(250);
+					
+					$("#copyrightBox").click(function(event){
+						btnLoadFromXML('aboutFaceMaker');
+					});
+					
+					$("#newface").fadeIn(250);
+
+					$("#saveImageButton").click(function() {
+						saveToDisk("MyAvatar.png");
+					});
+					
+					$("#sendPerMail").on("click", function() {
+						location = "mailto:?subject=" + languageMapping['emailHeader'] + "&body=" + languageMapping['emailText'] + "&attachment="+ dataUrl;
+					});
+					
+					$("#renderAvatarBox").mouseover(function(){ mouseOverUIElement = true; });
+					$("#renderAvatarBox").mouseout(function() { mouseOverUIElement = false;});
+					$("#copyrightBox").mouseover(function(){ mouseOverUIElement = true; });
+					$("#copyrightBox").mouseout(function() { mouseOverUIElement = false;});
+					
+					$("#renderAvatarBox").fadeIn(250);
+					//faceMorphingVerts = undefined;
+				}
+				
+				function btnSubmit() {
+
+					setDataCookie("sendClicked", parseInt(getDataCookie("sendClicked")) + 1);	
+					$("#alertBoxBackground").fadeIn(200);
+
+					infoBoxOpen = true;
+					document.getElementById("alertBoxTitle").innerHTML = languageMapping["finalQuestions"];
+					$("#innerAlertBox").show();
+					$("#innerAlertBox").empty();
+					
+					var finalQuestions = new Array();
+					
+					finalQuestions[0] = new Object();
+					finalQuestions[0]["groupName"] = "finalQuestion1";
+					finalQuestions[0]["groupTitle"] = languageMapping["finalQuestion1"];
+					if(theTask != "") finalQuestions[0]["groupTitle"] += " \"" + theTask + "\"";
+					finalQuestions[0]["separator"] = new Array(" ", "3","2", "1", languageMapping["neutral"], "1", "2", "3"," ") ;
+					finalQuestions[0]["values"] = new Array("", 3, 2, 1, 0, -1, -2, -3,"" ) ;
+					finalQuestions[0]["groupLeft"] = languageMapping["successful"];
+					finalQuestions[0]["groupRight"] = languageMapping["notsuccessful"];
+					
+					
+					finalQuestions[1] = new Object();
+					finalQuestions[1]["groupName"] = "finalQuestion2";
+					finalQuestions[1]["groupTitle"] = languageMapping["finalQuestion2"];
+					finalQuestions[1]["separator"] = new Array(" ", "3","2", "1", languageMapping["neutral"], "1", "2", "3"," ") ;
+					finalQuestions[1]["values"] = new Array("", 3, 2, 1, 0, -1, -2, -3,"" ) ;			
+					finalQuestions[1]["groupLeft"] = languageMapping["likable"];
+					finalQuestions[1]["groupRight"] = languageMapping["disagreeable"];
+					
+					finalQuestions[2] = new Object();
+					finalQuestions[2]["groupName"] = "finalQuestion3";;
+					finalQuestions[2]["groupTitle"] = "";
+					finalQuestions[2]["values"] = new Array("", -3, -2, -1, 0, 1, 2, 3,"" ) ;
+					finalQuestions[2]["separator"] = "";
+					finalQuestions[2]["groupLeft"] = languageMapping["unattractive"];
+					finalQuestions[2]["groupRight"] = languageMapping["attractive"];
+					
+					finalQuestions[3] = new Object();
+					finalQuestions[3]["groupName"] = "finalQuestion4";
+					finalQuestions[3]["groupTitle"] = ""
+					finalQuestions[3]["values"] = new Array("", -3, -2, -1, 0, 1, 2, 3,"" ) ;
+					finalQuestions[3]["separator"] = "";
+					finalQuestions[3]["groupLeft"] = languageMapping["feminine"];
+					finalQuestions[3]["groupRight"] = languageMapping["masculine"];
+					
+					
+					var renderWidth = 400;
+					var renderHeight = 250;
+					
+					$('#container3D').css('width', renderWidth +"px");
+					$('#container3D').css('height', renderHeight+"px");
+
+					camera.aspect = renderWidth / renderHeight;
+					
+					var cacheYaw = camTargetYaw; 
+					var cachePitch = camTargetPitch;
+					var cacheZoom = targetZoom;
+					var cacheTarget = targetCamHeight;
+					
+					skipMovement = true;
+					renderer.setClearColor( 0x000000, 1 );
+					renderer.alpha = false;
+					camTargetYaw = 1.57;
+					camTargetPitch = 0;
+					targetZoom = 10.0;
+					targetCamHeight = 0;
+					
+					camera.updateProjectionMatrix();
+					renderer.setSize( renderWidth, renderHeight );
+					render();
+					
+					dataUrl = renderer.domElement.toDataURL("image/jpg");
+					
+					$('#container3D').css('width', '100%');
+					$('#container3D').css('height', '100%');
+					renderer.setSize( window.innerWidth, window.innerHeight );
+					camera.aspect = window.innerWidth / window.innerHeight;
+					
+					var imageThumb = document.createElement("img");
+					imageThumb.src = dataUrl;
+					
+					renderer.alpha = true;
+					camTargetYaw = cacheYaw; 
+					camTargetPitch = cachePitch;
+					targetZoom = cacheZoom;
+					targetCamHeight = cacheTarget;
+					renderer.setClearColor( 0x000000, 0 );
+					camera.updateProjectionMatrix();
+					render();
+					skipMovement = false;
+
+					var divTableRow = document.createElement("div"); divTableRow.className = "sp_table_row";
+					var divTableCell = document.createElement("div"); divTableCell.className = "sp_table_cell";	
+					var divSubTable = document.createElement("div"); divSubTable.className = "sp_sub_table";
+					var divImagePlaceholder = document.createElement("div"); divImagePlaceholder.className = "imagePlaceholder";
+					var divSubTableRowHeader = document.createElement("div"); divSubTableRowHeader.className = "sp_sub_table_row";		
+							
+					document.getElementById("innerAlertBox").appendChild(divTableRow);
+					
+					divTableRow.appendChild(divTableCell);
+					divTableCell.appendChild(divSubTable);
+					divImagePlaceholder.appendChild(imageThumb);
+					divSubTable.appendChild(divImagePlaceholder);
+					
+					
+							
+					
+					divSubTable.appendChild(divSubTableRowHeader);
+					
+					var _checked = 0;
+					
+					if(_checked < 1 || _checked == null || _checked == undefined) {
+						document.getElementById("alertBoxText").innerHTML = "<span id='innerAlertBoxText'>" + languageMapping["wantToSubmit"] + "</span><p></p><span id='missingYes'></span><a id='no' class='button' href='#' width='48px' >" + languageMapping["submitNo"] + "</a>";			
+						$('input[name="radioGrp_finalQuestion1"]').prop('checked',false);
+					}else{
+						document.getElementById("alertBoxText").innerHTML = "<span id='innerAlertBoxText'>" + languageMapping["wantToSubmit"] + "</span><p></p>" + "<a id='yes' class='button' href='#' width='48px' >" + languageMapping["submitYes"] + "</a>" + "<a id='no' class='button' href='#' width='48px' >" + languageMapping["submitNo"] + "</a>";
+						document.getElementById("innerAlertBoxText").innerHTML = languageMapping["pleaseFillOut"];
+					}
+					
+					for(var j = 0; j < finalQuestions.length; j++) {
+						
+						var divSubTableRowQuestions = document.createElement("div");
+					
+						if(finalQuestions[j]["groupTitle"] != ""){
+							var divTheQuestion = document.createElement("div"); 
+							divTheQuestion.innerHTML = finalQuestions[j]["groupTitle"];
+							divTheQuestion.className = "questionWord";
+							divSubTable.appendChild(divTheQuestion);
+						}
+						
+						var divSubTableRowSeparator = document.createElement("div");
+						
+						
+						if(finalQuestions[j]["separator"] != ""){
+							for(var i = 0; i < 9; i++) {
+								var divSubTableCell = document.createElement("div"); 
+								divSubTableCell.className = "sp_sub_table_cell";
+								
+								if(i == 0 ||i == 8) divSubTableCell.className += " sideTerm";
+								else divSubTableCell.className += " sp_sub_table_centeredCell sp_sub_table_fixed";
+								
+								divSubTableCell.innerHTML = finalQuestions[j]["separator"][i];
+								
+								divSubTableRowSeparator.appendChild(divSubTableCell);
+							}	
+						}
+						divSubTable.appendChild(divSubTableRowSeparator);
+						
+						for(var i = 0; i < 9; i++) {
+							var divSubTableCell = document.createElement("div"); 
+							divSubTableCell.className = "sp_sub_table_cell";
+							
+							if(i == 0 || i == 8){
+								divSubTableCell.className += " sideTerm";
+								divSubTableCell.className += " top_separator";
+								if ( i == 0){divSubTableCell.innerHTML = finalQuestions[j]["groupLeft"];divSubTableCell.className += " sideTermLeft";}
+								if ( i == 8) divSubTableCell.innerHTML = finalQuestions[j]["groupRight"];
+							} else {
+								divSubTableCell.className += " sp_sub_table_centeredCell sp_sub_table_fixed";
+								divSubTableCell.className += " top_separator";
+								divSubTableCell.innerHTML = '<input type="radio" name="radioGrp_' + finalQuestions[j]["groupName"] + '" value="' + finalQuestions[j]["values"][i] + '" id="radioBox_' + finalQuestions[j]["groupName"] + '_' + (i-1) + '" class="css-radiobox" /><label  for="radioBox_' + finalQuestions[j]["groupName"] + '_' + (i-1) + '" class="css-radiolabel css-correctDistance" />';
+							}
+							divSubTableCell.className += " greyed"
+							divSubTableRowQuestions.appendChild(divSubTableCell);
+						}	
+						
+							
+						divSubTable.appendChild(divSubTableRowQuestions);
+						var isItTrue = false;
+						
+						$('input[name="radioGrp_' + finalQuestions[j]["groupName"] + '"]').click(function(e){ 
+
+							for(var n = 0; n < finalQuestions.length; n++ ) {
+								if( $('input[name="radioGrp_' + finalQuestions[n]["groupName"] + '"]:checked').val() == null ||
+									typeof $('input[name="radioGrp_' + finalQuestions[n]["groupName"] + '"]:checked').val() == 'undefined') {
+									isItTrue = false;
+									break;
+								}
+								isItTrue = true;
+							}
+							
+							if(isItTrue == true)
+							{
+								document.getElementById("missingYes").innerHTML = "<a id='yes' class='button' href='#' >" + languageMapping["submitYes"] + "</a>";
+								document.getElementById("innerAlertBoxText").innerHTML = languageMapping["pleaseFillOut"];
+								
+								for(var k = 0; k < finalQuestions.length; k++) setDataCookie(finalQuestions[k]["groupName"], $('input[name="radioGrp_' + finalQuestions[k]["groupName"] + '"]:checked').val());
+
+								$("#yes").click(function(e) {
+									submitFaceQuestion();
+								});		
+							}
+						});
+					}
+
+					$("#no").click(function(e) {
+						$("#alertBoxBackground").fadeOut(200);
+						infoBoxOpen = false;
+					});					
+				}
+				
+				if(languageMapping == null)
+				var languageMapping = new Array();				
+				
+				if(languageFontSizeMapping == null)
+				var languageFontSizeMapping = new Array();
+				
+				function loadLanguage(){
+					$.ajax({async: true, crossDomain: false, cache: true,  type: "GET", url: "data/sites.xml", dataType: "xml", success: function(xml) {
+						$(xml).find('static[id="facelab"]').children().each(function(){	
+							if( $(this).attr('fontSize') != null) 
+							updateHTML((this).nodeName, $(xml).find('static[id="facelab"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text(), $(this).attr('fontSize'));
+							else 
+							updateHTML((this).nodeName, $(xml).find('static[id="facelab"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text());
+						});
+						$(xml).find('dynamic[id="facelab"]').children().each(function(){	
+							if( $(this).attr('fontSize') != null) {
+								languageMapping[(this).nodeName] = $(xml).find('dynamic[id="facelab"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text();
+								languageFontSizeMapping[(this).nodeName] = $(xml).find('dynamic[id="facelab"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text();
+							} else {
+								languageMapping[(this).nodeName] = $(xml).find('dynamic[id="facelab"]').find((this).nodeName + '[lang="' + selectedLanguage + '"]').text();
+							}
+						});
+					}}).done(function() {
+						
+						$('#sendFace').prop('value', languageMapping["sendFace"]);
+					});
+				}
+				
+				function updateHTML(_id, _value, _fontsize) {
+					var elem = document.getElementById(_id);
+					if(elem != null) document.getElementById(_id).innerHTML = _value;
+					if(elem != null && _fontsize != null){ $("#"+_id).css("font-size", _fontsize + "px");}
+				}
+
+				function transformSliders() {	
+					
+					$("#slider_faceGender").ionRangeSlider({ values: [ languageMapping["female"], "asex", languageMapping["male"] ], type: "single", hideFromTo: true, min: 0.0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+							sliderInUse = true;
+							faceMorphingWeights["face"][1] = obj.fromPers/100;
+							faceMorphingWeights["shirt"][1] = obj.fromPers/100;
+							faceMorphingWeights["lashes"][21] = obj.fromPers/100;
+							faceMaps["face"][4]["opacity"] = obj.fromPers/100;
+							faceMaps["lashes"][0]["opacity"] = 1 - obj.fromPers/100;
+							faceMaps["lashes"][1]["opacity"] = obj.fromPers/100;
+							
+							setDataCookie("faceGender", obj.fromPers/100);
+							increaseCountOf("faceGender", "Clk");
+							computeMorphing("all"); 
+							computeBlending("all"); 
+						}
+					});			
+					
+					$("#slider_faceStyle").ionRangeSlider({ values: [ languageMapping["real"], "normal", languageMapping["cartoon"] ], type: "single", hideFromTo: true, min: 0, max: 100, from: 0, hasGrid: true, onChange: function (obj) { 
+							sliderInUse = true;
+							faceMorphingWeights["plane"][1] = (obj.fromPers/100) * 1;
+							faceMorphingWeights["lashes"][16] = (obj.fromPers/100) * 1;
+							faceMorphingWeights["face"][2] =  (obj.fromPers/100) * 1;	
+							faceMorphingWeights["eyes"][10] = (obj.fromPers/100) * 1;	
+							faceMorphingWeights["shirt"][2] = (obj.fromPers/100) * 1;
+							
+							faceMaps["eyes"][1]["opacity"] = 1 - (obj.fromPers/100);	
+							setDataCookie("faceStyle", obj.fromPers/100);
+							increaseCountOf("faceStyle", "Clk");
+							
+							computeMorphing("all"); 
+							computeBlending("eyes"); 
+						}
+					});
+				
+					$("#slider_skinDetails").ionRangeSlider({ values: [ languageMapping["smooth"], "normal", languageMapping["porous"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1, hasGrid: true, onChange: function (obj) {   // callback is called on every slider change
+							sliderInUse = true;
+							faceMaps["face"][3]["opacity"] = obj.fromPers/100;
+							setDataCookie("skinDetails", obj.fromPers/100);
+							increaseCountOf("skinDetails", "Clk");
+							computeBlending("face");
+					}});
+						
+					$("#slider_skinColor").ionRangeSlider({ values: [ languageMapping["dark"], "Normal", languageMapping["bright"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1, hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var blendingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(blendingBalance < 0){
+							faceMaps["face"][1]["opacity"] = 0;
+							faceMaps["face"][2]["opacity"] = blendingBalance * -1;
+						} else {
+							faceMaps["face"][1]["opacity"] = blendingBalance;
+							faceMaps["face"][2]["opacity"] = 0;
+						}
+						setDataCookie("skinColor", obj.fromPers/100);
+						increaseCountOf("skinColor", "Clk");
+						computeBlending("face");
+					}});
+
+					$("#slider_hairColor").ionRangeSlider({ values: [ languageMapping["black"], languageMapping["brunette"], languageMapping["mediumblonde"], languageMapping["red"], languageMapping["brightblonde"] ], type: "single", hideFromTo: false, min: 0, max: 100, from: 2, hasGrid: true, onLoad: function(obj) {
+							$(".haircolor").find( ".irs-line" ).css("background-image","url(img/sprite-hair-color.png)");
+							$(".haircolor").find( ".irs-line-left" ).hide();
+							$(".haircolor").find( ".irs-line-mid" ).hide();
+							$(".haircolor").find( ".irs-line-right" ).hide();
+						}, onChange: function (obj) {   // callback is called on every slider change
+							sliderInUse = true;
+							var blendingBalance = obj.fromPers/100;
+							
+							if(blendingBalance <= 0.25){
+								faceMaps["face"][5]["opacity"] = 1;
+								faceMaps["face"][6]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][7]["opacity"] = 0;
+								faceMaps["face"][8]["opacity"] = 0;
+								faceMaps["face"][9]["opacity"] = 0;
+							} else if(blendingBalance > 0.25 && blendingBalance <= 0.50){
+								faceMaps["face"][5]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][6]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][7]["opacity"] = (blendingBalance - 0.25) * 4;
+								faceMaps["face"][8]["opacity"] = 0;
+								faceMaps["face"][9]["opacity"] = 0;
+							} else if(blendingBalance > 0.50 && blendingBalance <= 0.75){
+								faceMaps["face"][5]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][6]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][7]["opacity"] = (blendingBalance - 0.25) * 4 ;
+								faceMaps["face"][8]["opacity"] = (blendingBalance - 0.50) * 4 ;
+								faceMaps["face"][9]["opacity"] = 0;
+							} else {
+								faceMaps["face"][5]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][6]["opacity"] = (blendingBalance - 0.00) * 4;
+								faceMaps["face"][7]["opacity"] = (blendingBalance - 0.25) * 4 ;
+								faceMaps["face"][8]["opacity"] = (blendingBalance - 0.50) * 4 ;
+								faceMaps["face"][9]["opacity"] = (blendingBalance - 0.75) * 4 ;		
+							}
+							
+							for(var i = 0; i < 5; i++) {
+								if(faceMaps["face"][5+i]["opacity"] >= 1) faceMaps["face"][5+i]["opacity"] = -faceMaps["face"][5+i]["opacity"] + 2;
+								if(faceMaps["face"][5+i]["opacity"] < 0) faceMaps["face"][5+i]["opacity"] = 0;
+							}
+							setDataCookie("hairColor", obj.fromPers/100);
+							increaseCountOf("hairColor", "Clk");
+							//computeEyeBrowBlendings();
+							computeBlending("face");
+					}});
+					
+					$("#slider_eyeColor").ionRangeSlider({ values: [ languageMapping["black"], languageMapping["brown"], languageMapping["amber"], languageMapping["green"], languageMapping["blue"], languageMapping["brightblue"], languageMapping["grey"] ], type: "single",hideFromTo: false, min: 0, max: 100, from: 1, hasGrid: true, onLoad: function(obj) {
+						$(".eyecolor").find( ".irs-line" ).css("background-image","url(img/sprite-skin-color.png)");
+						$(".eyecolor").find( ".irs-line-left" ).hide();
+						$(".eyecolor").find( ".irs-line-mid" ).hide();
+						$(".eyecolor").find( ".irs-line-right" ).hide();
+					}, onChange: function (obj) {
+						sliderInUse = true;
+						var blendingBalance = obj.fromPers/100;
+						var segmentos = 6;
+						
+						if(blendingBalance <= (1/segmentos)){ 
+							faceMaps["eyes"][2]["opacity"] = 1; 
+							faceMaps["eyes"][3]["opacity"] = (blendingBalance - 0.00) * segmentos;
+							faceMaps["eyes"][4]["opacity"] = 0;
+							faceMaps["eyes"][5]["opacity"] = 0;
+							faceMaps["eyes"][6]["opacity"] = 0;
+							faceMaps["eyes"][7]["opacity"] = 0;
+							faceMaps["eyes"][8]["opacity"] = 0;
+						} else if(blendingBalance > (1/segmentos) && blendingBalance <= (2/segmentos)){
+							faceMaps["eyes"][2]["opacity"] = 1;
+							faceMaps["eyes"][3]["opacity"] = (-(blendingBalance - 1/segmentos) * segmentos) + 1;
+							faceMaps["eyes"][4]["opacity"] = ( (blendingBalance - 1/segmentos) * segmentos); 
+							faceMaps["eyes"][5]["opacity"] = 0;
+							faceMaps["eyes"][6]["opacity"] = 0;
+							faceMaps["eyes"][7]["opacity"] = 0;
+							faceMaps["eyes"][8]["opacity"] = 0;
+							
+						} else if(blendingBalance > (2/segmentos) && blendingBalance <= (3/segmentos)){
+							faceMaps["eyes"][2]["opacity"] = 1;
+							faceMaps["eyes"][3]["opacity"] = 0;
+							faceMaps["eyes"][4]["opacity"] = (-(blendingBalance - 2/segmentos) * segmentos) + 1;
+							faceMaps["eyes"][5]["opacity"] = ( (blendingBalance - 2/segmentos) * segmentos); 
+							faceMaps["eyes"][6]["opacity"] = 0;
+							faceMaps["eyes"][7]["opacity"] = 0;
+							faceMaps["eyes"][8]["opacity"] = 0;
+							
+						} else if(blendingBalance > (3/segmentos) && blendingBalance <= (4/segmentos)){
+							faceMaps["eyes"][2]["opacity"] = 1;
+							faceMaps["eyes"][3]["opacity"] = 0;
+							faceMaps["eyes"][4]["opacity"] = 0;
+							faceMaps["eyes"][5]["opacity"] = 1 - ( (blendingBalance - 3/segmentos) * segmentos);
+							faceMaps["eyes"][6]["opacity"] = ( (blendingBalance - 3/segmentos) * segmentos);
+							faceMaps["eyes"][7]["opacity"] = 0;
+							faceMaps["eyes"][8]["opacity"] = 0;
+							
+						} else if(blendingBalance > (4/segmentos) && blendingBalance <= (5/segmentos)){
+							faceMaps["eyes"][2]["opacity"] = 1;
+							faceMaps["eyes"][3]["opacity"] = 0;
+							faceMaps["eyes"][4]["opacity"] = 0;
+							faceMaps["eyes"][5]["opacity"] = 0;
+							faceMaps["eyes"][6]["opacity"] = 1 - ( (blendingBalance - 4/segmentos) * segmentos);
+							faceMaps["eyes"][7]["opacity"] = ( (blendingBalance - 4/segmentos) * segmentos); 
+							faceMaps["eyes"][8]["opacity"] = 0;
+						} else {
+							faceMaps["eyes"][2]["opacity"] = 1;
+							faceMaps["eyes"][3]["opacity"] = 0;
+							faceMaps["eyes"][4]["opacity"] = 0;
+							faceMaps["eyes"][5]["opacity"] = 0;
+							faceMaps["eyes"][6]["opacity"] = 0;
+							faceMaps["eyes"][7]["opacity"] = 1 - ( (blendingBalance - 5/segmentos) * segmentos);
+							faceMaps["eyes"][8]["opacity"] = ( (blendingBalance - 5/segmentos) * segmentos); 
+						}	
+
+						//if(faceMaps["eyes"][2]["opacity"] < 0) { faceMaps["eyes"][2]["opacity"] = 0;}else if(faceMaps["eyes"][2]["opacity"] > 1){faceMaps["eyes"][2]["opacity"] = 1;}
+						if(faceMaps["eyes"][3]["opacity"] < 0) { faceMaps["eyes"][3]["opacity"] = 0;}else if(faceMaps["eyes"][3]["opacity"] > 1){faceMaps["eyes"][3]["opacity"] = 1;}
+						if(faceMaps["eyes"][4]["opacity"] < 0) { faceMaps["eyes"][4]["opacity"] = 0;}else if(faceMaps["eyes"][4]["opacity"] > 1){faceMaps["eyes"][4]["opacity"] = 1;}
+						if(faceMaps["eyes"][5]["opacity"] < 0) { faceMaps["eyes"][5]["opacity"] = 0;}else if(faceMaps["eyes"][5]["opacity"] > 1){faceMaps["eyes"][5]["opacity"] = 1;}
+						if(faceMaps["eyes"][6]["opacity"] < 0) { faceMaps["eyes"][6]["opacity"] = 0;}else if(faceMaps["eyes"][6]["opacity"] > 1){faceMaps["eyes"][6]["opacity"] = 1;}
+						if(faceMaps["eyes"][7]["opacity"] < 0) { faceMaps["eyes"][7]["opacity"] = 0;}else if(faceMaps["eyes"][7]["opacity"] > 1){faceMaps["eyes"][7]["opacity"] = 1;}
+						if(faceMaps["eyes"][8]["opacity"] < 0) { faceMaps["eyes"][8]["opacity"] = 0;}else if(faceMaps["eyes"][8]["opacity"] > 1){faceMaps["eyes"][8]["opacity"] = 1;}
+						
+						setDataCookie("eyeColor", obj.fromPers/100);
+						increaseCountOf("eyeColor", "Clk");
+						computeBlending("eyes");
+					}});
+					
+					$("#slider_eyeShape").ionRangeSlider({ values: [ languageMapping["droopy"], languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"],languageMapping["asian"]], type: "single",hideFromTo: false, min: 0, max: 100, from: 3,	hasGrid: true, onChange: function (obj) {
+						var morphingBalance = obj.fromPers/100;					
+						var segments = 6;
+						sliderInUse = true;
+						if(morphingBalance <= 0.16){ // droopy
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = (-(morphingBalance - 0.00) * segments) + 1; 
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] =  (morphingBalance - 0.00) * segments;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0; 
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] 	= 0;
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 0;
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= 0;
+											
+						} else if(morphingBalance > 0.16 && morphingBalance <= 0.32){
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = (-(morphingBalance - 1/segments) * segments) + 1;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = ( (morphingBalance - 1/segments) * segments); 
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] 	= 0;
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 0;
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= 0;
+							
+						} else if(morphingBalance > 0.32 && morphingBalance <= 0.50){
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = 0;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = (-(morphingBalance - 2/segments) * segments) + 1;
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] 	= 0;
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 0;
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= 0;
+							
+						} else if(morphingBalance > 0.50 && morphingBalance <= 0.66){
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = 0;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0;
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] = ( (morphingBalance - 3/segments) * segments);
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 0;
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= 0;
+							
+						} else if(morphingBalance > 0.66 && morphingBalance <= 0.83){
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = 0;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0;
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] 	= 1 - ( (morphingBalance - 4/segments) * segments);
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = ( (morphingBalance - 4/segments) * segments); 
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= 0;
+						} else {
+							faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
+							faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = 0;
+							faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0;
+							faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] 	= 0;
+							faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 1 - ( (morphingBalance - 5/segments) * segments);
+							faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] 	= ( (morphingBalance - 5/segments) * segments); 
+						}
+						
+						setDataCookie("eyeShape", obj.fromPers/100);
+						//console.log("Eye Shape", obj.fromPers/100);	
+						
+						increaseCountOf("eyeShape", "Clk");
+						computeMorphing("face");
+						computeMorphing("lashes");
+						
+					}});
+					
+					$("#slider_eyeOpening").ionRangeSlider({ values: [ languageMapping["narrow"], "normal", languageMapping["wide"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][55] = faceMorphingWeights["lashes"][17] = 0;
+							faceMorphingWeights["face"][56] = faceMorphingWeights["lashes"][18] = morphingBalance * -1;
+						} else {
+							faceMorphingWeights["face"][56] = faceMorphingWeights["lashes"][18] = 0;
+							faceMorphingWeights["face"][55] = faceMorphingWeights["lashes"][17] = morphingBalance;
+						}
+						setDataCookie("eyeOpening", obj.fromPers/100);
+						increaseCountOf("eyeOpening", "Clk");
+						computeMorphing("all");
+					}});	
+					
+					$("#slider_eyeSize").ionRangeSlider({ values: [ languageMapping["small"], "normal", languageMapping["big"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][43] = faceMorphingWeights["lashes"][7] = faceMorphingWeights["eyes"][2] = faceMorphingWeights["eyes"][2] = morphingBalance * -1;
+							faceMorphingWeights["face"][44] = faceMorphingWeights["lashes"][6] = faceMorphingWeights["eyes"][3] = faceMorphingWeights["eyes"][3] = 0;
+						} else {
+							faceMorphingWeights["face"][44] = faceMorphingWeights["lashes"][6] = faceMorphingWeights["eyes"][3] = faceMorphingWeights["eyes"][3] = morphingBalance;
+							faceMorphingWeights["face"][43] = faceMorphingWeights["lashes"][7] = faceMorphingWeights["eyes"][2] = faceMorphingWeights["eyes"][2] = 0;
+						}
+						setDataCookie("eyeSize", obj.fromPers/100);
+						increaseCountOf("eyeSize", "Clk");
+						computeMorphing("all");
+					}});
+					
+					$("#slider_eyeHeight").ionRangeSlider({ values: [ languageMapping["up"], "normal", languageMapping["down"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][37] = faceMorphingWeights["lashes"][9] = faceMorphingWeights["eyes"][4] = faceMorphingWeights["eyes"][4] = 0;
+							faceMorphingWeights["face"][38] = faceMorphingWeights["lashes"][8] = faceMorphingWeights["eyes"][5] = faceMorphingWeights["eyes"][5] = morphingBalance * -1;
+						} else {
+							faceMorphingWeights["face"][38] = faceMorphingWeights["lashes"][8] = faceMorphingWeights["eyes"][5] = faceMorphingWeights["eyes"][5] = 0;
+							faceMorphingWeights["face"][37] = faceMorphingWeights["lashes"][9] = faceMorphingWeights["eyes"][4] = faceMorphingWeights["eyes"][4] = morphingBalance;
+						}
+						setDataCookie("eyeHeight", obj.fromPers/100);
+						increaseCountOf("eyeHeight", "Clk");
+						computeMorphing("all");
+					}});
+					
+					$("#slider_eyeDistance").ionRangeSlider({ values: [ languageMapping["narrow"], "normal", languageMapping["wide"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][46] = faceMorphingWeights["lashes"][10] = faceMorphingWeights["eyes"][7] = faceMorphingWeights["eyes"][7] = morphingBalance * -1;
+							faceMorphingWeights["face"][45] = faceMorphingWeights["lashes"][11] = faceMorphingWeights["eyes"][6] = faceMorphingWeights["eyes"][6] = 0;
+						} else {
+							faceMorphingWeights["face"][45] = faceMorphingWeights["lashes"][11] = faceMorphingWeights["eyes"][6] = faceMorphingWeights["eyes"][6] = morphingBalance;
+							faceMorphingWeights["face"][46] = faceMorphingWeights["lashes"][10] = faceMorphingWeights["eyes"][7] = faceMorphingWeights["eyes"][7] = 0;
+						}
+						setDataCookie("eyeDistance", obj.fromPers/100);
+						
+						increaseCountOf("eyeDistance", "Clk");
+						computeMorphing("all");
+					}});
+					
+					$("#slider_eyeDepth").ionRangeSlider({ values: [ languageMapping["bulgy"], "normal", languageMapping["cavernous"]], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][41] = faceMorphingWeights["lashes"][4] = faceMorphingWeights["eyes"][9] = faceMorphingWeights["eyes"][9] = morphingBalance * -1;
+							faceMorphingWeights["face"][42] = faceMorphingWeights["lashes"][5] = faceMorphingWeights["eyes"][8] = faceMorphingWeights["eyes"][8] = 0;
+						} else {
+							faceMorphingWeights["face"][42] = faceMorphingWeights["lashes"][5] = faceMorphingWeights["eyes"][8] = faceMorphingWeights["eyes"][8] = morphingBalance;
+							faceMorphingWeights["face"][41] = faceMorphingWeights["lashes"][4] = faceMorphingWeights["eyes"][9] = faceMorphingWeights["eyes"][9] = 0;
+						}
+						setDataCookie("eyeDepth", obj.fromPers/100);
+						increaseCountOf("eyeDepth", "Clk");
+						computeMorphing("all");
+					}});
+					
+					$("#slider_eyeRotation").ionRangeSlider({ values: [ languageMapping["inner"], "normal", languageMapping["outer"]], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][57] = faceMorphingWeights["lashes"][19] = morphingBalance * -1;
+							faceMorphingWeights["face"][58] = faceMorphingWeights["lashes"][20] = 0;
+						} else {
+							faceMorphingWeights["face"][58] = faceMorphingWeights["lashes"][20] = morphingBalance;
+							faceMorphingWeights["face"][57] = faceMorphingWeights["lashes"][19] = 0;
+						}
+						setDataCookie("eyeRotation", obj.fromPers/100);
+						increaseCountOf("eyeRotation", "Clk");
+						computeMorphing("all");
+					}});
+					
+				
+					$("#slider_eyebrowsColor").ionRangeSlider({ values: [ languageMapping["black"], languageMapping["brunette"], languageMapping["mediumblonde"], languageMapping["red"], languageMapping["brightblonde"] ], type: "single", hideFromTo: false, min: 0, max: 100, from: 2, hasGrid: true, onLoad: function(obj) {
+							$(".haircolor").find( ".irs-line" ).css("background-image","url(img/sprite-hair-color.png)");
+							$(".haircolor").find( ".irs-line-left" ).hide();
+							$(".haircolor").find( ".irs-line-mid" ).hide();
+							$(".haircolor").find( ".irs-line-right" ).hide();
+						}, onChange: function (obj) {   // callback is called on every slider change
+							eyebrowsColor = obj.fromPers/100;
+							sliderInUse = true;
+
+							setDataCookie("eyebrowsColor", eyebrowsColor);
+							increaseCountOf("eyebrowsColor", "Clk");
+							computeEyeBrowBlendings();
+							computeBlending("face");
+					}});
+					
+					$("#slider_eyebrowsShape").ionRangeSlider({ values: [ languageMapping["pointed"], languageMapping["straight"], "normal", languageMapping["round"], languageMapping["hooked"] ], type: "single",hideFromTo: false, min: 0, max: 100, from: 2,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = obj.fromPers/100;
+						
+						if(morphingBalance <= 0.25){
+							faceMorphingWeights["face"][6] = -(morphingBalance - 0.25) * 4;
+							faceMorphingWeights["face"][10]  =  (morphingBalance       ) * 4;
+							faceMorphingWeights["face"][9] = 0;
+							faceMorphingWeights["face"][5] = 0;
+						} else if(morphingBalance > 0.25 && morphingBalance <= 0.50){
+							faceMorphingWeights["face"][6] = 0;
+							faceMorphingWeights["face"][10]  = -(morphingBalance - 0.50) * 4;
+							faceMorphingWeights["face"][9] = 0;
+							faceMorphingWeights["face"][5] = 0;
+						} else if(morphingBalance > 0.50 && morphingBalance <= 0.75){
+							faceMorphingWeights["face"][6] = 0;
+							faceMorphingWeights["face"][10]  = 0;
+							faceMorphingWeights["face"][9] =  (morphingBalance - 0.50) * 4;
+							faceMorphingWeights["face"][5] = 0;
+						} else {
+							faceMorphingWeights["face"][6] = 0;
+							faceMorphingWeights["face"][10]  = 0;
+							faceMorphingWeights["face"][9] = -(morphingBalance - 1.00) * 4;
+							faceMorphingWeights["face"][5] =  (morphingBalance - 0.75) * 4;
+						}
+						
+						setDataCookie("eyebrowsShape", obj.fromPers/100);
+						increaseCountOf("eyebrowsShape", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_eyebrowsLine").ionRangeSlider({ values: [ languageMapping["thin"], "normal", languageMapping["thick"] ], type: "single", hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						eyebrowsLineBalance = -(2-((obj.fromPers/100) + 0.5) * 2);
+						setDataCookie("eyebrowsLine", obj.fromPers/100);
+						increaseCountOf("eyebrowsLine", "Clk");
+						computeEyeBrowBlendings();
+						computeBlending("face");
+					}});
+					
+					$("#slider_noseShape").ionRangeSlider({ values: [ languageMapping["snub"], "normal", languageMapping["hooked"] ], type: "single", hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][16] = morphingBalance * -1;
+							faceMorphingWeights["face"][15] = 0;
+						} else {
+							faceMorphingWeights["face"][15] = morphingBalance;
+							faceMorphingWeights["face"][16] = 0;
+						}
+						setDataCookie("noseShape", obj.fromPers/100);
+						increaseCountOf("noseShape", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_noseLength").ionRangeSlider({ values: [ languageMapping["short"], "normal", languageMapping["long"] ], type: "single", hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][12] = morphingBalance * -1;
+							faceMorphingWeights["face"][11] = 0;
+						} else {
+							faceMorphingWeights["face"][11] = morphingBalance;
+							faceMorphingWeights["face"][12] = 0;
+						}
+						setDataCookie("noseLength", obj.fromPers/100);
+						increaseCountOf("noseLength", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_noseWidth").ionRangeSlider({ values: [ languageMapping["thin"], "normal", languageMapping["thick"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][14] = morphingBalance * -1;
+							faceMorphingWeights["face"][13] = 0;
+						} else {
+							faceMorphingWeights["face"][13] = morphingBalance;
+							faceMorphingWeights["face"][14] = 0;
+						}
+						setDataCookie("noseWidth", obj.fromPers/100);
+						increaseCountOf("noseWidth", "Clk");
+						computeMorphing("face");
+					}});
+					
+
+					
+					$("#slider_noseBridge").ionRangeSlider({ values: [ languageMapping["thin"], "normal", languageMapping["thick"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][17] = morphingBalance * -1;
+							faceMorphingWeights["face"][18] = 0;
+						} else {
+							faceMorphingWeights["face"][18] = morphingBalance;
+							faceMorphingWeights["face"][17] = 0;
+						}
+						setDataCookie("noseBridge", obj.fromPers/100);
+						increaseCountOf("noseBridge", "Clk");
+						computeMorphing("all");
+					}});
+					
+					$("#slider_foreheadHeight").ionRangeSlider({ values: [ languageMapping["down"], "normal", languageMapping["up"] ], type: "single", hideFromTo: true, min: 0, max: 100, from: 1, hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][3] = morphingBalance * -1;
+							faceMorphingWeights["face"][4] = 0;
+						} else {
+							faceMorphingWeights["face"][4] = morphingBalance;
+							faceMorphingWeights["face"][3] = 0;
+						}
+						setDataCookie("foreheadHeight", obj.fromPers/100);
+						increaseCountOf("foreheadHeight", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_cheeksBone").ionRangeSlider({ values: [ languageMapping["fat"], "normal", languageMapping["scraggy"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][19] = morphingBalance * -1;
+							faceMorphingWeights["face"][20] = 0;
+						} else {
+							faceMorphingWeights["face"][20] = morphingBalance;
+							faceMorphingWeights["face"][19] = 0;
+						}
+						setDataCookie("cheeksBone", obj.fromPers/100);
+						increaseCountOf("cheeksBone", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_jawShape").ionRangeSlider({ values: [ languageMapping["triangle"], "normal", languageMapping["squared"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][31] = morphingBalance * -1;
+							faceMorphingWeights["face"][32] = 0;
+						} else {
+							faceMorphingWeights["face"][32] = morphingBalance;
+							faceMorphingWeights["face"][31] = 0;
+						}
+						setDataCookie("jawShape", obj.fromPers/100);
+						increaseCountOf("jawShape", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_jawChin").ionRangeSlider({ values: [ languageMapping["pointed"], "normal", languageMapping["cleft"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][27] = morphingBalance * -1;
+							faceMorphingWeights["face"][28] = 0;
+						} else {
+							faceMorphingWeights["face"][28] = morphingBalance;
+							faceMorphingWeights["face"][27] = 0;
+						}
+						setDataCookie("jawChin", obj.fromPers/100);
+						increaseCountOf("jawChin", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_jawLength").ionRangeSlider({ values: [ languageMapping["short"], "normal", languageMapping["long"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][30] = morphingBalance * -1;
+							faceMorphingWeights["face"][29] = 0;
+						} else {
+							faceMorphingWeights["face"][29] = morphingBalance;
+							faceMorphingWeights["face"][30] = 0;
+						}
+						setDataCookie("jawLength", obj.fromPers/100);
+						increaseCountOf("jawLength", "Clk");
+						computeMorphing("face");
+					}});				
+					
+					$("#slider_throatSize").ionRangeSlider({ values: [ languageMapping["thin"], "normal", languageMapping["thick"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][33] = morphingBalance * -1;
+							faceMorphingWeights["face"][34] = 0;
+						} else {
+							faceMorphingWeights["face"][34] = morphingBalance;
+							faceMorphingWeights["face"][33] = 0;
+						}
+						setDataCookie("throatSize", obj.fromPers/100);
+						increaseCountOf("throatSize", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_earSize").ionRangeSlider({ values: [ languageMapping["small"], "normal", languageMapping["big"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][35] = morphingBalance * -1;
+							faceMorphingWeights["face"][36] = 0;
+						} else {
+							faceMorphingWeights["face"][36] = morphingBalance;
+							faceMorphingWeights["face"][35] = 0;
+						}
+						setDataCookie("earSize", obj.fromPers/100);
+						increaseCountOf("earSize", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_mouthVolume").ionRangeSlider({ values: [ languageMapping["thin"], "normal", languageMapping["full"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][23] = morphingBalance * -1;
+							faceMorphingWeights["face"][24] = 0;
+						} else {
+							faceMorphingWeights["face"][24] = morphingBalance;
+							faceMorphingWeights["face"][23] = 0;
+						}
+						setDataCookie("mouthVolume", obj.fromPers/100);
+						increaseCountOf("mouthVolume", "Clk");
+						computeMorphing("face");
+					}});
+
+					$("#slider_lipRatio").ionRangeSlider({ values: [ languageMapping["upperlip"], "normal", languageMapping["lowerlip"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][22] = morphingBalance * -1;
+							faceMorphingWeights["face"][21] = 0;
+						} else {
+							faceMorphingWeights["face"][21] = morphingBalance;
+							faceMorphingWeights["face"][22] = 0;
+						}
+						setDataCookie("lipRatio", obj.fromPers/100);
+						increaseCountOf("lipRatio", "Clk");
+						computeMorphing("face");
+					}});
+
+					$("#slider_mouthOverlap").ionRangeSlider({ values: [ languageMapping["down"], "normal", languageMapping["up"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][61] = morphingBalance * -1;
+							faceMorphingWeights["face"][62] = 0;
+						} else {
+							faceMorphingWeights["face"][62] = morphingBalance;
+							faceMorphingWeights["face"][61] = 0;
+						}
+						setDataCookie("mouthOverlap", obj.fromPers/100);
+						increaseCountOf("mouthOverlap", "Clk");
+						computeMorphing("face");
+					}});
+							
+					$("#slider_mouthWidth").ionRangeSlider({ values: [ languageMapping["wide"], "normal", languageMapping["narrow"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][60] = morphingBalance * -1;
+							faceMorphingWeights["face"][59] = 0;
+						} else {
+							faceMorphingWeights["face"][59] = morphingBalance;
+							faceMorphingWeights["face"][60] = 0;
+						}
+						setDataCookie("mouthWidth", obj.fromPers/100);
+						increaseCountOf("mouthWidth", "Clk");
+						computeMorphing("face");
+					}});
+								
+					$("#slider_mouthHeight").ionRangeSlider({ values: [ languageMapping["up"], "normal", languageMapping["down"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][26] = morphingBalance * -1;
+							faceMorphingWeights["face"][25] = 0;
+						} else {
+							faceMorphingWeights["face"][25] = morphingBalance;
+							faceMorphingWeights["face"][26] = 0;
+						}
+						setDataCookie("mouthHeight", obj.fromPers/100);
+						increaseCountOf("mouthHeight", "Clk");
+						computeMorphing("face");
+					}});
+
+					$("#slider_mouthDepth").ionRangeSlider({ values: [ languageMapping["backwards"], "normal", languageMapping["forwards"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][53] = morphingBalance * -1;
+							faceMorphingWeights["face"][54] = 0;
+						} else {
+							faceMorphingWeights["face"][54] = morphingBalance;
+							faceMorphingWeights["face"][53] = 0;
+						}
+						setDataCookie("mouthDepth", obj.fromPers/100);
+						increaseCountOf("mouthDepth", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_noseCartilage").ionRangeSlider({ values: [ languageMapping["round"], "normal", languageMapping["flat"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 1,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var morphingBalance = (1 - ((obj.fromPers/100) + 0.5)) * 2;
+						if(morphingBalance < 0){
+							faceMorphingWeights["face"][51] = morphingBalance * -1;
+							faceMorphingWeights["face"][52] = 0;
+						} else {
+							faceMorphingWeights["face"][52] = morphingBalance;
+							faceMorphingWeights["face"][51] = 0;
+						}
+						setDataCookie("noseCartilage", obj.fromPers/100);
+						increaseCountOf("noseCartilage", "Clk");
+						computeMorphing("face");
+					}});
+					
+					$("#slider_eyeShadow").ionRangeSlider({ values: [ languageMapping["nothing"], "normal", languageMapping["strong"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 0,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var blendingBalance = obj.fromPers/100;
+						faceMaps["face"][25]["opacity"] = blendingBalance;
+						setDataCookie("eyeShadow", obj.fromPers/100);
+						increaseCountOf("eyeShadow", "Clk");
+						computeBlending("face");
+					}});
+					
+					$("#slider_lipStick").ionRangeSlider({ values: [ languageMapping["nothing"], "normal", languageMapping["strong"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 0,	hasGrid: true, onChange: function (obj) {	
+						sliderInUse = true;
+						var blendingBalance = obj.fromPers/100;
+						faceMaps["face"][26]["opacity"] = blendingBalance;
+						setDataCookie("lipStick", obj.fromPers/100);
+						increaseCountOf("lipStick", "Clk");
+						computeBlending("face");
+					}});
+					
+					$("#slider_rouge").ionRangeSlider({ values: [ languageMapping["nothing"], "normal", languageMapping["strong"] ], type: "single",hideFromTo: true, min: 0, max: 100, from: 0,	hasGrid: true, onChange: function (obj) {
+						sliderInUse = true;
+						var blendingBalance = obj.fromPers/100;
+						faceMaps["face"][27]["opacity"] = blendingBalance;
+						setDataCookie("rouge", obj.fromPers/100);
+						increaseCountOf("rouge", "Clk");
+						computeBlending("face");
+					}});
+					
+					
+				}
+
+				if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+				var statsEnabled = true;
+				var container, stats, loader, filesToLoad = 0, fileCount = 0;
+				var camera, scene, renderer;
+				
+				var mesh;
+				var skyMesh;
+				var clock; 
+				var composer, composerUV1, composerUV2, composerUV3, composerBeckmann;
+				var waitAfterLoad = 250; // ms
+				
+				var directionalLight, pointLight, ambientLight;
+				var camYaw = Math.PI / 2, camTargetYaw = Math.PI / 2;
+				var camPitch = 0, camTargetPitch = 0;
+				var camDistance = 1000, camRotationSpeed = .1;
+				var camLookAt = new THREE.Vector3(0,-100,0);
+				var camHeight = 0;
+				var targetCamHeight = 0;
+				var camHeightOffset = 100;
+				
+				var mouseIsDown;
+				
+				var canvas3DHalfX = (window.innerWidth / 2);
+				var canvas3DHalfY = (window.innerHeight / 2);
+
+				var firstPass = true;
+				var lightSetting = 1;
+				var lightDistance = 0;
+				var lightSwitchBlocked = false;
+				var infoBoxOpen = false;
+				var mouseOverUIElement = false;
+				var renderBoxDragging = false;
+				
+				var highLightIntensity = 1.0;
+				var mediumLightIntensity = 0.3;		
+				var lowLightIntensity = 0.1;
+				
+				var eyebrowsLineBalance = 0, eyebrowsColor = 0;
+				
+				var canvasImages = new Array();
+				var canvasTextures = new Array();
+				var canvasContexts = new Array();
+				
+				var materials = new Array();
+				var uniformsUV;
+				// MESH & MORPHING ARRAYS
+				
+				var faceMesh = new Array()
+					
+				// Initialize faceMorphingVerts and their influences
+				var faceMorphingVerts = new Array();
+					faceMorphingVerts["face"] = new Array();
+					faceMorphingVerts["lashes"] = new Array();
+					faceMorphingVerts["eyes"] = new Array();
+					faceMorphingVerts["shirt"] = new Array();
+					faceMorphingVerts["plane"] = new Array();
+					
+				var faceMorphingFiles = new Array();
+					faceMorphingFiles["face"] = new Array(
+						"models/face_female.js", 		// 0
+						"models/face_male.js", 				// 1
+						"models/face_cartoon.js",		// 2
+						"models/face_forehead_up.js",		// 3
+						"models/face_forehead_down.js",	// 4
+						"models/face_eyebrows_hooked.js",		// 5
+						"models/face_eyebrows_pointed.js",		// 6
+						"models/face_eyebrows_near.js",		// 7
+						"models/face_eyebrows_wide.js",		// 8
+						"models/face_eyebrows_round.js",		// 9
+						"models/face_eyebrows_straight.js",	// 10
+						"models/face_nose_short.js",			// 11
+						"models/face_nose_long.js",			// 12	
+						"models/face_nose_thin.js",			// 13
+						"models/face_nose_thick.js",			// 14
+						"models/face_nose_snub.js",			// 15
+						"models/face_nose_hooked.js",			// 16
+						"models/face_nose_bridgethick.js",// 17
+						"models/face_nose_bridgethin.js",// 18
+						"models/face_cheeks_scraggy.js",		// 19
+						"models/face_cheeks_fat.js",			// 20
+						"models/face_lips_upbig.js",			// 21
+						"models/face_lips_downbig.js",			// 22	
+						"models/face_lips_full.js",			// 23
+						"models/face_lips_thin.js",			// 24
+						"models/face_lips_up.js",				// 25
+						"models/face_lips_down.js",			// 26
+						"models/face_chin_cleft.js",			// 27
+						"models/face_chin_pointed.js",		// 28	
+						"models/face_chin_short.js",			// 29
+						"models/face_chin_long.js",			// 30
+						"models/face_chin_square.js",			// 31
+						"models/face_chin_round.js",			// 32
+						"models/face_throat_thick.js",		// 33
+						"models/face_throat_thin.js",			// 34
+						"models/face_ears_big.js",			// 35
+						"models/face_ears_small.js",			// 36
+						"models/face_eyes_up.js",				// 37
+						"models/face_eyes_down.js",			// 38
+						"models/face_eyes_asian.js",			// 39
+						"models/face_eyes_almond.js",			// 40	
+						"models/face_eyes_cavernous.js",		// 41
+						"models/face_eyes_bulgy.js",			// 42
+						"models/face_eyes_big.js",			// 43
+						"models/face_eyes_small.js",			// 44
+						"models/face_eyes_narrow.js",			// 45
+						"models/face_eyes_wide.js",			// 46
+						"models/face_eyes_downturned.js",			// 47
+						"models/face_eyes_droopy.js",			// 48	
+						"models/face_eyes_round.js",			// 49
+						"models/face_eyes_upturned.js",			// 50	
+						"models/face_nose_cartilage_small.js",		// 51
+						"models/face_nose_cartilage_big.js",		// 52
+						"models/face_lips_forward.js",		// 53
+						"models/face_lips_backward.js",		// 54
+						"models/face_eyes_slim.js",		// 55
+						"models/face_eyes_open.js",		// 56
+						"models/face_eyes_rotation_out.js",		// 57
+						"models/face_eyes_rotation_in.js",		// 58
+						"models/face_lips_wide.js",		// 59
+						"models/face_lips_narrow.js",		// 60
+						"models/face_lips_upturned.js",		// 61
+						"models/face_lips_downturned.js"		// 62
+					);
+					
+					faceMorphingFiles["lashes"] = new Array(
+						"models/face_lashes_normal.js",		// 0
+						"models/face_lashes_cartoon.js",	// 1
+						"models/face_lashes_almond.js",	// 2
+						"models/face_lashes_asian.js",		// 3
+						"models/face_lashes_cavernous.js",	// 4
+						"models/face_lashes_bulgy.js",		// 5
+						"models/face_lashes_small.js",		// 6
+						"models/face_lashes_big.js",		// 7
+						"models/face_lashes_down.js",		// 8
+						"models/face_lashes_up.js",			// 9
+						"models/face_lashes_wide.js",		// 10
+						"models/face_lashes_narrow.js",		// 11
+						"models/face_lashes_droopy.js",		// 12
+						"models/face_lashes_downturned.js",		// 13
+						"models/face_lashes_round.js",		// 14
+						"models/face_lashes_upturned.js",		// 15
+						"models/face_lashes_cartoon.js",	// 16
+						"models/face_lashes_slim.js",		// 17
+						"models/face_lashes_open.js",		// 18
+						"models/face_lashes_rotation_out.js",		// 19
+						"models/face_lashes_rotation_in.js",		// 20
+						"models/face_lashes_male.js"		// 21
+					);
+					
+					faceMorphingFiles["eyes"] = new Array(
+						"models/eyes_normal.js",		// 0
+						"models/eyes_cartoon.js",		// 1
+						"models/eyes_big.js",			// 2
+						"models/eyes_small.js",			// 3
+						"models/eyes_up.js",			// 4
+						"models/eyes_down.js",			// 5
+						"models/eyes_narrow.js",		// 6
+						"models/eyes_wide.js",			// 7
+						"models/eyes_bulgy.js",			// 8
+						"models/eyes_cavernous.js",		// 9
+						"models/eyes_cartoon.js"		// 10
+					);
+				
+					
+					faceMorphingFiles["shirt"] = new Array(
+						"models/shirt_female.js",
+						"models/shirt_male.js",
+						"models/shirt_cartoon.js"
+					);
+										
+					faceMorphingFiles["plane"] = new Array(
+						"models/_plane.js",
+						"models/_plane2.js"
+					);
+					
+					// defining the weights...
+					
+					// [0] = base
+					// [1] = gender
+					// [2] = cartoon
+					
+				//Array Weights s.o.
+				
+				var faceMorphingWeights = new Array();
+				faceMorphingWeights["face"] = new Array();
+				for(var i = 0; i < faceMorphingFiles["face"].length; i++) {
+					var val = (i == 0) ? 1 : (i == 1) ? 0.5 : 0;
+					faceMorphingWeights["face"].push(val);
+				}
+				
+				faceMorphingWeights["lashes"] = new Array();
+				for(var i = 0; i < faceMorphingFiles["lashes"].length; i++) {
+					var val = (i == 0) ? 1 : 0;
+					faceMorphingWeights["lashes"].push(val);
+				}
+				
+				faceMorphingWeights["eyes"] = new Array();
+				for(var i = 0; i < faceMorphingFiles["eyes"].length; i++) {
+					var val = (i == 0) ? 1 : 0;
+					faceMorphingWeights["eyes"].push(val);
+				}
+				
+				faceMorphingWeights["shirt"] = new Array();
+				for(var i = 0; i < faceMorphingFiles["shirt"].length; i++) {
+					var val = (i == 0) ? 1 : (i == 1) ? 0.5 : 0;
+					faceMorphingWeights["shirt"].push(val);
+				}
+				
+				faceMorphingWeights["plane"] = new Array();
+				for(var i = 0; i < faceMorphingFiles["plane"].length; i++) {
+					var val = (i == 0) ? 1 : 0;
+					faceMorphingWeights["plane"].push(val);
+				}
+					
+				
+				// defining the faceMap blendings
+				
+				// [0] = base skin
+				// [1] = dark skin
+				// [2] = bright skin
+				// [3] = beard
+				// [4] = medium blonde hair
+
+				
+				var faceMaps = new Array();
+				
+					faceMaps["face"] = new Array();
+					faceMaps["face"]["width"] 			= 1000;
+					faceMaps["face"][0] = new Object();
+					faceMaps["face"][0]["src"] 			= "models/skin_base.png";
+					faceMaps["face"][0]["blending"] 	= "source-over";
+					faceMaps["face"][0]["opacity"] 		= 1;
+					faceMaps["face"][1] = new Object();
+					faceMaps["face"][1]["src"] 			= "models/skin_noDetails_dark.png";
+					faceMaps["face"][1]["blending"] 	= "source-over";
+					faceMaps["face"][1]["opacity"] 		= 0;
+					faceMaps["face"][2] = new Object();
+					faceMaps["face"][2]["src"] 			= "models/skin_noDetails_bright.png";
+					faceMaps["face"][2]["blending"] 	= "source-over";
+					faceMaps["face"][2]["opacity"] 		= 0;
+					faceMaps["face"][3] = new Object();
+					faceMaps["face"][3]["src"] 			= "models/skin_details.png";
+					faceMaps["face"][3]["blending"] 	= "multiply";
+					faceMaps["face"][3]["opacity"] 		= 0.5;
+					faceMaps["face"][4] = new Object();
+					faceMaps["face"][4]["src"] 			= "models/skin_male.png";		
+					faceMaps["face"][4]["blending"] 	= "source-over";				
+					faceMaps["face"][4]["opacity"] 		= 0.5;
+					faceMaps["face"][5] = new Object();
+					faceMaps["face"][5]["src"] 			= "models/hair_black.png";
+					faceMaps["face"][5]["blending"] 	= "source-over";	
+					faceMaps["face"][5]["opacity"] 		= 0;
+					faceMaps["face"][6] = new Object();
+					faceMaps["face"][6]["src"] 			= "models/hair_brunette.png";
+					faceMaps["face"][6]["blending"] 	= "source-over";	
+					faceMaps["face"][6]["opacity"] 		= 0;
+					faceMaps["face"][7] = new Object();
+					faceMaps["face"][7]["src"] 			= "models/hair_mediumblonde.png";
+					faceMaps["face"][7]["blending"] 	= "source-over";	
+					faceMaps["face"][7]["opacity"] 		= 1;
+					faceMaps["face"][8] = new Object();
+					faceMaps["face"][8]["src"] 			= "models/hair_red.png";
+					faceMaps["face"][8]["blending"] 	= "source-over";	
+					faceMaps["face"][8]["opacity"] 		= 0;
+					faceMaps["face"][9] = new Object();
+					faceMaps["face"][9]["src"] 			= "models/hair_brightblonde.png";
+					faceMaps["face"][9]["blending"] 	= "source-over";	
+					faceMaps["face"][9]["opacity"] 		= 0;
+					faceMaps["face"][10] = new Object();
+					faceMaps["face"][10]["src"] 		= "models/eyebrows_black_thin.png";
+					faceMaps["face"][10]["blending"] 	= "multiply";	
+					faceMaps["face"][10]["opacity"] 	= 0;
+					faceMaps["face"][11] = new Object();
+					faceMaps["face"][11]["src"] 		= "models/eyebrows_black_normal.png";
+					faceMaps["face"][11]["blending"] 	= "multiply";	
+					faceMaps["face"][11]["opacity"] 	= 0;
+					faceMaps["face"][12] = new Object();
+					faceMaps["face"][12]["src"] 		= "models/eyebrows_black_thick.png";
+					faceMaps["face"][12]["blending"] 	= "multiply";	
+					faceMaps["face"][12]["opacity"] 	= 0;
+					faceMaps["face"][13] = new Object();
+					faceMaps["face"][13]["src"] 		= "models/eyebrows_brunette_thin.png";
+					faceMaps["face"][13]["blending"] 	= "multiply";	
+					faceMaps["face"][13]["opacity"] 	= 0;
+					faceMaps["face"][14] = new Object();
+					faceMaps["face"][14]["src"] 		= "models/eyebrows_brunette_normal.png";
+					faceMaps["face"][14]["blending"] 	= "multiply";	
+					faceMaps["face"][14]["opacity"] 	= 0;
+					faceMaps["face"][15] = new Object();
+					faceMaps["face"][15]["src"] 		= "models/eyebrows_brunette_thick.png";
+					faceMaps["face"][15]["blending"] 	= "multiply";	
+					faceMaps["face"][15]["opacity"] 	= 0;		
+					faceMaps["face"][16] = new Object();
+					faceMaps["face"][16]["src"] 		= "models/eyebrows_mediumblonde_thin.png";
+					faceMaps["face"][16]["blending"] 	= "multiply";	
+					faceMaps["face"][16]["opacity"] 	= 0;
+					faceMaps["face"][17] = new Object();
+					faceMaps["face"][17]["src"] 		= "models/eyebrows_mediumblonde_normal.png";
+					faceMaps["face"][17]["blending"] 	= "multiply";	
+					faceMaps["face"][17]["opacity"] 	= 1;
+					faceMaps["face"][18] = new Object();
+					faceMaps["face"][18]["src"] 		= "models/eyebrows_mediumblonde_thick.png";
+					faceMaps["face"][18]["blending"] 	= "multiply";	
+					faceMaps["face"][18]["opacity"] 	= 0;	
+					faceMaps["face"][19] = new Object();
+					faceMaps["face"][19]["src"] 		= "models/eyebrows_red_thin.png";
+					faceMaps["face"][19]["blending"] 	= "multiply";	
+					faceMaps["face"][19]["opacity"] 	= 0;
+					faceMaps["face"][20] = new Object();
+					faceMaps["face"][20]["src"] 		= "models/eyebrows_red_normal.png";
+					faceMaps["face"][20]["blending"] 	= "multiply";	
+					faceMaps["face"][20]["opacity"] 	= 0;
+					faceMaps["face"][21] = new Object();
+					faceMaps["face"][21]["src"] 		= "models/eyebrows_red_thick.png";
+					faceMaps["face"][21]["blending"] 	= "multiply";	
+					faceMaps["face"][21]["opacity"] 	= 0;	
+					faceMaps["face"][22] = new Object();
+					faceMaps["face"][22]["src"] 		= "models/eyebrows_brightblonde_thin.png";
+					faceMaps["face"][22]["blending"] 	= "multiply";	
+					faceMaps["face"][22]["opacity"] 	= 0;
+					faceMaps["face"][23] = new Object();
+					faceMaps["face"][23]["src"] 		= "models/eyebrows_brightblonde_normal.png";
+					faceMaps["face"][23]["blending"] 	= "multiply";	
+					faceMaps["face"][23]["opacity"] 	= 0;
+					faceMaps["face"][24] = new Object();
+					faceMaps["face"][24]["src"] 		= "models/eyebrows_brightblonde_thick.png";
+					faceMaps["face"][24]["blending"] 	= "multiply";	
+					faceMaps["face"][24]["opacity"] 	= 0;		
+					faceMaps["face"][25] = new Object();
+					faceMaps["face"][25]["src"] 		= "models/skin_eyeshadow.png";
+					faceMaps["face"][25]["blending"] 	= "multiply";	
+					faceMaps["face"][25]["opacity"] 	= 0;	
+					faceMaps["face"][26] = new Object();
+					faceMaps["face"][26]["src"] 		= "models/skin_lipstick.png";
+					faceMaps["face"][26]["blending"] 	= "multiply";	
+					faceMaps["face"][26]["opacity"] 	= 0;		
+					faceMaps["face"][27] = new Object();
+					faceMaps["face"][27]["src"] 		= "models/skin_rouge.png";
+					faceMaps["face"][27]["blending"] 	= "multiply";	
+					faceMaps["face"][27]["opacity"] 	= 0;			
+
+					faceMaps["lashes"] = new Array();
+					faceMaps["lashes"]["width"] 		= 1000;
+					faceMaps["lashes"][0] = new Object();
+					faceMaps["lashes"][0]["src"] 		= "models/lashes_female.png";
+					faceMaps["lashes"][0]["blending"] 	= "copy";
+					faceMaps["lashes"][0]["opacity"] 	= 0.5;
+					faceMaps["lashes"][1] = new Object();
+					faceMaps["lashes"][1]["src"] 		= "models/lashes_male.png";
+					faceMaps["lashes"][1]["blending"] 	= "source-over";
+					faceMaps["lashes"][1]["opacity"] 	= 0.5;
+					
+					faceMaps["eyes"] = new Array();
+					faceMaps["eyes"]["width"] 			= 512;
+					faceMaps["eyes"][0] = new Object();
+					faceMaps["eyes"][0]["src"] 			= "models/eye_white.png";
+					faceMaps["eyes"][0]["blending"] 	= "source-over";
+					faceMaps["eyes"][0]["opacity"] 		= 1;
+					faceMaps["eyes"][1] = new Object();
+					faceMaps["eyes"][1]["src"] 			= "models/eye_details.png";
+					faceMaps["eyes"][1]["blending"] 	= "source-over";
+					faceMaps["eyes"][1]["opacity"] 		= 1;
+					faceMaps["eyes"][2] = new Object();
+					faceMaps["eyes"][2]["src"] 			= "models/eye_black.png";
+					faceMaps["eyes"][2]["blending"] 	= "source-over";
+					faceMaps["eyes"][2]["opacity"] 		= 0;
+					faceMaps["eyes"][3] = new Object();
+					faceMaps["eyes"][3]["src"] 			= "models/eye_brown.png";
+					faceMaps["eyes"][3]["blending"] 	= "source-over";
+					faceMaps["eyes"][3]["opacity"] 		= 1;
+					faceMaps["eyes"][4] = new Object();
+					faceMaps["eyes"][4]["src"] 			= "models/eye_amber.png";
+					faceMaps["eyes"][4]["blending"] 	= "source-over";
+					faceMaps["eyes"][4]["opacity"] 		= 0;
+					faceMaps["eyes"][5] = new Object();
+					faceMaps["eyes"][5]["src"] 			= "models/eye_green.png";
+					faceMaps["eyes"][5]["blending"] 	= "source-over";
+					faceMaps["eyes"][5]["opacity"] 		= 0;
+					faceMaps["eyes"][6] = new Object();
+					faceMaps["eyes"][6]["src"] 			= "models/eye_blue.png";
+					faceMaps["eyes"][6]["blending"] 	= "source-over";
+					faceMaps["eyes"][6]["opacity"] 		= 0;
+					faceMaps["eyes"][7] = new Object();
+					faceMaps["eyes"][7]["src"] 			= "models/eye_brightblue.png";
+					faceMaps["eyes"][7]["blending"] 	= "source-over";
+					faceMaps["eyes"][7]["opacity"] 		= 0;
+					faceMaps["eyes"][8] = new Object();
+					faceMaps["eyes"][8]["src"] 			= "models/eye_grey.png";
+					faceMaps["eyes"][8]["blending"] 	= "source-over";
+					faceMaps["eyes"][8]["opacity"] 		= 0;
+					faceMaps["eyes"][9] = new Object();
+					faceMaps["eyes"][9]["src"] 			= "models/eye_bump.png";
+					faceMaps["eyes"][9]["blending"] 	= "source-over";
+					faceMaps["eyes"][9]["opacity"] 		= 0;
+					
+					
+					faceMaps["shirt"] = new Array();
+					faceMaps["shirt"]["width"] 			= 1000;
+					faceMaps["shirt"][0] = new Object();
+					faceMaps["shirt"][0]["src"] 		= "models/shirt_grey.png";
+					faceMaps["shirt"][0]["blending"] 	= "source-over";
+					faceMaps["shirt"][0]["opacity"] 	= 1;		
+					
+					faceMaps["plane"] = new Array();
+					faceMaps["plane"]["width"] 			= 256;
+					faceMaps["plane"][0] = new Object();
+					faceMaps["plane"][0]["src"] 		= "models/_plane.jpg";
+					faceMaps["plane"][0]["blending"] 	= "source-over";
+					faceMaps["plane"][0]["opacity"] 	= 1;	
+					
+					
+				function btnChangeLight() {
+					if (lightSwitchBlocked == false) {
+						function completeLight() {
+							lightSwitchBlocked = false;
+							if(lightSetting == 3) lightSetting = 1;
+							else lightSetting++;
+						}
+						
+						if(lightSetting == 1) {
+							lightSwitchBlocked = true;
+							pointLight.position.x = lightDistance;
+							keyLight.position.x = -lightDistance;
+							document.getElementById("statusText").innerHTML = languageMapping["leftLightOn"];	
+						}
+						
+						if(lightSetting == 2) {
+							lightSwitchBlocked = true;
+							pointLight.position.x = -lightDistance;
+							keyLight.position.x = lightDistance;
+							document.getElementById("statusText").innerHTML = languageMapping["rightLightOn"];	
+						}
+						
+						if(lightSetting == 3) {
+							lightSwitchBlocked = true;
+							pointLight.position.x = 0;
+							keyLight.position.x = 0;
+							document.getElementById("statusText").innerHTML = languageMapping["rightAndLeftLightOn"];
+						}
+						$("#statusText").fadeIn(100).delay(1000).fadeOut(100, completeLight);
+					}
+					setDataCookie("lightsClicked", parseInt(getDataCookie("lightsClicked")) + 1);
+				}
+								
+				function reset(name, value, setCookie) {
+					
+					$("#slider_" + name).ionRangeSlider("update", {
+						from: value
+					});
+					
+					$("#slider_" + name).ionRangeSlider("update").updateData;
+
+					if(setCookie == true && evalMode == false && agenMode == false && faceMakerStarted == true){
+						//countResetBtnOf(name, "Rst");
+						increaseCountOf(name, "Rst");
+						//console.log("reset of "+name);
+						//setDataCookie(name + "Rst", parseInt(getDataCookie(name + "Rst")) + 1);
+					}
+				}
+			
+				
+				function resetAllSlider(_msg) {
+					function completeReset() {
+						for(var slidergrp in sliderCollection) {
+							for(var slider in sliderCollection[slidergrp]){
+								lockIncreaseCountOf =!_msg;
+								reset(sliderCollection[slidergrp][slider][1], sliderCollection[slidergrp][slider][3], false); 
+							}				
+						}
+						
+						targetZoom = 10;
+						//targetCamHeight = 0;
+						if(_msg != true) document.getElementById("statusText").innerHTML = languageMapping["faceResetted"];
+						if(_msg != true) $("#statusText").delay(1000).fadeOut(200);
+					}
+					
+					if(_msg != true) document.getElementById("statusText").innerHTML = languageMapping["resetFace"];
+					if(_msg != true) $("#statusText").fadeIn(200, completeReset);
+					else completeReset();
+					if(_msg != true) setDataCookie("mainResetClicked", parseInt(getDataCookie("mainResetClicked")) + 1);
+				}
+					
+				function computeEyeBrowBlendings(){		
+				
+					var eyebrowsColorMap = new Array();
+					if(eyebrowsColor <= 0.25){
+						eyebrowsColorMap[0] = 1
+						eyebrowsColorMap[1] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[2] = 0;
+						eyebrowsColorMap[3] = 0;
+						eyebrowsColorMap[4] = 0;
+					} else if(eyebrowsColor > 0.25 && eyebrowsColor <= 0.50){
+						eyebrowsColorMap[0] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[1] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[2] = (eyebrowsColor - 0.25) * 4;
+						eyebrowsColorMap[3] = 0;
+						eyebrowsColorMap[4] = 0;
+					} else if(eyebrowsColor > 0.50 && eyebrowsColor <= 0.75){
+						eyebrowsColorMap[0] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[1] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[2] = (eyebrowsColor - 0.25) * 4 ;
+						eyebrowsColorMap[3] = (eyebrowsColor - 0.50) * 4 ;
+						eyebrowsColorMap[4] = 0;
+					} else {
+						eyebrowsColorMap[0] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[1] = (eyebrowsColor - 0.00) * 4;
+						eyebrowsColorMap[2] = (eyebrowsColor - 0.25) * 4 ;
+						eyebrowsColorMap[3] = (eyebrowsColor - 0.50) * 4 ;
+						eyebrowsColorMap[4] = (eyebrowsColor - 0.75) * 4 ;		
+					}
+
+					for (var i = 0; i < 5; i++) {		
+						if(eyebrowsColorMap[i] >= 1) eyebrowsColorMap[i] = -eyebrowsColorMap[i] + 2;
+						if(eyebrowsColorMap[i] < 0) eyebrowsColorMap[i] = 0;
+						
+						if(eyebrowsLineBalance < 0){					
+							faceMaps["face"][10+i*3]["opacity"] = (eyebrowsLineBalance * -1) * eyebrowsColorMap[i];
+							faceMaps["face"][11+i*3]["opacity"] = (1 + eyebrowsLineBalance) * eyebrowsColorMap[i];
+							faceMaps["face"][12+i*3]["opacity"] = 0;
+						} else {
+							faceMaps["face"][10+i*3]["opacity"] = 0;
+							faceMaps["face"][11+i*3]["opacity"] = (1 - eyebrowsLineBalance) * eyebrowsColorMap[i];
+							faceMaps["face"][12+i*3]["opacity"] = (eyebrowsLineBalance) * eyebrowsColorMap[i];
+						}
+					}
+				}
+				
+				function init() {
+					
+					clock = new THREE.Clock();
+					container = document.createElement( 'div' );
+					document.getElementById("container3D").appendChild( container );
+
+					camera = new THREE.PerspectiveCamera( 10, window.innerWidth / window.innerHeight, 10, 10000 );
+					camera.position.z = camDistance;
+					camera.lookAt(camLookAt);
+					//camHeight = camLookAt.y;
+					
+					targetZoom = zoom = camera.fov;
+					
+					//console.log("targetZoom: " + targetZoom);
+					scene = new THREE.Scene();
+					
+					for(var map in faceMaps){
+						for(var i = 0; i < faceMaps[map].length; i++){
+							filesToLoad++;
+						}
+					}
+					
+					//console.log("Maps: " + filesToLoad);
+					
+					for(var part in faceMorphingFiles){
+						for(var mesh in faceMorphingFiles[part]){
+							filesToLoad++;	
+						}
+					}
+					
+					fileCount = filesToLoad;
+					lightDistance = 300;
+					//console.log("filesToLoad: " + filesToLoad);
+					// LIGHTS
+					ambientLight = new THREE.AmbientLight( 0x444444, 1.0 );
+					scene.add( ambientLight );
+					
+					pointLight = new THREE.PointLight( 0xffffff, 0.4, 1000 );
+					pointLight.position.set( -lightDistance, 100, 50 );
+					scene.add( pointLight );
+
+					keyLight = new THREE.DirectionalLight( 0xffffff, 0.9 );
+					keyLight.position.set( lightDistance, 150, 500 );
+					//keyLight.color.setHSL( 0.6, 1, 0.85 );
+					scene.add( keyLight );
+					keyLight.castShadow = true;
+					//keyLight.shadowCameraVisible = true;
+					keyLight.shadowMapWidth = 2048;
+					keyLight.shadowMapHeight = 2048;
+					keyLight.shadowCameraNear = 200;
+					keyLight.shadowCameraFar = 1500;
+					keyLight.shadowCameraLeft = -500;
+					keyLight.shadowCameraRight = 500;
+					keyLight.shadowCameraTop = 500;
+					keyLight.shadowCameraBottom = -500;
+					keyLight.shadowBias = -0.005;
+					keyLight.shadowDarkness = 0.07;
+
+
+					// MATERIALS
+					for(var map in faceMaps){
+						canvasImages[map] = null;
+						canvasImages[map] = document.createElement('canvas');
+						canvasContexts[map] = canvasImages[map].getContext('2d');
+						canvasTextures[map] = new THREE.Texture(canvasImages[map]);
+						canvasImages[map].width = faceMaps[map]["width"];
+						canvasImages[map].height = faceMaps[map]["width"];	
+						//renderer.deallocateTexture(canvasTextures[map]);
+						
+						for(var i = 0; i < faceMaps[map].length; i++){
+							//console.log("Map Length: " + faceMaps[map].length + " " + map + " " + faceMaps[map][i]["src"] );
+							faceMaps[map][i]["img"] = new Image();
+							faceMaps[map][i]["img"].onload = function() {
+								removeLoadingBar();
+							};
+							faceMaps[map][i]["img"].src = faceMaps[map][i]["src"];
+						}
+					}			
+	
+					// SKIN & REFLECTIONS SETUP
+					var ambient = 0xa0a0a0, diffuse = 0xa0a0a0, shininess = 50, specular = 0x606060;
+					var roughness = 0.185, specularBrightness = 0.8, normalScale = 1, bumpScale = 0.5;
+					
+					var shader = THREE.ShaderSkin[ "skinSimple" ];
+					var fragmentShader = shader.fragmentShader;
+					var vertexShader = shader.vertexShader;
+					var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
+					
+					var mapHeight = canvasTextures["face"];		
+					var mapSpecular = canvasTextures["face"];			
+					var mapColor = canvasTextures["face"];
+					
+					renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
+					//if(!renderer) document.getElementById("statusText").innerHTML = "Error";
+					renderer.setSize( window.innerWidth, window.innerHeight );
+					renderer.setClearColor( 0x101010, 0.0 );
+					renderer.autoClear = false;
+					renderer.gammaInput = true;
+					renderer.gammaOutput = true;
+					renderer.shadowMapEnabled = true;
+					renderer.shadowMapCullFace = THREE.CullFaceBack;
+					container.appendChild( renderer.domElement );
+					
+					var pars = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBufer: false };
+					var rtwidth = 512, rtheight = 512;
+					
+					composerBeckmann = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtwidth, rtheight, pars ) );
+				
+					uniforms[ "enableBump" ].value = true;
+					uniforms[ "enableSpecular" ].value = true;
+					
+					uniforms[ "tBeckmann" ].value = composerBeckmann.renderTarget1;
+					uniforms[ "tDiffuse" ].value = mapColor;
+					uniforms[ "bumpMap" ].value = mapHeight;
+					uniforms[ "specularMap" ].value = mapSpecular;
+					uniforms[ "ambient" ].value.setHex( ambient );
+					uniforms[ "diffuse" ].value.setHex( diffuse );
+					uniforms[ "specular" ].value.setHex( specular );
+					uniforms[ "uRoughness" ].value = roughness;
+					uniforms[ "uSpecularBrightness" ].value = 0.75;
+					uniforms[ "bumpScale" ].value = 0.5;
+					uniforms[ "offsetRepeat" ].value.set( 0.001, 0.001, 0.998, 0.998 );
+					
+					var path = "textures/cube/pisa/";
+					var format = '.jpg';
+					var urls = [
+						path + 'posx' + format, path + 'negx' + format,
+						path + 'posy' + format, path + 'negy' + format,
+						path + 'posz' + format, path + 'negz' + format
+					];
+					
+					var textureCube = THREE.ImageUtils.loadTextureCube( urls );
+					
+					var tShirtBump = THREE.ImageUtils.loadTexture(faceMaps["shirt"][0]["src"]);
+					var eyeBump = THREE.ImageUtils.loadTexture(faceMaps["eyes"][8]["src"]);
+				
+					materials["eyes"] = new THREE.MeshPhongMaterial({map:canvasTextures["eyes"], shininess: 1900, combine: THREE.MixOperation, bumpMap: eyeBump,bumpScale: 0.05,  envMap: textureCube, reflectivity: 0.1 , specular: 0x151515 });
+					materials["lashes"] = new THREE.MeshPhongMaterial({map:canvasTextures["lashes"], transparent: true, side: THREE.DoubleSide });	
+					materials["shirt"] = new THREE.MeshPhongMaterial( {map:canvasTextures["shirt"] , specular: 0x111111, shininess: 25, bumpMap: tShirtBump, bumpScale: 0.3, metal: true } );
+					materials["face"] = new THREE.ShaderMaterial( { fragmentShader: fragmentShader, vertexShader: vertexShader, uniforms: uniforms, lights: true } );
+					materials["plane"] = new THREE.MeshLambertMaterial({map:canvasTextures["plane"], transparent: true, side: THREE.DoubleSide });	
+					
+					// LOADER
+					loader = new THREE.JSONLoader( true );
+					document.body.appendChild( loader.statusDomElement );
+					
+					function loadingHandler(part) {
+						return function(geometry, material) {
+							faceMorphingVerts[part].push(geometry.vertices);
+							faceMesh[part] = new THREE.Mesh(geometry);
+							addObjectToScene( geometry, 100, materials[part] );
+							recursiveLoader(part, 1);
+						};
+					}
+					
+					for(part in faceMorphingFiles)
+					{
+						loader.load(faceMorphingFiles[part][0], loadingHandler(part));
+					}
+							
+					// EVENT LISTENER
+					document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+					document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+					document.addEventListener( 'mouseup', onDocumentMouseUp, false );	
+					
+					// STATS
+					if ( statsEnabled ) {
+						stats = new Stats();
+						container.appendChild( stats.domElement );
+					}
+					
+					// RENDERER
+					var effectBeckmann = new THREE.ShaderPass( THREE.ShaderSkin[ "beckmann" ] );
+					var effectCopy = new THREE.ShaderPass( THREE.CopyShader );
+
+					effectCopy.renderToScreen = true;
+
+					composerBeckmann.addPass( effectBeckmann );
+					composerBeckmann.addPass( effectCopy );
+
+					window.addEventListener( 'resize', onWindowResize, false );
+					
+				}
+
+				function removeLoadingBar() {
+					
+					filesToLoad--;
+					
+					if(filesToLoad > 0)
+					{
+						if(languageMapping["label_loader"] != null){
+							document.getElementById("statusText").innerHTML = languageMapping["label_loader"] + (100 - Math.round((filesToLoad/fileCount)*100)) + "%";			
+						} else {
+							document.getElementById("statusText").innerHTML = "";
+						}
+						if(!renderer) document.getElementById("statusText").innerHTML = languageMapping["noGlContext"];
+						filesToLoad--;
+					} else if (filesToLoad == 0) {
+						filesToLoad = 0;
+						$('#statusText').fadeOut(400, function(){
+							//$('#loadingGIF').fadeOut(400, function(){
+								$('#loadingScreen').fadeOut(400, function(){
+
+								});
+							//});
+						});
+						//var t1 = setTimeout(function(){
+							function completeLoading() {			
+								computeBlending("all"); 
+								computeMorphing("all"); 
+								appChooser();
+							}
+							
+							$('#statusText').fadeOut( 200, completeLoading );
+					//	},1000);
+					} else {
+						filesToLoad = 0;
+					}
+					
+					//console.log(filesToLoad + "/" + fileCount);
+				}
+				
+				function recursiveLoader(name, count){
+					removeLoadingBar();
+					//console.log(name + "/" + count);
+					if (count < faceMorphingFiles[name].length){
+						loader.load(faceMorphingFiles[name][count], function( geometry ) { 
+							loader.onLoadComplete = function() {
+								
+								faceMorphingVerts[name].push(geometry.vertices);
+								
+								for ( var v = 0; v < geometry.vertices.length; v++ ) 
+								{
+									faceMorphingVerts[name][count][v].x = geometry.vertices[v].x - faceMorphingVerts[name][0][v].x;
+									faceMorphingVerts[name][count][v].y = geometry.vertices[v].y - faceMorphingVerts[name][0][v].y;
+									faceMorphingVerts[name][count][v].z = geometry.vertices[v].z - faceMorphingVerts[name][0][v].z;
+								}
+								recursiveLoader(name, count + 1);
+							}
+							
+						});	
+					} else { return; }
+				}
+				
+				function computeBlending(blending){
+					for(var map in faceMaps){
+						if(map == blending || blending == "all"){
+							for(var i = 0; i < faceMaps[map].length; i++){
+								canvasContexts[map].globalAlpha = faceMaps[map][i]["opacity"];
+								canvasContexts[map].globalCompositeOperation = faceMaps[map][i]["blending"];
+								canvasContexts[map].drawImage(faceMaps[map][i]["img"], 0, 0);
+							}
+							if ( canvasTextures[map] ) canvasTextures[map].needsUpdate = true;
+						}
+					}
+				}
+				
+				function computeMorphing(morphing) {
+					for (var part in faceMorphingVerts)
+					{
+						if(part == morphing || morphing == "all") {
+							var newVertices = [];
+							
+							for(var v = 0; v < faceMesh[part].geometry.vertices.length; v++)
+							{
+								var weightAllMorphs = new THREE.Vector3(0,0,0);
+								
+								if(faceMorphingWeights[part]){									
+									for( var m = 0; m < faceMorphingWeights[part].length; m++){
+										
+										if(faceMorphingVerts[part][m] != undefined)
+										{
+											if(faceMorphingWeights[part][m] > 0 ) {
+												weightAllMorphs.x += faceMorphingVerts[part][m][v].x * faceMorphingWeights[part][m];
+												weightAllMorphs.y += faceMorphingVerts[part][m][v].y * faceMorphingWeights[part][m];
+												weightAllMorphs.z += faceMorphingVerts[part][m][v].z * faceMorphingWeights[part][m];
+											}
+										}
+									}
+								}
+								
+								newVertices.push(new THREE.Vector3(
+									weightAllMorphs.x,
+									weightAllMorphs.y,
+									weightAllMorphs.z
+								));
+							}
+
+							faceMesh[part].geometry.dynamic = true;
+							faceMesh[part].geometry.verticesNeedUpdate = true;
+							faceMesh[part].geometry.vertices = newVertices;
+						}
+					}
+				}
+				
+				function createDownloadObjLink(fileName, str) {
+					var blob = new Blob([str], {
+						type: "text/plain;charset=utf-8;",
+					});
+					saveAs(blob, fileName);
+				}				
+
+				function saveAsObj() {
+					var str = "";
+					var vertexCounter = 1;
+					var uvCounter = 1;
+					
+					
+					for(var part in faceMesh){
+					
+						str += "\n\n#object " + part + "\n#vertices:  " + faceMesh[part].geometry.vertices.length + "\n"; 
+						for(var i = 0; i < faceMesh[part].geometry.vertices.length; i++){
+							var x = (faceMesh[part].geometry.vertices[i].x == 0 ? "0.0000" : round(parseFloat(faceMesh[part].geometry.vertices[i].x),4));
+							var y = (faceMesh[part].geometry.vertices[i].y == 0 ? "0.0000" : round(parseFloat(faceMesh[part].geometry.vertices[i].y),4));
+							var z = (faceMesh[part].geometry.vertices[i].z == 0 ? "0.0000" : round(parseFloat(faceMesh[part].geometry.vertices[i].z),4));
+							str += "v " + x + " " + y + " " + z + "\n"; 
+						}
+						
+						str += "\n#uvs:  " + faceMesh[part].geometry.faceVertexUvs[0].length + "\n"; 
+						for(var i = 0; i < faceMesh[part].geometry.faceVertexUvs[0].length; i++){
+							for(var j = 0; j < faceMesh[part].geometry.faceVertexUvs[0][i].length; j++){
+								var u = faceMesh[part].geometry.faceVertexUvs[0][i][j].x;
+								var v = faceMesh[part].geometry.faceVertexUvs[0][i][j].y;
+								str += "vt " + u + " " + v + "\n"; 
+							}
+						}
+						
+						str += "\n\n#faces: " + faceMesh[part].geometry.faces.length + "\n"; 
+						str += "g " + part + "\n"; 
+						str += "s 1\n"; 
+						for(var i = 0; i < faceMesh[part].geometry.faces.length; i++){
+							var a = faceMesh[part].geometry.faces[i].a + vertexCounter;
+							var b = faceMesh[part].geometry.faces[i].b + vertexCounter;
+							var c = faceMesh[part].geometry.faces[i].c + vertexCounter;
+							var vt1 = uvCounter;
+							var vt2 = uvCounter + 1;
+							var vt3 = uvCounter + 2;
+							uvCounter = uvCounter + 3;
+							str += "f " + a + "/" + vt1 + " " + b + "/" + vt2 + " " + c + "/" + vt3 + "\n"; 
+						}
+						vertexCounter += faceMesh[part].geometry.vertices.length;
+					}
+				
+					dataUrlFace = canvasImages["face"].toDataURL("image/png");
+					dataUrlEyes = canvasImages["eyes"].toDataURL("image/png");
+					dataUrlLashes = canvasImages["lashes"].toDataURL("image/png");
+					dataUrlShirt = canvasImages["shirt"].toDataURL("image/png");
+
+					var blobFace = dataURItoBlob(dataUrlFace);
+					var blobEyes = dataURItoBlob(dataUrlEyes);
+					var blobLashes = dataURItoBlob(dataUrlLashes);
+					var blobShirt = dataURItoBlob(dataUrlShirt);
+					
+					saveAs(blobFace, "facetexture.png");
+					saveAs(blobEyes, "eyestexture.png");
+					saveAs(blobLashes, "lashestexture.png");
+					saveAs(blobShirt, "shirttexture.png");
+					createDownloadObjLink("facemodel.obj",str);
+				}
+				
+				function dataURItoBlob(dataURI) {
+					var byteString;
+					if (dataURI.split(',')[0].indexOf('base64') >= 0) byteString = atob(dataURI.split(',')[1]);
+					else byteString = unescape(dataURI.split(',')[1]);
+
+					var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+					var ia = new Uint8Array(byteString.length);
+					for (var i = 0; i < byteString.length; i++)  ia[i] = byteString.charCodeAt(i);
+
+					return new Blob([ia], {type:mimeString});
+				}
+				
+				function onWindowResize() {
+					canvas3DHalfX = window.innerWidth / 2;
+					canvas3DHalfY = window.innerHeight / 2;
+
+					if(evalMode == true){
+						camera.aspect = eval3DWidth / eval3DHeight;
+						camera.updateProjectionMatrix();
+						renderer.setSize( eval3DWidth, eval3DHeight );
+					}
+					else
+					{
+						camera.aspect = window.innerWidth / window.innerHeight;
+						camera.updateProjectionMatrix();
+						renderer.setSize( window.innerWidth, window.innerHeight );
+					}
+					
+
+					if(evalMode == true) renderer.setSize( eval3DWidth, eval3DHeight );
+					else renderer.setSize( window.innerWidth, window.innerHeight );
+				}
+
+				function addObjectToScene( geometry, scale, skinMaterial ) {
+					geometry.computeTangents();
+					mesh = new THREE.Mesh( geometry, skinMaterial );
+					mesh.scale.set( scale, scale, scale );
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
+					scene.add( mesh );
+					loader.statusDomElement.style.display = "none";
+				}
+
+				function onDocumentMouseMove( event ) {
+					event.preventDefault();
+					if(mouseIsDown && !renderBoxDragging){
+						var testYaw = (((event.clientX - canvas3DHalfX ) / canvas3DHalfX )*2 + Math.PI / 2);	
+						if(testYaw < Math.PI && testYaw > 0) camTargetYaw = testYaw ;
+						
+						var testPitch = ((event.clientY - canvas3DHalfY ) / canvas3DHalfY ) / 4;	
+						camTargetPitch = testPitch ;	
+					}
+					if(sliderInUse == false && mouseOverUIElement == false){
+						targetZoom = 10;
+						targetCamHeight = 0;
+					}
+				}
+
+				function onDocumentMouseDown( event ) {
+					event.preventDefault();
+					
+					if(infoBoxOpen == true || mouseOverUIElement == true) 
+					{
+						mouseIsDown = false;
+					}else{
+						mouseIsDown = true;
+						targetZoom = 10;
+						targetCamHeight = 0;
+						var testYaw = ((event.clientX - canvas3DHalfX ) / canvas3DHalfX ) * 2 + Math.PI / 2;	
+						if(testYaw < Math.PI && testYaw > 0) camTargetYaw = testYaw ;
+						
+						var testPitch = ((event.clientY - canvas3DHalfY ) / canvas3DHalfY ) / 4 ;	
+						camTargetPitch = testPitch ;
+						
+						//console.log(camera.position.x + " " + camera.position.y + " " + camera.position.z);
+					}
+				}
+
+				function onDocumentMouseUp( event ) {
+					event.preventDefault();
+					mouseIsDown = false;
+					sliderInUse = false;
+					lockIncreaseCountOf = false;
+					//console.log("lockincreaseCountOf " + lockincreaseCountOf);
+				}
+				
+				function animate() {
+					setTimeout( function() {
+						
+						requestAnimationFrame( animate );
+
+					}, 1000 / 100 );
+					
+					render();
+					if ( statsEnabled ) stats.update();
+				}
+
+				function render() {	
+					if(skipMovement == false){
+						camYaw += (camTargetYaw - camYaw) * camRotationSpeed ;
+						camPitch += (camTargetPitch - camPitch) * camRotationSpeed ;
+						camHeight += (targetCamHeight - camHeight) * camRotationSpeed; 
+						zoom += (targetZoom - zoom) * zoomSpeed;
+					} else {
+						camYaw = camTargetYaw;
+						camPitch = camTargetPitch;
+						camHeight = targetCamHeight;
+						zoom = targetZoom;
+					}
+					
+					camera.position.z = camDistance * Math.sin( camYaw ) * Math.cos(camPitch);
+					camera.position.x = camDistance * Math.cos( camYaw ) * Math.cos(camPitch);
+					camera.position.y = camDistance * Math.sin( camPitch );
+					camLookAt.y = camHeight;
+					camera.fov = zoom;
+					
+					camera.updateProjectionMatrix();
+					
+					//var newCenter = new THREE.Vector3(scene.position.x, scene.position.y, scene.position.z );
+					camera.lookAt(camLookAt);
+					renderer.clear();
+
+					if ( firstPass ) {
+						composerBeckmann.render();
+						firstPass = false;
+					}
+
+
+					//composerScene.render();
+					//composerUV1.render();
+					//composerUV2.render();
+					//composerUV3.render();
+
+					if( faceMakerStarted && showFace) renderer.render( scene, camera );
+				}
+				
+				window.onunload = function() {
+
+					for(var map in faceMaps){
+						canvasTextures[map].dispose();
+					}
+					
+					for(var mesh in scene) {
+						scene.remove( mesh );
+					}					
+					
+					for(var part in faceMesh){
+						scene.remove( faceMesh[part] );
+						faceMesh[part].geometry.dispose();
+						faceMesh[part].material.dispose();
+					}
+						
+					for(var material in materials) {
+						materials[material].dispose();
+					}
+					canvasImages = null;
+					canvasTextures = null;
+					canvasContexts = null;
+					materials = null;	
+					faceMaps = null;
+					faceMesh = null;
+					faceMorphingVerts = null;
+					faceMorphingFiles = null;
+					//console.log("unloaded");
+				}
+				
+				function changeSkyMaterial(_name){
+					if(skyMesh) skyMesh.visible = true;
+					var path = "textures/cube/" + _name + "/";
+					var format = '.jpg';
+					var urls = [
+							path + 'posx' + format, path + 'negx' + format,
+							path + 'posy' + format, path + 'negy' + format,
+							path + 'posz' + format, path + 'negz' + format
+						];
+
+					var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
+					reflectionCube.format = THREE.RGBFormat;
+					
+					var shader = THREE.ShaderLib[ "cube" ];
+					shader.uniforms[ "tCube" ].value = reflectionCube;
+
+					var material = new THREE.ShaderMaterial( {
+						fragmentShader: shader.fragmentShader,
+						vertexShader: shader.vertexShader,
+						uniforms: shader.uniforms,
+						depthWrite: false,
+						side: THREE.BackSide
+					} );
+					
+					if(skyMesh) scene.remove(skyMesh);
+					skyMesh = new THREE.Mesh( new THREE.BoxGeometry( 1000, 1000, 1000 ), material );
+					scene.add( skyMesh );
+				}
+				
+			</script>
+		</div>
+	</body>
+</html
