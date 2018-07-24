@@ -3,7 +3,7 @@
 	$tablename = "trials";
 	
 	if($_SERVER['HTTP_HOST'] == "localhost") {
-		$connection = mysqli_connect("localhost", "root", "facemaker", "facemaker")
+		$connection = mysqli_connect("localhost", "root", "", "facemaker")
 		or die ("Connection could be established");
 		//echo "choosing local db<p></p>";
 	} else {

@@ -211,6 +211,8 @@
 				var zoomSpeed = .1;
 				var sliderInUse = false;
 				var skipMovement = false;
+				var isSavingAvatarImages = false;
+				var imageID = 0;
 				
 				start();
 				//console.log($.cookie());
@@ -235,6 +237,8 @@
 					$("#evaluationResult").mouseout(function() { mouseOverUIElement = false; });
 					
 				}
+				
+				
 				
 				$( document ).ready(function() {
 					loadLanguage();	
@@ -460,6 +464,9 @@
 				function openEvaluationBoard(){
 					$("#sidebarRight").hide();
 					$("#sidebarLeft").hide();
+					
+					fileName = "evalAvatar.png";
+					
 					generateSliders();
 					resetAllSlider(true);
 					
@@ -494,6 +501,8 @@
 					
 					function evalFilter(){
 						$("#filterTable").empty();
+						
+						/*
 						$("#filterTable").append("<input type='checkbox' name='onlyCompleted' value='1' id='onlyCompletedTrials' class='css-checkbox'></input><label for='onlyCompletedTrials' class='css-checklabel'><div id='label_onlyCompletedTrials'>only complete trials</div></label><p></p>");
 						
 						//$("#onlyCompletedTrials").prop( "checked", showOnlyCompleteTrials ) 
@@ -502,7 +511,7 @@
 							console.log($("#onlyCompletedTrials").prop( "checked" ));
 							showOnlyCompleteTrials = $("#onlyCompletedTrials").prop( "checked" );
 							evalFilter();
-						});
+						});*/
 					
 						evalFilterSelection["trialid"] = new Array("label_trialID",languageMapping["label_theTrial"],"trialID","200px");
 						evalFilterSelection["latinSquare"] = new Array("label_taskID",languageMapping["label_theTask"],"taskID","200px");
@@ -515,10 +524,12 @@
 						evalFilterSelection["finalQuestion3"] = new Array("label_finalQuestion3ID",languageMapping["label_finalQuestion3"],"finalQuestion3ID","200px");
 						evalFilterSelection["finalQuestion4"] = new Array("label_finalQuestion4ID",languageMapping["label_finalQuestion4"],"finalQuestion4ID","200px");
 						evalFilterSelection["userUID"] = new Array("label_userUID","User UID","userUID","200px");
+						evalFilterSelection["trialID"] = new Array("label_trialID","Trial ID","trialID","200px");
+						evalFilterSelection["theAge"] = new Array("label_theAge",languageMapping["label_theAge"],"theAgeID","200px");
 						
 						var paramAllOrOnly = "all"
 						var phpURL = "getEvalCount.php"
-						if(showOnlyCompleteTrials == true) paramAllOrOnly += "&onlycomplete=yes";
+						//if(showOnlyCompleteTrials == true) paramAllOrOnly += "&onlycomplete=yes";
 						//if(showOnlyCompleteTrials==true) phpURL = "getEvalCountOnly.php";
 						
 						for(var item in evalFilterSelection){
@@ -534,12 +545,14 @@
 								
 								var config = {'.chosen-select-wide'      : {width:evalFilterSelection[this.indexValue][3]}};
 								for (var selector in config) { $("#"+this.indexValue).chosen(config[selector]); }
-								$("#"+this.indexValue).change(function () { evalFace(); });
+								$("#"+this.indexValue).change(function () { /*evalFace();*/ });
 							}});	
 						}
 						
 						$("#filterTable").append("<input id='saveEvalImageButton' type='button' class='button inEval' value='Save Image'></input>");
+						$("#filterTable").append("<input id='frontEvalViewButton' type='button' class='button inEval' value='Front View'></input>");
 						$("#filterTable").append("<input id='resetEvalViewButton' type='button' class='button inEval' value='Reset View'></input>");
+						$("#filterTable").append("<input id='submitEvalViewButton' type='button' class='button inEval' value='Submit'></input>");
 						$("#filterTable").append("<h3>The Tasks</h3>");
 						$("#filterTable").append("<p>A: Create <b>an arbitrary face</b>.</p>");
 						$("#filterTable").append("<p>B: Create <b>a repulsive face</b>..</p>");
@@ -548,18 +561,38 @@
 						$("#filterTable").append("<p>E: Create <b>a female villain</b>.</p>");
 						$("#filterTable").append("<p>F: Create <b>a male villain</b>.</p>");
 						
+						$("#filterTable").append("From <input type='text'  id='fromTrialID' name='fromTrialIDName' value='1'></input> to <input type='text'  id='toTrialID' name='toTrialIDName'  value='5451'></input><input id='submitSaveIDButton' type='button' class='button inEval' value='SAVE'></input>");
+						
 						$("#saveEvalImageButton").click(function(){
-							saveToDisk("evalAvatar.png");
+							saveToDisk(fileName);
 						});
 						
 						$("#resetEvalViewButton").click(function(){
 							camTargetYaw = 1.00;
 							camTargetPitch = 0;
-							targetZoom = 10
+							targetZoom = 10;
+						});
+						
+						$("#frontEvalViewButton").click(function(){
+							camTargetYaw = 1.57;
+							camTargetPitch = 0;
+							targetZoom = 10.0;
+						});
+						
+						$("#submitEvalViewButton").click(function(){
+							evalFace();
+						});
+						
+						
+						$("#submitSaveIDButton").click(function(){
+							imageID = parseInt($("#fromTrialID").val());
+							saveAvatarImageOnServer();
 						});
 						
 						evalFace();
 					}
+					
+					
 					
 					 
 					function evalFace() {					
@@ -567,14 +600,26 @@
 						$("#demoResultTable").empty();
 						
 						var str = "";
-						
+						str += "(";
 						for(var item in evalFilterSelection){
+							
 							if(item != "theCountry" ){
 								var selectedItems = $("#" +item).val();
+								
 								for(var field in selectedItems){
-									str += item + "[]=" + selectedItems[field]+"&";
+									str += "(" + item + ":'" + selectedItems[field]+"')OR";
 								}
-							} else {
+								
+								if(selectedItems != null) {
+									str = str.substring(0, str.length - 2);
+									str += ")AND(";
+								}
+								//str = str.substring(0, str.length - 2);
+								//str += ")AND(";
+								
+							}
+							
+							/* else {
 								var selectedTheCountry = [];
 								$('#theCountryID option:selected').each(function(){
 									selectedTheCountry.push($(this).text());
@@ -584,24 +629,25 @@
 								for(var country in selectedTheCountry){
 									countryIndex = jQuery.inArray( selectedTheCountry[country], countryList["en"] );
 									//console.log("selectedTheCountry: " + selectedTheCountry[item] + " item: " + countryIndex);
-									str += "theCountry[]=" + countryIndex+"&";
+									str += "theCountry:" + countryIndex+"+";
 								}
-							}
+							}*/
+							
 						}
+						str = str.substring(0, str.length - 4);
 						
+						str = "query=" + str;
+						/*
 						selectedTrials = $("#trialID").val();
 						for(var item in selectedTrials){
-							str += "trialid[]=" + selectedTrials[item]+"&";
+							str += "trialid:" + selectedTrials[item]+"";
 						}
-						
-						str = str.substr(0, (str.length - 1)) 
-						//console.log(str);
+						*/					
 						
 						var faceDataEval = new Array();
 						var aggregatedData = new Array();
+										
 						
-						//console.log("str" + str);
-						if(showOnlyCompleteTrials==true) str += "&onlycomplete[]=yes";
 						loadFaceWithStr(str);
 						
 					}
@@ -609,10 +655,34 @@
 					console.log("eval mode");
 				}
 				
+				function saveAvatarImageOnServer(){
+					
+					camYaw = camTargetYaw = 1.00 + Math.random();
+					camPitch = camTargetPitch = 0 + Math.random()/10;
+					
+					var saveTo = $("#toTrialID").val();
+					if(imageID <= saveTo){
+						isSavingAvatarImages = true;
+						str = "query=((trialID:'"+ imageID +"'))";
+						loadFaceWithStr(str);
+						
+					} else {
+						isSavingAvatarImages = false;
+						console.log("Saving Finished: " + imageID);
+					}
+                   
+				}
+                
+
+
+				
 				function loadFaceWithStr(str) {
 					
+					//console.log("Sended: " + str);	
+					
 					$.ajax({ async: true, crossDomain: false, cache: true, type: "POST", url: "php/getAvgData.php", data: str, success: function(response) {
-						//console.log(response);
+                       // console.log("Received: " + response);
+						
 						if(response!=""){
 							
 							var responseColumns = response.split("|");
@@ -673,6 +743,8 @@
 									document.getElementById("demoTitle").innerHTML = value + " demographic data sets";
 								}else if(field == "latinSquare" ||field == "trialid" || field == "latinSquare"|| field == "timeDate"|| field == "cookies"|| field == "webgl"|| field == "acceptTOU" ||field == "sessions" || field == "userUID" || field == "systemLanguage"|| field == "userLanguage" || field == "ipadress" || field == "theAge" || field == "theGender" || field == "theCountry" ||  field == "appVersion" || field == "product" || field == "playingGames" || field == "watchingMovies" || field == "screenHeight"  || field == "screenWidth" || field == "browser"|| field == "appCodeName" || field == "platform"|| field == "browser" )
 								{
+									if(field == "trialid") fileName = "avatar.png";
+									
 									if(field == "theCountry") {
 										var str = "";
 										value = value.substr(0, (value.length - 1))
@@ -768,14 +840,44 @@
 							}
 							mapCookiesToFace();
 							
+							if(isSavingAvatarImages){
+							
+								var fileURL = renderer.domElement.toDataURL("image/png");
+								console.log("IMAGE ID: " + (imageID - 1) + " pitch " + camPitch + " yaw " + camYaw)
+								$.ajax({
+									url: "php/uploadFile.php?id=" + pad((imageID-1),4) + "_" + camPitch + "_" + camYaw, // Url to which the request is send
+									type: "POST",             // Type of request to be send, called as method
+									data: fileURL, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+									contentType: "image/png",       // The content type used when sending data to the server.
+									cache: false,             // To unable request pages to be cached
+									processData: false,        // To send DOMDocument or non processed data file it is set to false
+									success: function(data)   // A function to be called if request succeeds
+									{
+										//$('#loading').hide();
+										console.log("Sended: " + data);
+                                        imageID++;
+                                        saveAvatarImageOnServer();
+										
+										
+									}
+								});
+							}
+							
+							
 						}else{
 							document.getElementById("resultsTitle").innerHTML = "No Results";
 							document.getElementById("demoTitle").innerHTML = "";
 							$('#container3D div canvas').hide();
 						}
+						
 					}});
+					
+					
 				}
-				
+				function pad(num, size) {
+                    var s = "000000000" + num;
+                    return s.substr(s.length-size);
+                }
 				function closeRendering(){$("#imageHolder").fadeOut(200, function(){$("#imageButtonBar").fadeOut(100);})}
 				
 				function checkForCookies(){

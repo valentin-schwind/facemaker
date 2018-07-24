@@ -6,27 +6,40 @@
 	$values = '';
 	$condition = '';
 	
-	foreach ($_POST as $array => $arrayValue) {
-		$condition .= "(";
+	/*foreach ($_POST as $array => $arrayValue) {
+		$condition .= "((";
 		foreach ($arrayValue as $columnName => $value) {
 			if($array != "onlycomplete" ){
-				$condition .= $array."='".$value."' OR ";
+				$value = str_replace( "|", ") OR (", $value );
+				if($value != "all"){
+					$condition .= $array."=".$value." AND ";
+				} else {
+					$condition .= $array."=".$value." OR ";
+				}
 			}
 			if($array == "onlycomplete" && $value == "yes"){
 				$condition .= "userUID IN (SELECT userUID FROM ".$tablename." GROUP BY userUID HAVING COUNT(*) >= 6 ) AND ";
 			} 
-			if($value != "all" && $array != "onlycomplete" ){
-				$condition .= $array."='".$value."' AND ";
-			}
+			
 		}
-		$condition = substr($condition, 0, -4);
-		$condition .= ") AND ";
-	}
+		$condition = substr($condition, 0, -5);
+		$condition .= ")) AND ";
+	}*/
+	$condition = $_POST["query"];
+	$condition = str_replace( ":", "=", $condition );
+	//print $condition;
 	
 	//$columnNames = substr($columnNames, 0, -1);
 	//$values = substr($values, 0, -1);
-	$condition = substr($condition, 0, -5);
+	//$condition = substr($condition, 0, -5);
+	
+	
+	//$myString = "'My amiable lady!' he interrupted, with an almost diabolical sneer on his face. 'Where is she--my amiable lady?'";
+	//$searchTerms = array ( 'lady', 'amiable' );
+	//$replacements = array ( 'wife', 'lovely' );
+	//print str_replace( $searchTerms, $replacements, $myString );
 	//print $condition;
+	
 	$columns = mysqli_query($connection,"select column_name from information_schema.columns where table_name='".$tablename."'");
 	//$column = mysqli_fetch_assoc($columns);
 	
@@ -63,7 +76,7 @@
 					
 					foreach($row as $fieldName => $value) {
 						$stopMe++;
-						if($stopMe < 10){
+						if($stopMe < 5){
 							if($condition != '') {
 								$sqlCount = "SELECT ".$columnname." FROM ".$tablename." WHERE ".$condition." AND ".$columnname."='".$value."' ORDER BY ".$columnname." DESC" ;
 							} else {
@@ -84,7 +97,7 @@
 							}else{
 								$output.= "<b>".$value."</b> <i>(".$numResultsCol.")</i><br />";
 							}
-						}else if ($stopMe == 10){
+						}else if ($stopMe == 100){
 							$output.= "...<br />";
 						}else{
 						}
@@ -115,6 +128,8 @@
 	$output = substr($output, 0, -1);
 
 	print $output;
+	
+	
 	/*
 	if($condition != '') {
 		$sql = "SELECT * FROM test WHERE ".$condition;
