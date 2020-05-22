@@ -7,7 +7,7 @@
 		or die ("Connection could be established");
 		//echo "choosing local db<p></p>";
 	} else {
-		$connection = mysqli_connect("HOSTNAME", "USERNAME", "PASSWORD", "DATABASENAME")
+		$connection = mysqli_connect("database", "root", "", "facemaker")
 		or die ("Connection could be established");
 		//echo "choosing online db<p></p>";
 	}
