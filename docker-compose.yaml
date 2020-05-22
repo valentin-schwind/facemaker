@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+  # database
+  database:
+    image: mysql:latest
+    restart: always
+    volumes:
+    - ./database/trials.sql:/docker-entrypoint-initdb.d/trials.sql
+    environment:
+      MYSQL_DATABASE: facemaker
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - '8000:80'
+    environment:
+      PMA_HOST: database
+
+  # webserver
+  web:
+    depends_on: 
+     - database
+    build: ./web
+    restart: always
+    ports: 
+      - '8080:80'
+    volumes:
+      - ./web:/var/www/html/
